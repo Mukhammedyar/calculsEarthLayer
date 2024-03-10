@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { list } from '../../API/tableList'
 import { useDispatch, useSelector } from 'react-redux'
-import { calculsStart, fizikLoySuccess, fizikQumSuccess } from '../../Reducer/ValuesList1'
+import { calculsStart, fizikLoySuccess, fizikQumSuccess, jamiPercentSuccess } from '../../Reducer/ValuesList1'
 
 export default function TableNatija() {
     const [listData, setListData] = useState(list)
@@ -16,6 +16,7 @@ export default function TableNatija() {
         fizikQumArray.length = 8
         fizikLoyArray.length = 8
         mexanikTarkibArray.length = 8
+        const jamiPerArray = Array(8).fill(0)
         dispatch(calculsStart())
         try {
             values.map((row, rowIndex) => {
@@ -29,11 +30,13 @@ export default function TableNatija() {
                 for (let colIndex = 4; colIndex < 8; colIndex++) {
                     sum2 += parseFloat(row[colIndex]);
                 }
-                fizikLoyArray[rowIndex]=sum2
+                fizikLoyArray[rowIndex] = sum2
+                jamiPerArray[rowIndex] = fizikLoyArray[rowIndex] + fizikQumArray[rowIndex]
             })
+                
+            dispatch(jamiPercentSuccess([...jamiPerArray]))
             dispatch(fizikQumSuccess([...fizikQumArray]))
             dispatch(fizikLoySuccess([...fizikLoyArray]))
-            console.log(fizikLoyArray);
         } catch (error) {
             console.log(error);
         }

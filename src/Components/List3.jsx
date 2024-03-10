@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import Input from '../UI/input'
 import TableInputHead from './TableList1/tableInputHead';
-import { useDispatch } from 'react-redux';
-import { valueSetStart, valueSetSuccess } from '../Reducer/ValuesList1';
+import { useDispatch, useSelector } from 'react-redux';
+import { jamiPercentSuccess, valueSetStart, valueSetSuccess } from '../Reducer/ValuesList1';
 import TableNatija from './TableList1/tableNatija';
+import List3Input from './TableList1/List3Input';
 
 function List3() {
   const dispatch = useDispatch()
+  const {isLoading, jamiPercent}=useSelector(state => state.valuesList1)
   const [jadvalQiymatlari, setJadvalQiymatlari] = useState(Array(8).fill(Array(8).fill('')));
 
   const handleChange = (row, col, event) => {
@@ -26,45 +28,35 @@ function List3() {
 
   return (
     <div className='mt-10 flex items-start flex-col px-10 gap-5 h-[100vh]'>
-      <table className='shadow-lg border bg-white text-center text-xs md:text-sm font-light dark:border-neutral-500 rounded-lg'>
-        <TableInputHead/>
-        <tbody className=''>
-          {jadvalQiymatlari.map((row, rowIndex) => (
-            <tr key={rowIndex} className='border-b'>
-              {row.map((qiymat, colIndex) => (
-                <td key={colIndex} className='w-[130px] border-r-[1px]'>
-                  <input
-                    type="number"
-                    value={qiymat}
-                    step={colIndex >= 6 ? 0.0001 : 0.001}
-                    onChange={(event) => handleChange(rowIndex, colIndex, event)}
-                    className={`
-                      ${colIndex === 0 && +qiymat < 0.25
-                        ? 'border-0 text-red-500'
-                        : colIndex === 1 && (+qiymat < 0.1 || +qiymat > 0.25)
-                        ? 'border-0 text-red-500'
-                        : colIndex === 2 && (+qiymat < 0.05 || +qiymat > 0.1)
-                        ? 'border-0 text-red-500'
-                        : colIndex === 3 && (+qiymat < 0.01 || +qiymat > 0.05)
-                        ? 'border-0 text-red-500'
-                        : colIndex === 4 && (+qiymat < 0.005 || +qiymat > 0.01)
-                        ? 'border-0 text-red-500'
-                        : colIndex === 5 && (+qiymat <  0.001 || +qiymat > 0.005)
-                        ? 'border-0 text-red-500'
-                        : colIndex === 6 && +qiymat > 0.001
-                        ? 'border-[1px] border-red-500 text-red-500'
-                        : colIndex === 7 && +qiymat < 0
-                        ? "border-[1px] border-red-500 text-red-500"
-                        : "border-none"
-                      }
-                        w-[130px] border-0 focus:outline-0`}
-                  />
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className='flex justify-center items-start gap-2 overflow-x-scroll min-h-[400px]'>
+        <table className='shadow-lg border bg-white text-center text-xs md:text-sm font-light dark:border-neutral-500 rounded-lg'>
+          <TableInputHead/>
+          <List3Input jadvalQiymatlari={jadvalQiymatlari} handleChange={handleChange} />
+        </table>
+        <table className='shadow-lg w-[100px] md:min-w-[100px] border bg-white text-center text-xs md:text-sm font-light dark:border-neutral-500 rounded-lg'>
+          <thead className="border-b border-gray-300 font-medium dark:border-neutral-500 rounded">
+              <tr className='bg-gray-200 border-b border-neutral-300 font-normal'>
+                <th
+                    rowSpan={2}
+                    scope="col"
+                    className="border-r py-8 md:py-11 border-neutral-300">
+                    Жами %
+                </th>
+              </tr>
+          </thead>
+          <tbody> 
+            {!isLoading && jamiPercent.map((item, index) => (
+              <tr key={index} className='bg-white border-b border-neutral-300 font-normal'>
+                  <td
+                    scope="col"
+                    className="border-b border-neutral-300">
+                    {item == NaN ? '0' : item?.toString()?.slice(0,3)}
+                  </td>
+                </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       <button onClick={saveAllValues} className='bg-blue-600 px-2 rounded-md text-white items-start'>Hisoblash</button>
       
 

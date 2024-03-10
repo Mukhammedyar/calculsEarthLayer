@@ -6,6 +6,7 @@ const initialState = {
   fizikQum: [],
   fizikLoy: [],
   MexanikTarkib: [],
+  jamiPercent: [],
   error: null,
 };
 
@@ -38,6 +39,10 @@ export const valueSlice = createSlice({
       state.isLoading = false;
       state.MexanikTarkib = action.payload;
     },
+    jamiPercentSuccess: (state, action) => {
+      state.isLoading = false;
+      state.jamiPercent = action.payload;
+    },
   },
 });
 
@@ -49,5 +54,6 @@ export const {
   fizikLoySuccess,
   MexanikTarkibSuccess,
   calculsStart,
+  jamiPercentSuccess,
 } = valueSlice.actions;
 export default valueSlice.reducer;
