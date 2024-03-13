@@ -1,6 +1,10 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 
-export default function List3Input({jadvalQiymatlari,handleChange}) {
+export default function List3Input({ jadvalQiymatlari, handleChange }) {
+  const { jamiNatiyja } = useSelector(state => state.valuesList1)
+  const array = Array(8).fill(0)
+  
   return (
     <tbody className=''>
           {jadvalQiymatlari.map((row, rowIndex) => (
@@ -10,33 +14,26 @@ export default function List3Input({jadvalQiymatlari,handleChange}) {
                   <input
                     type="number"
                     value={qiymat}
-                    step={colIndex >= 6 ? 0.0001 : 0.001}
+                    step={1}
                     onChange={(event) => handleChange(rowIndex, colIndex, event)}
                     className={`
-                      ${colIndex === 0 && +qiymat < 0.25
-                        ? 'border-0 text-red-500'
-                        : colIndex === 1 && (+qiymat < 0.1 || +qiymat > 0.25)
-                        ? 'border-0 text-red-500'
-                        : colIndex === 2 && (+qiymat < 0.05 || +qiymat > 0.1)
-                        ? 'border-0 text-red-500'
-                        : colIndex === 3 && (+qiymat < 0.01 || +qiymat > 0.05)
-                        ? 'border-0 text-red-500'
-                        : colIndex === 4 && (+qiymat < 0.005 || +qiymat > 0.01)
-                        ? 'border-0 text-red-500'
-                        : colIndex === 5 && (+qiymat <  0.001 || +qiymat > 0.005)
-                        ? 'border-0 text-red-500'
-                        : colIndex === 6 && +qiymat > 0.001
-                        ? 'border-[1px] border-red-500 text-red-500'
-                        : colIndex === 7 && +qiymat < 0
-                        ? "border-[1px] border-red-500 text-red-500"
-                        : "border-none"
+                      ${ +qiymat > 100
+                        ? 'border-1 border-red-500 text-red-500'
+                        : "border-none px-2"
                       }
-                        w-[70px] md:w-[100px] border-0 focus:outline-0`}
+                        w-[70px] md:w-[100px] focus:outline-0`}
                   />
                 </td>
               ))}
             </tr>
           ))}
+          <tr className='bg-blue-300 text-start'>
+            {array.map((item, index) => (
+              <td key={index} className='w-[70px] md:w-[100px] text-sm md:text-md border-r-[1px] px-2 text-gray-800 font-medium'>
+                {jamiNatiyja[index].toString().slice(0,9)}
+              </td>
+            ))}
+          </tr>
         </tbody>
   )
 }

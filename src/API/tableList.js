@@ -47,4 +47,10 @@ export const list = [
     tch: 100,
     qqal: 15,
   },
+  {
+    id: 9,
+    ych: 0,
+    tch: 0,
+    qqal: 100,
+  },
 ];

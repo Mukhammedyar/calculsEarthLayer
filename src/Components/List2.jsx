@@ -5,6 +5,7 @@ import TableInput from './List2Table/tableInput/TableInput'
 
 
 function List2() {
+  
   return (
     <div className='px-10 py-10'>
       <TableConst />

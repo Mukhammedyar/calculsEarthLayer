@@ -45,9 +45,9 @@ export default function TableLists() {
         {/* 1-qatar */}
         {listData.map(item => (
            <tr key={item.id} className='border-b'>
-            <th className='border-r py-1'>{item.id}</th>
-            <td className='border-r py-1'>{item.ych}</td>
-            <td className='border-r py-1'>{item.tch}</td>
+            <th className='border-r py-1'>{item.id ===9 ? "Oratasha" : item.id}</th>
+            <td className='border-r py-1'>{item.id ===9 ? "" : item.ych}</td>
+            <td className='border-r py-1'>{item.id ===9 ? "" : item.tch}</td>
             <td className='border-r py-1' colSpan={2}>{item.qqal}</td>
         </tr> 
         ))}

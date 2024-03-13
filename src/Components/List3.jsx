@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { jamiPercentSuccess, valueSetStart, valueSetSuccess } from '../Reducer/ValuesList1';
 import TableNatija from './TableList1/tableNatija';
 import List3Input from './TableList1/List3Input';
+import TableLists from './TableList1/tableLists';
 
 function List3() {
   const dispatch = useDispatch()
@@ -12,9 +13,15 @@ function List3() {
   const [jadvalQiymatlari, setJadvalQiymatlari] = useState(Array(8).fill(Array(8).fill('')));
 
   const handleChange = (row, col, event) => {
+    dispatch(valueSetStart())
     const newJadvalQiymatlari = jadvalQiymatlari.map(row => [...row]);
-    newJadvalQiymatlari[row][col] = event.target.value;
-    setJadvalQiymatlari(newJadvalQiymatlari);
+    try {
+      newJadvalQiymatlari[row][col] = event.target.value;
+      setJadvalQiymatlari(newJadvalQiymatlari);
+      dispatch(valueSetSuccess([...newJadvalQiymatlari]))
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const saveAllValues = async () => {
@@ -27,8 +34,8 @@ function List3() {
   };
 
   return (
-    <div className='mt-10 flex items-start flex-col px-10 gap-5 h-[100vh]'>
-      <div className='flex justify-center items-start gap-2 overflow-x-scroll min-h-[400px]'>
+    <div className='mt-10 flex items-start flex-col px-10 gap-5 min-h-[100vh]'>
+      <div className='flex justify-center items-start gap-2 overflow-x-scroll min-h-[320px]'>
         <table className='shadow-lg border bg-white text-center text-xs md:text-sm font-light dark:border-neutral-500 rounded-lg'>
           <TableInputHead/>
           <List3Input jadvalQiymatlari={jadvalQiymatlari} handleChange={handleChange} />
@@ -50,7 +57,7 @@ function List3() {
                   <td
                     scope="col"
                     className="border-b border-neutral-300">
-                    {item == NaN ? '0' : item?.toString()?.slice(0,3)}
+                    {item == NaN ? '0' : item?.toString()?.slice(0,7)}
                   </td>
                 </tr>
             ))}
@@ -58,9 +65,16 @@ function List3() {
         </table>
       </div>
       <button onClick={saveAllValues} className='bg-blue-600 px-2 rounded-md text-white items-start'>Hisoblash</button>
-      
-
-      <TableNatija/>
+      <div className='flex gap-2 mb-5'>
+        <div>
+          Ozgarmas Qiymatlar 
+          <TableLists/>
+        </div>
+        <div>
+          Natiyja
+          <TableNatija/>
+        </div>
+      </div>
     </div>
   );
 }

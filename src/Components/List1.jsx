@@ -1,9 +1,7 @@
 import React from 'react'
 import table1 from '../assets/table1.jpg'
-import TableInput from './TableList1/TableInput'
 import TableLists from './TableList1/tableLists'
 import TableNatija from './TableList1/tableNatija'
-import Button from '../UI/button'
 
 function List1() {
   return (
@@ -11,7 +9,7 @@ function List1() {
       <div className='flex mt-10 justify-center items-start'>
         <div>
           <p className="text-2xl">Qiymatlarni kiritish</p>
-          <TableInput />
+          {/* <TableInput /> */}
         </div>
       </div>
       <div className='flex my-10 justify-center gap-16 items-center'>

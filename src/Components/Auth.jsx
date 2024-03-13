@@ -27,14 +27,14 @@ function Auth() {
             <Input 
                 placeholder={"login..."}
                 type={"text"}
-                className={"text-gray-800 focus:ring-2"}
+                className={"text-gray-800 focus:ring-2 w-full"}
                 value={value.login}
                 onchange={(e)=> setValue({...value,login: e.target.value})}
                 />
             <Input 
                 placeholder={"password..."}
                 type={"password"}
-                className={"text-gray-800 focus:ring-2 "}
+                className={"text-gray-800 focus:ring-2 w-full"}
                 value={value.password}
                 onchange={(e)=> setValue({...value,password: e.target.value})}
               />
