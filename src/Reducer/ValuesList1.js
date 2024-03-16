@@ -11,8 +11,8 @@ const initialState = {
   error: null,
 };
 
-export const valueSlice = createSlice({
-  name: "valuse",
+export const value1Slice = createSlice({
+  name: "values1",
   initialState,
   reducers: {
     valueSetStart: (state) => {
@@ -61,5 +61,5 @@ export const {
   calculsStart,
   jamiPercentSuccess,
   jamiNatiyjatSuccess,
-} = valueSlice.actions;
-export default valueSlice.reducer;
+} = value1Slice.actions;
+export default value1Slice.reducer;

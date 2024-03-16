@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import Button from '../UI/button'
+import Button from '../../UI/button'
 import 'boxicons'
 import { useDispatch } from 'react-redux'
-import { logOutUser } from '../Reducer/auth'
+import { logOutUser } from '../../Reducer/auth'
 
 
 function Navbar() {

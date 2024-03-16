@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { list } from '../../API/tableList'
+import { qqal } from '../../API/tableList2'
 import { useDispatch, useSelector } from 'react-redux'
 import { calculsStart, fizikLoySuccess, fizikQumSuccess, jamiNatiyjatSuccess, jamiPercentSuccess } from '../../Reducer/ValuesList1'
 
 export default function TableNatija() {
-    const [listData, setListData] = useState(list)
+    const [listData, setListData] = useState(qqal)
     const dispatch = useDispatch()
     const { values,fizikQum,fizikLoy, jamiNatiyja } = useSelector(state => state.valuesList1)
 
@@ -22,12 +22,12 @@ export default function TableNatija() {
         try {
             let sum1 = 0,sum2 = 0,sum3 = 0,sum4 = 0,sum5 = 0,XajmOgirligiJami = 0
             
-            values.map((row, index) => {
+            values.map((row,index ) => {
                 // 1 - 4 ustunlar yigindisi 
                 for (let colIndex = 0; colIndex < 4; colIndex++) {
                     sum1 += parseFloat(values[index][colIndex]);
                     fizikQumArray[index] = sum1
-                }
+                }index
                 sum1 = 0
                 // 5 - 8 ustunlar yigindisi 
                 for (let colIndex = 4; colIndex < 7; colIndex++) {
@@ -45,6 +45,7 @@ export default function TableNatija() {
                 jamiQiymatlar[7] = XajmOgirligiJami / parseFloat(listData[8].qqal)
                 XajmOgirligiJami = 0
                 sum3 = 0; sum4 = 0;
+                
                 for (let i = 0; i < 8; i++) {
                     sum4 += parseFloat(values[i][7]) * parseFloat(listData[i].qqal) * fizikQumArray[i]      
                     sum5 += parseFloat(values[i][7]) * parseFloat(listData[i].qqal) * fizikLoyArray[i]
@@ -55,11 +56,10 @@ export default function TableNatija() {
                 jamiQiymatlar[9] = sum5
                 sum4 = 0; sum5 = 0
             }) 
-            console.log(jamiQiymatlar);
             dispatch(jamiPercentSuccess([...jamiPerArray]))
             dispatch(fizikQumSuccess([...fizikQumArray]))
             dispatch(fizikLoySuccess([...fizikLoyArray]))
-            dispatch(jamiNatiyjatSuccess([...jamiQiymatlar]))
+            dispatch(jamiNatiyjatSuccess(jamiQiymatlar))
         } catch (error) {
             console.log(error);
         }
@@ -67,25 +67,25 @@ export default function TableNatija() {
 
   return (
     <table
-        className="shadow-lg border bg-white text-center text-xs md:text-sm font-light dark:border-neutral-500 rounded-lg">
-        <thead className="border-b border-gray-300 font-medium dark:border-neutral-500 rounded">
+        className="shadow-lg border bg-white text-center font-light dark:border-neutral-500 rounded-lg">
+        <thead className="border-b text-xs border-gray-300 font-medium dark:border-neutral-500 rounded">
             <tr className='bg-gray-200 border-b border-neutral-300 font-normal'>
                 <th
                     scope="col"
                     rowSpan={2}
-                    className="border-r px-2 py-5 border-neutral-300">
+                    className="border-r px-2 py-6 border-neutral-300">
                     Физик қум
                 </th>
                 <th
                     scope="col"
                     rowSpan={2}
-                    className="border-r px-2 py-5 border-neutral-300">
+                    className="border-r px-2 py-6 border-neutral-300">
                     Физик лой
                 </th>
                 <th
                     scope="col"
                     rowSpan={2}
-                    className="border-r px-2 py-5 border-neutral-300">
+                    className="border-r px-2 py-6 border-neutral-300">
                     Механик таркиб
                 </th>
             </tr>
@@ -94,10 +94,10 @@ export default function TableNatija() {
         {/* 1-qatar */}
         {listData.map((item ,index)=> (
             index < 8 ? 
-            <tr key={ item.id} className='border-b'>
-                <td className='border-r p-1'>{fizikQum[index]?.toString().slice(0,5)}</td>
-                <td className='border-r p-1'>{fizikLoy[index]?.toString().slice(0,7)}</td>
-                <td className='border-r p-1'>{fizikLoy[index] <= 10 ? "Қум"
+            <tr key={ item.id} className='border-b text-xs font-medium'>
+                <td className='border-r py-[2px]'>{fizikQum[index]?.toString().slice(0,5)}</td>
+                <td className='border-r py-[2px]'>{fizikLoy[index]?.toString().slice(0,7)}</td>
+                <td className='border-r py-[2px]'>{fizikLoy[index] <= 10 ? "Қум"
                 : fizikLoy[index] >= 10 && fizikLoy[index] <= 20 ? "Kumloq"
                 : fizikLoy[index] >= 20 && fizikLoy[index] <= 30 ? "Yengil Qumloq" 
                 : fizikLoy[index] >= 30 && fizikLoy[index] <= 45 ? "Orta Qumloq" 
@@ -107,10 +107,10 @@ export default function TableNatija() {
             </tr> 
             : ""
         ))}
-        <tr>
-        <td className='border-r p-1'>{jamiNatiyja[8]?.toString().slice(0,7)}</td>
-            <td className='border-r p-1'>{jamiNatiyja[9]?.toString().slice(0,7)}</td>
-            <td className='border-r p-1'>{jamiNatiyja[9] <= 10 ? "Қум"
+        <tr className='text-xs'>
+        <td className='border-r'>{jamiNatiyja[8]?.toString().slice(0,7)}</td>
+            <td className='border-r py-[2px]'>{jamiNatiyja[9]?.toString().slice(0,7)}</td>
+            <td className='border-r py-[2px]'>{jamiNatiyja[9] <= 10 ? "Қум"
             : jamiNatiyja[9] >= 10 && jamiNatiyja[9] <= 20 ? "Kumloq"
             : jamiNatiyja[9] >= 20 && jamiNatiyja[9] <= 30 ? "Yengil Qumloq" 
             : jamiNatiyja[9] >= 30 && jamiNatiyja[9] <= 45 ? "Orta Qumloq" 

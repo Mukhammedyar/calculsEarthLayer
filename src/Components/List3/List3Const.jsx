@@ -1,8 +1,24 @@
 import React, { useState } from 'react'
-import {list} from '../../API/tableList'
+import { list1 } from '../../API/tableList'
+import { plo } from '../../API/tableList2'
+import { useDispatch, useSelector } from 'react-redux'
+import { tigizQoldiqJamiSuccess } from '../../Reducer/List3Values'
 
-export default function TableConst() {
-    const [listData, setListData]=useState(list)
+
+export default function List3Const() {
+    const dispatch = useDispatch()
+    const [listData, setListData] = useState(list1)
+    const [ploData, setPloData] = useState(plo)
+    const { tigizQoldiq } = useSelector(state => state.valuesList3)
+    
+    const jamiTigizQoldiq = () => {
+        let sum = 0
+        tigizQoldiq.map(i => {
+            sum += i
+        })
+        dispatch(tigizQoldiqJamiSuccess(sum))
+        return sum
+    }
 
   return (
     <table
@@ -12,7 +28,7 @@ export default function TableConst() {
                 <th
                     rowSpan={2}
                     scope="col"
-                    className="border-r py-2  px-3 border-neutral-300 ">
+                    className="border-r py-2 w-[50px] border-neutral-300 ">
                     Кесмa N0
                 </th>
                 <th
@@ -44,12 +60,19 @@ export default function TableConst() {
         </thead>
         <tbody>
         {/* 1-qatar */}
-        {listData.map(item => (
-           <tr className='border-b'>
-            <th className='border-r py-1'>{item.id}</th>
-            <td className='border-r py-1'>{item.ych}</td>
-            <td className='border-r py-1'>{item.tch}</td>
-            <td className='border-r py-1' colSpan={2}>{item.qqal}</td>
+        {listData.map((item, index) => (
+            <tr key={item.id} className='border-b'>
+            <th className='border-r py-[10px] font-medium w-auto'>{item.id}</th>
+            <td className='border-r py-[10px] font-medium'>{item.ych}</td>
+            <td className='border-r py-[10px] font-medium'>{item.tch}</td>
+            <td className='border-r w-[80px] font-medium' colSpan={2}>
+                {ploData[index]?.plo}
+                    {index == 8
+                        ? jamiTigizQoldiq()
+                        : <td className='bg-slate-200 text-blue-700 w-[100px] md:w-[120px] text-start px-2 font-medium'>
+                       { tigizQoldiq == "" ? "null" : tigizQoldiq[index]?.toFixed(3)}
+                    </td>}
+            </td>
         </tr> 
         ))}
     </tbody>

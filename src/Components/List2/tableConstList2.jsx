@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
-import { list } from '../../API/tableList'
-export default function TableLists() {
-    const [listData, setListData] = useState(list)
+import { list1 } from '../../API/tableList'
+import { plo } from '../../API/tableList2'
 
-    return (
+export default function TableConst() {
+    const [listData, setListData]=useState(list1)
+    const [ploData, setPloData]=useState(plo)
+  return (
     <table
         className="shadow-lg border bg-white text-center text-xs md:text-sm font-light dark:border-neutral-500 rounded-lg">
         <thead className="border-b border-gray-300 font-medium dark:border-neutral-500 rounded">
@@ -11,21 +13,21 @@ export default function TableLists() {
                 <th
                     rowSpan={2}
                     scope="col"
-                    className="border-r py-2  px-3 border-neutral-300 ">
+                    className="border-r py-2 w-[50px] border-neutral-300 ">
                     Кесмa N0
                 </th>
                 <th
                     colSpan={2}
                     scope="col"
                     className="border-r  py-2 px-2 border-neutral-300">
-                    Генетик қатлам.см
+                    Чуқурлик.см
                 </th>
                 <th
                     colSpan={2}
                     rowSpan={2}
                     scope="col"
                     className="border-r  py-2 px-2 border-neutral-300">
-                    Қатлам қалыңлығы
+                    Тығыз қалдық 
                 </th>
             </tr>
             <tr className='bg-gray-200'>
@@ -43,12 +45,12 @@ export default function TableLists() {
         </thead>
         <tbody>
         {/* 1-qatar */}
-        {listData.map(item => (
-           <tr key={item.id} className='border-b'>
-            <th className='border-r py-1'>{item.id ===9 ? "Oratasha" : item.id}</th>
-            <td className='border-r py-1'>{item.id ===9 ? "" : item.ych}</td>
-            <td className='border-r py-1'>{item.id ===9 ? "" : item.tch}</td>
-            <td className='border-r py-1' colSpan={2}>{item.qqal}</td>
+        {listData.map((item, index) => (
+            <tr key={item.id} className='border-b'>
+            <th className='border-r py-[14px] w-auto'>{item.id}</th>
+            <td className='border-r py-[14px]'>{item.ych}</td>
+            <td className='border-r py-[14px]'>{item.tch}</td>
+            <td className='border-r py-[14px]' colSpan={2}>{ploData[index]?.plo}</td>
         </tr> 
         ))}
     </tbody>

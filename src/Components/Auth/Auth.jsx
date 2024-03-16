@@ -1,20 +1,23 @@
 import React, { useState } from 'react'
-import Input from '../UI/input'
-import { useDispatch } from 'react-redux'
-import { signUserStart, signUserSuccess } from '../Reducer/auth'
+import Input from '../../UI/input'
+import { useDispatch, useSelector } from 'react-redux'
+import { signUserStart, signUserSuccess } from '../../Reducer/auth'
 import { useNavigate } from 'react-router-dom'
-import Button from '../UI/button'
+import Button from '../../UI/button'
 
 function Auth() {
     const [value,setValue]=useState({login: "", password: ""})
     const dispatch = useDispatch()
-    const navigate= useNavigate()
+  const navigate = useNavigate()
+  const {loggedIn}=useSelector(state => state.auth)
 
     const signInHandler =async (e) => {
         e.preventDefault()
         dispatch(signUserStart())
         try {
-            dispatch(signUserSuccess())
+          value.login === "admin" && value.password === "admin1234"
+            ? dispatch(signUserSuccess())
+            : setValue({login: "", password: ""})
         } catch (error) {
             console.log(error);
         }
@@ -39,8 +42,9 @@ function Auth() {
                 onchange={(e)=> setValue({...value,password: e.target.value})}
               />
         <Button
-          className={"bg-blue-500 text-white font-medium rounded-md mt-4"}
+          className={"bg-blue-500 text-white disabled:bg-blue-300 font-medium rounded-md mt-4"}
           onClick={signInHandler}
+          disabled= {value.password == "" || value.password=="" ? true : false}
         >
           SignIn
         </Button>

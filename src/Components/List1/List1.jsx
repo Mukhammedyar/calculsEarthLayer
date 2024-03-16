@@ -1,17 +1,22 @@
 import React, { useState } from 'react'
-import Input from '../UI/input'
-import TableInputHead from './TableList1/tableInputHead';
+import TableInputHead from './tableInputHead';
 import { useDispatch, useSelector } from 'react-redux';
-import { jamiPercentSuccess, valueSetStart, valueSetSuccess } from '../Reducer/ValuesList1';
-import TableNatija from './TableList1/tableNatija';
-import List3Input from './TableList1/List3Input';
-import TableLists from './TableList1/tableLists';
+import {valueSetStart, valueSetSuccess } from '../../Reducer/ValuesList1';
+import TableNatija from './tableNatija';
+import List3Input from './List3Input';
+import TableLists from './tableLists';
+import Jami from './Jami';
+import { qqal } from '../../API/tableList2'
+import { plo } from '../../API/tableList2'
+import { tigizQoldiqSuccess } from '../../Reducer/List3Values';
+
 
 function List3() {
   const dispatch = useDispatch()
-  const {isLoading, jamiPercent}=useSelector(state => state.valuesList1)
   const [jadvalQiymatlari, setJadvalQiymatlari] = useState(Array(8).fill(Array(8).fill('')));
-
+  const [ploArray, setPloArray] = useState([])
+  const {values}= useSelector(state => state.valuesList1)
+  
   const handleChange = (row, col, event) => {
     dispatch(valueSetStart())
     const newJadvalQiymatlari = jadvalQiymatlari.map(row => [...row]);
@@ -23,11 +28,21 @@ function List3() {
       console.log(error);
     }
   };
+  const handlePloSetArray = () => {
+    const arr = []
+    values.map((item, index) => {
+        arr[index]=parseFloat(qqal[index]?.qqal) * parseFloat(plo[index]?.plo) * parseFloat(values[index][7])
+    })
+    dispatch(tigizQoldiqSuccess([...arr]))
+  }
 
   const saveAllValues = async () => {
     dispatch(valueSetStart())
     try {
       dispatch(valueSetSuccess([...jadvalQiymatlari]))
+      handlePloSetArray()
+      dispatch(valueSetSuccess(values))
+
     } catch (error) {
       console.log(error);
     }
@@ -35,47 +50,29 @@ function List3() {
 
   return (
     <div className='mt-10 flex items-start flex-col px-10 gap-5 min-h-[100vh]'>
-      <div className='flex justify-center items-start gap-2 overflow-x-scroll min-h-[320px]'>
-        <table className='shadow-lg border bg-white text-center text-xs md:text-sm font-light dark:border-neutral-500 rounded-lg'>
-          <TableInputHead/>
-          <List3Input jadvalQiymatlari={jadvalQiymatlari} handleChange={handleChange} />
-        </table>
-        <table className='shadow-lg w-[100px] md:min-w-[100px] border bg-white text-center text-xs md:text-sm font-light dark:border-neutral-500 rounded-lg'>
-          <thead className="border-b border-gray-300 font-medium dark:border-neutral-500 rounded">
-              <tr className='bg-gray-200 border-b border-neutral-300 font-normal'>
-                <th
-                    rowSpan={2}
-                    scope="col"
-                    className="border-r py-8 md:py-11 border-neutral-300">
-                    Жами %
-                </th>
-              </tr>
-          </thead>
-          <tbody> 
-            {!isLoading && jamiPercent.map((item, index) => (
-              <tr key={index} className='bg-white border-b border-neutral-300 font-normal'>
-                  <td
-                    scope="col"
-                    className="border-b border-neutral-300">
-                    {item == NaN ? '0' : item?.toString()?.slice(0,7)}
-                  </td>
-                </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+        <div className="flex gap-2 flex-wrap md:flex-nowrap items-start">
+          <div>
+            Ozgarmas Qiymatlar 
+            <TableLists/>
+          </div>
+          <div>
+            Qiymat Kiritish
+            <table className='shadow-lg border bg-white text-center text-xs md:text-sm font-light dark:border-neutral-500 rounded-lg'>
+              <TableInputHead/>
+              <List3Input jadvalQiymatlari={jadvalQiymatlari} handleChange={handleChange} />
+            </table>
+          </div>
+          <div>
+            <p>Jami</p>
+            <Jami/>
+          </div>
+          <div>
+            Natiyja
+            <TableNatija/>
+          </div>
+        </div>
       <button onClick={saveAllValues} className='bg-blue-600 px-2 rounded-md text-white items-start'>Hisoblash</button>
-      <div className='flex gap-2 mb-5'>
-        <div>
-          Ozgarmas Qiymatlar 
-          <TableLists/>
-        </div>
-        <div>
-          Natiyja
-          <TableNatija/>
-        </div>
       </div>
-    </div>
   );
 }
 
