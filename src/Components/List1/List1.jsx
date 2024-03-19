@@ -11,6 +11,7 @@ import { plo } from '../../API/tableList2'
 import { tigizQoldiqSuccess } from '../../Reducer/List3Values';
 
 
+
 function List3() {
   const dispatch = useDispatch()
   const [jadvalQiymatlari, setJadvalQiymatlari] = useState(Array(8).fill(Array(8).fill('')));
@@ -42,7 +43,6 @@ function List3() {
       dispatch(valueSetSuccess([...jadvalQiymatlari]))
       handlePloSetArray()
       dispatch(valueSetSuccess(values))
-
     } catch (error) {
       console.log(error);
     }

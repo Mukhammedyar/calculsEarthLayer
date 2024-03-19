@@ -35,9 +35,9 @@ export default function List2Result() {
         {listData.map((item ,index)=> (
             index < 8 ? 
             <tr key={ item.id} className='border-b'>
-                <td className='border-r py-[4px]'>{tip[index]}</td>
-                <td className='border-r py-[4px]'>{tipPer[index]}</td>
-                <td className='border-r py-[4px]'>{"NaN"}</td>
+                <td className='border-r h-[48px] py-[2px]'>{tip[index]}</td>
+                <td className='border-r h-[48px] py-[2px]'>{tipPer[index]}</td>
+                <td className='border-r h-[48px] py-[2px]'>{"NaN"}</td>
             </tr> 
             : ""
         ))}

@@ -47,10 +47,10 @@ export default function TableConst() {
         {/* 1-qatar */}
         {listData.map((item, index) => (
             <tr key={item.id} className='border-b'>
-            <th className='border-r py-[14px] w-auto'>{item.id}</th>
-            <td className='border-r py-[14px]'>{item.ych}</td>
-            <td className='border-r py-[14px]'>{item.tch}</td>
-            <td className='border-r py-[14px]' colSpan={2}>{ploData[index]?.plo}</td>
+            <th className='border-r py-[11px] w-auto'>{item.id}</th>
+            <td className='border-r py-[11px]'>{item.ych}</td>
+            <td className='border-r py-[11px]'>{item.tch}</td>
+            <td className='border-r py-[11px]' colSpan={2}>{ploData[index]?.plo}</td>
         </tr> 
         ))}
     </tbody>

@@ -62,10 +62,10 @@ export default function List3Const() {
         {/* 1-qatar */}
         {listData.map((item, index) => (
             <tr key={item.id} className='border-b'>
-            <th className='border-r py-[10px] font-medium w-auto'>{item.id}</th>
-            <td className='border-r py-[10px] font-medium'>{item.ych}</td>
-            <td className='border-r py-[10px] font-medium'>{item.tch}</td>
-            <td className='border-r w-[80px] font-medium' colSpan={2}>
+            <th className='border-r h-[40px] py-[3px] font-medium w-auto'>{item.id}</th>
+            <td className='border-r h-[40px] py-[3px] font-medium'>{item.ych}</td>
+            <td className='border-r h-[40px] py-[3px] font-medium'>{item.tch}</td>
+            <td className='border-r h-[40px] w-[80px] font-medium' colSpan={2}>
                 {ploData[index]?.plo}
                     {index == 8
                         ? jamiTigizQoldiq()

@@ -39,9 +39,9 @@ export default function List3Result() {
             {listData.map((item ,index)=> (
                 index < 8 ? 
                 <tr key={ item.id} className='border-b font-medium text-xs'>
-                    <td className='border-r py-[6px]'>{tip[index]}</td>
-                    <td className='border-r py-[6px]'>{tipPerList3[index]}</td>
-                    <td className='border-r py-[6px]'>{"NaN"}</td>
+                    <td className='border-r h-[45px] py-[2px]'>{tip[index]}</td>
+                    <td className='border-r h-[45px] py-[2px]'>{tipPerList3[index]}</td>
+                    <td className='border-r h-[45px] py-[2px]'>{"NaN"}</td>
                 </tr> 
                 : ""
             ))}
