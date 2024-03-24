@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 
 export default function List3Input({ jadvalQiymatlari, handleChange }) {
   const { valuesList2  } = useSelector(state => state.valuesList2)
-  const { valuesResult  } = useSelector(state => state.valuesList3)
+  const { valuesResult, jamiQiymatlar  } = useSelector(state => state.valuesList3)
   return (
     <table
         className="mb-4 shadow-lg border bg-white text-center text-xs md:text-sm font-light dark:border-neutral-500 rounded-lg">
@@ -17,7 +17,7 @@ export default function List3Input({ jadvalQiymatlari, handleChange }) {
                         <input
                             type={"number"}
                             step={1}
-                            value={valuesList2 == "" ? qiymat : valuesList2[rowIndex][colIndex]}
+                            value={valuesList2 == "" ? qiymat.slice(0,5) : valuesList2[rowIndex][colIndex]}
                             placeholder={"0"} 
                             onChange={(event) => handleChange(rowIndex, colIndex, event)}
                             className={`
@@ -27,12 +27,19 @@ export default function List3Input({ jadvalQiymatlari, handleChange }) {
                             } py-[3px] max-w-[100px] md:w-[80px] lg:w-[80px] font-medium px-1 mx-0 focus:outline-0`}
                         />
                         <td className='bg-slate-200 py-[2px] text-blue-800 w-[100px] md:w-[80px] text-start px-1 font-medium'>
-                            {valuesResult == "" ? "0" : valuesResult[rowIndex][colIndex]}
+                            {valuesResult == "" ? "0" : valuesResult[rowIndex][colIndex].toString().slice(0.5)}
                         </td>
                     </td>
                 ))}
                 </tr>
             ))}
+              <tr className='border-b border-neutral-300 text-xs h-[20px]'>
+                {jamiQiymatlar.map((qiymat, index) => (
+                    <td key={index} className='w-[80px] border-r border-neutral-30 font-medium bg-blue-300 text-start px-2 text-black'>
+                        {qiymat}
+                    </td>
+                ))}
+                </tr>
         </tbody>
     </table>
   )

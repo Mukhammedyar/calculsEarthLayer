@@ -22,26 +22,26 @@ export default function List3Const() {
 
   return (
     <table
-        className="shadow-lg border bg-white text-center text-xs md:text-sm font-light dark:border-neutral-500 rounded-lg">
-        <thead className="border-b border-gray-300 font-medium dark:border-neutral-500 rounded">
+        className="shadow-lg border bg-white text-center text-xs font-light dark:border-neutral-500 rounded-lg">
+        <thead className="border-b md:text-sm h-[80px] border-gray-300 font-medium dark:border-neutral-500 rounded">
             <tr className='bg-gray-200 border-b border-neutral-300 font-normal'>
                 <th
                     rowSpan={2}
                     scope="col"
-                    className="border-r py-2 w-[50px] border-neutral-300 ">
+                    className="border-r w-[50px] border-neutral-300 ">
                     Кесмa N0
                 </th>
                 <th
                     colSpan={2}
                     scope="col"
-                    className="border-r  py-2 px-2 border-neutral-300">
+                    className="border-r px-2 border-neutral-300">
                     Чуқурлик.см
                 </th>
                 <th
                     colSpan={2}
                     rowSpan={2}
                     scope="col"
-                    className="border-r  py-2 px-2 border-neutral-300">
+                    className="border-r px-2 border-neutral-300">
                     Тығыз қалдық 
                 </th>
             </tr>
@@ -58,14 +58,14 @@ export default function List3Const() {
                 </th>
         </tr>
         </thead>
-        <tbody>
+        <tbody className='h-[375px] '>
         {/* 1-qatar */}
         {listData.map((item, index) => (
-            <tr key={item.id} className='border-b'>
-            <th className='border-r h-[40px] py-[3px] font-medium w-auto'>{item.id}</th>
-            <td className='border-r h-[40px] py-[3px] font-medium'>{item.ych}</td>
-            <td className='border-r h-[40px] py-[3px] font-medium'>{item.tch}</td>
-            <td className='border-r h-[40px] w-[80px] font-medium' colSpan={2}>
+            <tr key={item.id} className={`border-b ${index == 8 ? "bg-blue-300": ""}`}>
+            <th className='border-r font-medium w-auto'>{index == 8 ? "" : item.id}</th>
+            <td className='border-r font-medium'>{index == 8 ? "" : item.ych}</td>
+            <td className='border-r font-medium'>{index == 8 ? "" : item.tch}</td>
+            <td className='border-r w-[80px] font-medium' colSpan={2}>
                 {ploData[index]?.plo}
                     {index == 8
                         ? jamiTigizQoldiq()

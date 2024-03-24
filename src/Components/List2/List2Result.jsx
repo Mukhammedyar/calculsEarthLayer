@@ -7,37 +7,37 @@ export default function List2Result() {
     const {tip, tipPer} = useSelector(state => state.valuesList2)
   return (
     <table
-        className="shadow-lg border bg-white text-center text-xs md:text-sm font-light dark:border-neutral-500 rounded-lg">
-        <thead className="border-b border-gray-300 font-medium dark:border-neutral-500 rounded">
+        className="shadow-lg border bg-white text-center text-xs font-light dark:border-neutral-500 rounded-lg">
+        <thead className="border-b h-[70px] border-gray-300 font-medium dark:border-neutral-500 rounded">
             <tr className='bg-gray-200 border-b border-neutral-300 font-normal'>
                 <th
                     scope="col"
                     rowSpan={2}
-                    className="border-r px-2 py-5 border-neutral-300">
+                    className="border-r px-2 border-neutral-300">
                     Тип
                 </th>
                 <th
                     scope="col"
                     rowSpan={2}
-                    className="border-r px-2 py-5 border-neutral-300">
+                    className="border-r px-2 border-neutral-300">
                     Тип (N%)
                 </th>
                 <th
                     scope="col"
                     rowSpan={2}
-                    className="border-r px-2 py-5 border-neutral-300">
+                    className="border-r px-2 border-neutral-300">
                     Степень засоления
                 </th>
             </tr>
         </thead>
-        <tbody>
+        <tbody className='h-[325px]'>
         {/* 1-qatar */}
         {listData.map((item ,index)=> (
             index < 8 ? 
-            <tr key={ item.id} className='border-b'>
-                <td className='border-r h-[48px] py-[2px]'>{tip[index]}</td>
-                <td className='border-r h-[48px] py-[2px]'>{tipPer[index]}</td>
-                <td className='border-r h-[48px] py-[2px]'>{"NaN"}</td>
+            <tr key={ item.id} className='border-b font-normal'>
+                <td className='border-r px-2'>{tip[index]}</td>
+                <td className='border-r'>{tipPer[index]}</td>
+                <td className='border-r'>{"NaN"}</td>
             </tr> 
             : ""
         ))}

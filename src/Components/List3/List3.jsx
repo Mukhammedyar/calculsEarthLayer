@@ -7,9 +7,9 @@ import List3Result from './List3Result';
 import { useSelector } from 'react-redux'
 import { qqal } from '../../API/tableList2'
 import { list3 } from '../../API/tableList'
-import { tipPerList3Success, tipSuccess, valuesResultSuccess } from '../../Reducer/List3Values';
+import { jamiQiymatlarSuccess, tipPerList3Success, tipSuccess, valuesResultSuccess } from '../../Reducer/List3Values';
 
-function List1() {
+function List3() {
   const [jadvalQiymatlari, setJadvalQiymatlari] = useState(Array(8).fill(Array(6).fill('')));
   const dispatch = useDispatch()
   const { valuesList2 } = useSelector(state => state.valuesList2)
@@ -33,10 +33,22 @@ function List1() {
   function CalculsResultsList3() {
       array = array?.map((row, rowIndex) => {
           return row.map((col, colIndex) => {
-             return parseFloat(valuesList2[rowIndex][colIndex]) * parseFloat(qqal[colIndex].qqal) * parseFloat(values[rowIndex][7])
+            return parseFloat(valuesList2[rowIndex][colIndex]) * parseFloat(qqal[colIndex].qqal) * parseFloat(values[rowIndex][7])
           })
       })
      return dispatch(valuesResultSuccess([...array]))
+  }
+  function CalculsResultsValues() {
+    var sum = 0
+    var jamiQiymatlarList3 = []
+    for (let i = 0; i < 6; i++){
+      for (let j = 0; j < 8; j++){
+        sum += parseFloat(valuesList2[j][i])
+      }
+      jamiQiymatlarList3[i] = sum
+      sum=0
+    }
+    dispatch(jamiQiymatlarSuccess(jamiQiymatlarList3));
   }
     
   const typeCalc = () => {
@@ -66,11 +78,12 @@ function List1() {
     dispatch(tipSuccess(typeArray));
     dispatch(tipPerList3Success(typePerArray));
     CalculsResultsList3()
+    CalculsResultsValues()
   }
 
   return (
-    <div className='min-h-[100vh] px-10 md:px-10 flex justify-center items-end gap-5 flex-col'>
-      <div className='flex mt-10 justify-center items-start gap-2'>
+    <div className='min-h-[100vh] px-10 md:px-20'>
+      <div className='flex mt-5 justify-center items-start gap-2'>
         <List3Const/>
         <List3Input jadvalQiymatlari={jadvalQiymatlari} handleChange={handleChange} />
         <List3Result/>
@@ -80,4 +93,4 @@ function List1() {
   )
 }
 
-export default List1
+export default List3

@@ -16,11 +16,11 @@ export default function TableNatija() {
         fizikQumArray.length = 8
         fizikLoyArray.length = 8
         mexanikTarkibArray.length = 8
-        const jamiPerArray = Array(8).fill(0)
+        const jamiPerArray = Array(9).fill(0)
         const jamiQiymatlar= Array(9).fill(0)
         dispatch(calculsStart())
         try {
-            let sum1 = 0,sum2 = 0,sum3 = 0,sum4 = 0,sum5 = 0,XajmOgirligiJami = 0
+            let sum1 = 0,sum2 = 0,sum3 = 0,sum4 = 0,sum5 = 0,XajmOgirligiJami = 0,sum6 = 0
             
             values.map((row,index ) => {
                 // 1 - 4 ustunlar yigindisi 
@@ -49,12 +49,15 @@ export default function TableNatija() {
                 for (let i = 0; i < 8; i++) {
                     sum4 += parseFloat(values[i][7]) * parseFloat(listData[i].qqal) * fizikQumArray[i]      
                     sum5 += parseFloat(values[i][7]) * parseFloat(listData[i].qqal) * fizikLoyArray[i]
+                   
+                    sum6 += jamiQiymatlar[i]
                 }
                 sum4 /= parseFloat(listData[8].qqal) * parseFloat(values[7][7])
                 sum5 /= parseFloat(listData[8].qqal) * parseFloat(values[7][7])
                 jamiQiymatlar[8] = sum4
                 jamiQiymatlar[9] = sum5
-                sum4 = 0; sum5 = 0
+                jamiPerArray[8]= sum6
+                sum4 = 0; sum5 = 0; sum6 = 0
             }) 
             dispatch(jamiPercentSuccess([...jamiPerArray]))
             dispatch(fizikQumSuccess([...fizikQumArray]))
@@ -68,36 +71,36 @@ export default function TableNatija() {
   return (
     <table
         className="shadow-lg border bg-white text-center font-light dark:border-neutral-500 rounded-lg">
-        <thead className="border-b text-xs border-gray-300 font-medium dark:border-neutral-500 rounded">
+        <thead className="border-b h-[82px] text-xs md:text-sm border-gray-300 font-medium dark:border-neutral-500 rounded">
             <tr className='bg-gray-200 border-b border-neutral-300 font-normal'>
                 <th
                     scope="col"
                     rowSpan={2}
-                    className="border-r px-2 py-6 border-neutral-300">
+                    className="border-r px-2 border-neutral-300">
                     Физик қум
                 </th>
                 <th
                     scope="col"
                     rowSpan={2}
-                    className="border-r px-2 py-6 border-neutral-300">
+                    className="border-r px-2 border-neutral-300">
                     Физик лой
                 </th>
                 <th
                     scope="col"
                     rowSpan={2}
-                    className="border-r px-2 py-6 border-neutral-300">
+                    className="border-r px-2 border-neutral-300">
                     Механик таркиб
                 </th>
             </tr>
         </thead>
-        <tbody>
+        <tbody className='h-[300px] text-xs md:text-sm'>
         {/* 1-qatar */}
         {listData.map((item ,index)=> (
             index < 8 ? 
-            <tr key={ item.id} className='border-b text-xs font-medium'>
-                <td className='border-r py-[2px]'>{fizikQum[index]?.toString().slice(0,5)}</td>
-                <td className='border-r py-[2px]'>{fizikLoy[index]?.toString().slice(0,7)}</td>
-                <td className='border-r py-[2px]'>{fizikLoy[index] <= 10 ? "Қум"
+            <tr key={ item.id} className='border-b font-medium'>
+                <td className='border-r'>{fizikQum[index]?.toString().slice(0,5)}</td>
+                <td className='border-r'>{fizikLoy[index]?.toString().slice(0,7)}</td>
+                <td className='border-r min-w-[100px]'>{fizikLoy[index] <= 10 ? "Қум"
                 : fizikLoy[index] >= 10 && fizikLoy[index] <= 20 ? "Kumloq"
                 : fizikLoy[index] >= 20 && fizikLoy[index] <= 30 ? "Yengil Qumloq" 
                 : fizikLoy[index] >= 30 && fizikLoy[index] <= 45 ? "Orta Qumloq" 
@@ -107,7 +110,7 @@ export default function TableNatija() {
             </tr> 
             : ""
         ))}
-        <tr className='text-xs'>
+        <tr className={'bg-blue-300 h-[33px]'}>
         <td className='border-r'>{jamiNatiyja[8]?.toString().slice(0,7)}</td>
             <td className='border-r py-[2px]'>{jamiNatiyja[9]?.toString().slice(0,7)}</td>
             <td className='border-r py-[2px]'>{jamiNatiyja[9] <= 10 ? "Қум"

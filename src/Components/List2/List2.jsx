@@ -7,7 +7,7 @@ import { natiyjaValuesSuccess, tipPerSuccess, tipSuccess, value2SetStart, value2
 
 
 function List2() {
-  const [jadvalQiymatlari2, setJadvalQiymatlari2] = useState(Array(8).fill(Array(6).fill(0)));
+  const [jadvalQiymatlari2, setJadvalQiymatlari2] = useState(Array(8).fill(Array(6).fill('')));
   const [natijaValues, setNatiyjaValues] = useState(Array(8).fill(Array(6).fill(0)))
   const {valuesList2} = useSelector( state => state.valuesList2)
   const dispatch = useDispatch()
@@ -39,7 +39,7 @@ function List2() {
       row[2] / row[1] > 0 && row[2] / row[1] <= 0.5 ? "Хлоридли" : // CO2 va CI ustunlari bolinmasini orqali hisoblash
       row[2] / row[1] > 0.5 && row[2] / row[1] <= 1 ? "Сульфат-хлоридли":
       row[2] / row[1] > 1 && row[2] / row[1] <= 5 ? "Хлорид-сульфатли":
-      row[2] / row[1] > 5 ? "Сульфатли" : "" 
+      row[2] / row[1] > 5 ? "Сульфатли" : "Сульфатли" 
     ))
     return typeArray
   }
@@ -69,7 +69,7 @@ function List2() {
   };
 
   return (
-    <div className='px-10 my-10 flex flex-col items-start min-h-[100vh]'>
+    <div className='px-10 my-5 flex flex-col items-start min-h-[100vh]'>
       <div className='flex flex-wrap md:flex-nowrap justify-center items-start gap-1'>
         <div>
           <p className="text-xl pb-2">Ozgarmas Qiymatlar</p>
@@ -85,7 +85,6 @@ function List2() {
         </div>
       </div>
       <button onClick={saveAllValues} className='bg-blue-600 px-2 py-1 rounded-md text-white items-start'>Hisoblash</button>
-      {/* <img src={table2} alt="" /> */}
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Button from '../../UI/button'
 import 'boxicons'
 import { useDispatch } from 'react-redux'
@@ -18,12 +18,8 @@ function Navbar() {
 
   return (
     <div className='flex z-10 px-10 md:px-16 items-center justify-between sticky top-0 h-[40px] md:h-[50px] bg-[rgba(255,255,255,.5)] shadow-md backdrop-blur-sm'>
-      <h1>logo</h1>
-      <div className="flex items-center justify-between gap-5">
-        <Link to={"/"}>list 1</Link>
-        <Link Link to={"/list2"}>list 2</Link>
-        <Link to={"/list3"}>list 3</Link>
-      </div>
+      <h1 className='font-bold text-cyan-700 text-lg'>ЭМБ Дастур</h1>
+      
       
       <div className="flex items-center gap-3 relative">
         <Button

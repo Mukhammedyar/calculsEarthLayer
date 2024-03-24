@@ -6,6 +6,7 @@ const initialState = {
   valuesResult: [],
   tigizQoldiqJami: [],
   valuesResultJami: 0,
+  jamiQiymatlar: [], //pastki jami qiymatlar
   tip: [],
   tipPerList3: [],
   error: null,
@@ -42,6 +43,10 @@ export const value3Slice = createSlice({
       state.isLoading = false;
       state.tipPerList3 = action.payload;
     },
+    jamiQiymatlarSuccess: (state, action) => {
+      state.isLoading = false;
+      state.jamiQiymatlar = action.payload;
+    },
   },
 });
 
@@ -53,5 +58,6 @@ export const {
   valuesResultJamiSuccess,
   tipSuccess,
   tipPerList3Success,
+  jamiQiymatlarSuccess,
 } = value3Slice.actions;
 export default value3Slice.reducer;
