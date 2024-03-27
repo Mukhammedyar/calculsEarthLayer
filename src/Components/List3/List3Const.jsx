@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { list1 } from '../../API/tableList'
 import { plo } from '../../API/tableList2'
 import { useDispatch, useSelector } from 'react-redux'
@@ -16,9 +16,14 @@ export default function List3Const() {
         tigizQoldiq.map(i => {
             sum += i
         })
-        dispatch(tigizQoldiqJamiSuccess(sum))
         return sum
     }
+
+    let jamiTigizQoldiqArray = jamiTigizQoldiq()
+
+    useEffect(() => {
+        dispatch(tigizQoldiqJamiSuccess(jamiTigizQoldiqArray))
+    },[jamiTigizQoldiqArray, dispatch])
 
   return (
     <table
@@ -62,18 +67,25 @@ export default function List3Const() {
         {/* 1-qatar */}
         {listData.map((item, index) => (
             <tr key={item.id} className={`border-b ${index == 8 ? "bg-blue-300": ""}`}>
-            <th className='border-r font-medium w-auto'>{index == 8 ? "" : item.id}</th>
-            <td className='border-r font-medium'>{index == 8 ? "" : item.ych}</td>
-            <td className='border-r font-medium'>{index == 8 ? "" : item.tch}</td>
-            <td className='border-r w-[80px] font-medium' colSpan={2}>
-                {ploData[index]?.plo}
-                    {index == 8
-                        ? jamiTigizQoldiq()
-                        : <td className='bg-slate-200 text-blue-700 w-[100px] md:w-[120px] text-start px-2 font-medium'>
-                       { tigizQoldiq == "" ? "null" : tigizQoldiq[index]?.toFixed(3)}
-                    </td>}
-            </td>
-        </tr> 
+                <td className='border-r font-medium w-auto'>{index == 8 ? "" : item.id}</td>
+                <td className='border-r font-medium'>{index == 8 ? "" : item.ych}</td>
+                <td className='border-r font-medium'>{index == 8 ? "" : item.tch}</td>
+                <td className='border-r w-[80px] font-medium' colSpan={2}>
+                    {ploData[index]?.plo}
+                        {index == 8
+                            ? jamiTigizQoldiq()
+                        : <table className='w-full h-full'>
+                            <tbody>
+                                <tr>
+                                    <td className='bg-slate-200 text-blue-700 text-start px-2 font-medium'>
+                                        { tigizQoldiq == "" ? "null" : tigizQoldiq[index]?.toFixed(3)}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    }
+                </td>
+            </tr> 
         ))}
     </tbody>
     </table>

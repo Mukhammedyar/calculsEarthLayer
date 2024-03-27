@@ -6,7 +6,6 @@ import List3Const from './List3Const';
 import List3Result from './List3Result';
 import { useSelector } from 'react-redux'
 import { qqal } from '../../API/tableList2'
-import { list3 } from '../../API/tableList'
 import { jamiQiymatlarSuccess, tipPerList3Success, tipSuccess, valuesResultSuccess } from '../../Reducer/List3Values';
 
 function List3() {
@@ -14,14 +13,13 @@ function List3() {
   const dispatch = useDispatch()
   const { valuesList2 } = useSelector(state => state.valuesList2)
   const { values } = useSelector(state => state.valuesList1)
-  const { valuesResult } = useSelector(state => state.valuesList3)
   
   const handleChange = (row, col, event) => {
-    dispatch(value2SetStart())
     const newJadvalQiymatlari = jadvalQiymatlari.map(row => [...row]);
     try {
         newJadvalQiymatlari[row][col] = event.target.value;
         setJadvalQiymatlari(newJadvalQiymatlari);
+        dispatch(value2SetStart())
         dispatch(value2SetSuccess(newJadvalQiymatlari))
     } catch (error) {
       console.log(error);
@@ -88,7 +86,7 @@ function List3() {
         <List3Input jadvalQiymatlari={jadvalQiymatlari} handleChange={handleChange} />
         <List3Result/>
       </div>
-      <button onClick={saveAll} className='bg-blue-600 text-white px-2 py-1'>Hisoblash</button>
+      <button onClick={saveAll} className='bg-blue-600 disabled:bg-blue-400 rounded-md text-white px-2 py-1'>Hisoblash</button>
     </div>
   )
 }

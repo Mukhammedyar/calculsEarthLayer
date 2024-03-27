@@ -17,7 +17,7 @@ export default function List3Input({ jadvalQiymatlari, handleChange }) {
                         <input
                             type={"number"}
                             step={1}
-                            value={valuesList2 == "" ? qiymat.slice(0,5) : valuesList2[rowIndex][colIndex]}
+                            value={valuesList2 == "" ? qiymat : valuesList2[rowIndex][colIndex]}
                             placeholder={"0"} 
                             onChange={(event) => handleChange(rowIndex, colIndex, event)}
                             className={`
@@ -26,9 +26,15 @@ export default function List3Input({ jadvalQiymatlari, handleChange }) {
                                 : "border-none focus:ring-0 text-gray-800 "
                             } py-[3px] max-w-[100px] md:w-[80px] lg:w-[80px] font-medium px-1 mx-0 focus:outline-0`}
                         />
-                        <td className='bg-slate-200 py-[2px] text-blue-800 w-[100px] md:w-[80px] text-start px-1 font-medium'>
-                            {valuesResult == "" ? "0" : valuesResult[rowIndex][colIndex].toString().slice(0.5)}
-                        </td>
+                        <table className='w-full h-full'>
+                            <tbody>
+                                <tr>
+                                    <td className='bg-slate-200 py-[2px] text-blue-800 w-[100px] md:w-[80px] text-start px-1 font-medium'>
+                                        {valuesResult == "" ? "0" : valuesResult[rowIndex][colIndex].toString().slice(0.3)}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </td>
                 ))}
                 </tr>

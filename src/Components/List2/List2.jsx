@@ -22,11 +22,11 @@ function List2() {
   } 
   
   const handleChange2 = (row, col, event) => {
-        dispatch(value2SetStart())
         const newQiymat = jadvalQiymatlari2.map(row => [...row]);
         try {
           newQiymat[row][col] = event.target.value;
           setJadvalQiymatlari2(newQiymat);
+          dispatch(value2SetStart())
           dispatch(value2SetSuccess([...newQiymat]))
         } catch (error) {
           console.log(error);
@@ -56,13 +56,15 @@ function List2() {
   }
   // tugma bosilganda hisoblash
   const saveAllValues = async () => {
+    console.log(jadvalQiymatlari2);
     dispatch(value2SetStart())
     try {
-      dispatch(value2SetSuccess(valuesList2))
+      dispatch(value2SetSuccess([...jadvalQiymatlari2]))
       dispatch(natiyjaValuesSuccess(natijaValues))
       handleNatijaValues()
       dispatch(tipSuccess(calculsTypeBool()))
       dispatch(tipPerSuccess(calculsTypePer()))
+      dispatch(value2SetSuccess(valuesList2))
     } catch (error) {
       console.log(error);
     }
@@ -84,7 +86,10 @@ function List2() {
           <List2Result />
         </div>
       </div>
-      <button onClick={saveAllValues} className='bg-blue-600 px-2 py-1 rounded-md text-white items-start'>Hisoblash</button>
+      <button
+        onClick={saveAllValues}
+        className='bg-blue-600 disabled:bg-blue-400 px-2 py-1 rounded-md text-white items-start'
+      >Hisoblash</button>
     </div>
   )
 }

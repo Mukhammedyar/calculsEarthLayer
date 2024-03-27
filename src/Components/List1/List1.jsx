@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import TableInputHead from './tableInputHead';
 import { useDispatch, useSelector } from 'react-redux';
-import {valueSetStart, valueSetSuccess } from '../../Reducer/ValuesList1';
+import ValuesList1, {valueSetStart, valueSetSuccess } from '../../Reducer/ValuesList1';
 import TableNatija from './tableNatija';
 import List3Input from './List3Input';
 import TableLists from './tableLists';
@@ -9,44 +9,49 @@ import Jami from './Jami';
 import { qqal } from '../../API/tableList2'
 import { plo } from '../../API/tableList2'
 import { tigizQoldiqSuccess } from '../../Reducer/List3Values';
+import {db} from '../../config/firebase'
+import {doc, setDoc} from 'firebase/firestore';
 
 
 
 function List1() {
   const dispatch = useDispatch()
-  const [jadvalQiymatlari, setJadvalQiymatlari] = useState(Array(8).fill(Array(8).fill('')));
-  const [ploArray, setPloArray] = useState([])
-  const {values}= useSelector(state => state.valuesList1)
+  const { values } = useSelector(state => state.valuesList1)
+  const [values1 , setValues1] = useState(Array(8).fill(Array(8).fill(0)))
+
+
+  const handleInputChange = async (rowIndex, colIndex, event) => {
+    const newArray = [...values1];
+    newArray[rowIndex][colIndex] = event.target.value; 
+    setValues1(newArray);
   
-  const handleChange = (row, col, event) => {
-    dispatch(valueSetStart())
-    const newJadvalQiymatlari = jadvalQiymatlari.map(row => [...row]);
     try {
-      newJadvalQiymatlari[row][col] = event.target.value;
-      setJadvalQiymatlari(newJadvalQiymatlari);
-      dispatch(valueSetSuccess([...newJadvalQiymatlari]))
+      await setDoc(doc(db, "Values", `row_${rowIndex}`), { data: newArray[rowIndex] });
+      // console.log("Row " + rowIndex + " successfully updated.");
+      const arr = []
+      values1.map((item, index) => {
+          arr[index]=parseFloat(qqal[index]?.qqal) * parseFloat(plo[index]?.plo) * parseFloat(values1[index][7])
+      })
+      dispatch(tigizQoldiqSuccess([...arr]))
     } catch (error) {
-      console.log(error);
+      console.error('Error updating Firestore:', error);
     }
   };
-  const handlePloSetArray = () => {
-    const arr = []
-    values.map((item, index) => {
-        arr[index]=parseFloat(qqal[index]?.qqal) * parseFloat(plo[index]?.plo) * parseFloat(values[index][7])
-    })
-    dispatch(tigizQoldiqSuccess([...arr]))
-  }
+
+
+ 
 
   const saveAllValues = async () => {
     dispatch(valueSetStart())
     try {
-      dispatch(valueSetSuccess([...jadvalQiymatlari]))
-      handlePloSetArray()
-      dispatch(valueSetSuccess(values))
+      // dispatch(valueSetSuccess([...jadvalQiymatlari]))
+      // handlePloSetArray()
+      // dispatch(valueSetSuccess(values))
     } catch (error) {
       console.log(error);
     }
   };
+  
 
   return (
     <div className='mt-10 flex items-start flex-col px-10 gap-5 min-h-[100vh]'>
@@ -59,7 +64,7 @@ function List1() {
             Qiymat Kiritish
             <table className='shadow-lg border bg-white text-center text-xs md:text-sm font-light dark:border-neutral-500 rounded-lg'>
               <TableInputHead/>
-              <List3Input jadvalQiymatlari={jadvalQiymatlari} handleChange={handleChange} />
+            <List3Input handleInputChange={handleInputChange} values1={values1} setValues1={setValues1} />
             </table>
           </div>
           <div>
@@ -68,7 +73,7 @@ function List1() {
           </div>
           <div>
             Natiyja
-            <TableNatija/>
+            <TableNatija values1={values1}/>
           </div>
         </div>
       <button onClick={saveAllValues} className='bg-blue-600 px-2 rounded-md text-white items-start'>Hisoblash</button>

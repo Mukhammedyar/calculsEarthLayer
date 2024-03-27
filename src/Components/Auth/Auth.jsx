@@ -8,8 +8,6 @@ import Button from '../../UI/button'
 function Auth() {
     const [value,setValue]=useState({login: "", password: ""})
     const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const {loggedIn}=useSelector(state => state.auth)
 
     const signInHandler =async (e) => {
         e.preventDefault()

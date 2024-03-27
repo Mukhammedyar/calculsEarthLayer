@@ -51,7 +51,7 @@ export default function List3Result() {
                         : tigizQoldiqJami > 50 && tigizQoldiqJami <= 100 ? "Кучсиз шурланган" 
                         : tigizQoldiqJami > 100 && tigizQoldiqJami <= 200 ? "Уртача шурланган"
                         : tigizQoldiqJami > 200 && tigizQoldiqJami <= 300 ? "Кучли шурланган"
-                        : tigizQoldiqJami > 300 ? "Шурхоклар" : tigizQoldiqJami < 0 ? "xato" : "Шурхоклар"
+                        : tigizQoldiqJami > 300 ? "Шурхоклар" : tigizQoldiqJami < 0 ? "xato" : ""
                     }
                     
                     </td>
