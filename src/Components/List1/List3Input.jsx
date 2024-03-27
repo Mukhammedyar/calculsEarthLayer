@@ -49,7 +49,7 @@ export default function List3Input({handleInputChange, values1, setValues1}) {
           <tr className='bg-blue-300 text-start h-[33px]'>
             {values1.map((item, index) => (
               <td key={index} className='w-[50px] md:w-[50px] px-2 border-r-[1px] text-gray-800 font-medium'>
-                {jamiNatiyja[index]?.toString().slice(0,9)}
+                {jamiNatiyja[index]?.toString().slice(0,5)}
               </td>
             ))}
           </tr>
