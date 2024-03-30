@@ -7,7 +7,7 @@ export default function TableConst() {
     const [ploData, setPloData]=useState(plo)
   return (
     <table
-        className="shadow-lg border bg-white text-center font-light dark:border-neutral-500 rounded-lg">
+        className="shadow-lg border font-medium bg-white text-center dark:border-neutral-500 rounded-lg">
         <thead className="border-b text-xs h-[70px] border-gray-300 font-medium dark:border-neutral-500 rounded">
             <tr className='bg-gray-200 border-b border-neutral-300 font-normal'>
                 <th
@@ -47,11 +47,11 @@ export default function TableConst() {
         {/* 1-qatar */}
         {listData.map((item, index) => (
             index == 8 ? "" :
-            <tr key={item.id} className={`border-b`}>
-                <th className='border-r w-auto'>{item.id}</th>
-                <td className='border-r'>{item.ych}</td>
-                <td className='border-r'>{item.tch}</td>
-                <td className='border-r' colSpan={2}>{ploData[index]?.plo}</td>
+            <tr key={item.id} className={`border-b  border-b-gray-300 ${index % 2 == 1 ? "bg-gray-100" : ""}`}>
+                <th className={`${index %2 == 1 ? "border-r-gray-200" : "" } border-r  w-auto'`}>{item.id}</th>
+                <td className={`${index %2 == 1 ? "border-r-gray-200" : "" } border-r `}>{item.ych}</td>
+                <td className={`${index %2 == 1 ? "border-r-gray-200" : "" } border-r `}>{item.tch}</td>
+                <td className={`${index %2 == 1 ? "border-r-gray-200" : "" } border-r `} colSpan={2}>{ploData[index]?.plo}</td>
             </tr> 
         ))}
     </tbody>

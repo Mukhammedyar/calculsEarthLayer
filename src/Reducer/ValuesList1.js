@@ -20,7 +20,7 @@ export const value1Slice = createSlice({
     },
     valueSetSuccess: (state, action) => {
       state.isLoading = false;
-      state.values = [...action.payload];
+      state.values = action.payload;
     },
     valueSetFailure: (state) => {
       state.isLoading = true;

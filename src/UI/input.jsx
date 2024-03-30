@@ -7,6 +7,7 @@ function Input({onchange, type, placeholder, className, value ,step}) {
         className={` ${className} w-[70px] text-sm bg-transparent backdrop-blur-md border border-gray-700 p-1 px-2 rounded focus:outline-none`} 
         placeholder={placeholder}
         onChange={onchange}
+        autoComplete="Of"
         value={value}
         step={step}
     />

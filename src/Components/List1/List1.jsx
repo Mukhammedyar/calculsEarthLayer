@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import TableInputHead from './tableInputHead';
 import { useDispatch, useSelector } from 'react-redux';
-import ValuesList1, {valueSetStart, valueSetSuccess } from '../../Reducer/ValuesList1';
+import {valueSetStart, valueSetSuccess } from '../../Reducer/ValuesList1';
 import TableNatija from './tableNatija';
 import List3Input from './List3Input';
 import TableLists from './tableLists';
@@ -21,16 +21,15 @@ function List1() {
 
 
   const handleInputChange = async (rowIndex, colIndex, event) => {
-    const newArray = [...values1];
-    newArray[rowIndex][colIndex] = event.target.value; 
+    const newArray = values1.map(row => [...row]);
+    event.target.value <= 101 && event.target.value >= -2 ? newArray[rowIndex][colIndex] = event.target.value : event.target.value; 
     setValues1(newArray);
-  
+    dispatch(valueSetSuccess(newArray))
     try {
       await setDoc(doc(db, "Values", `row_${rowIndex}`), { data: newArray[rowIndex] });
-      // console.log("Row " + rowIndex + " successfully updated.");
       const arr = []
-      values1.map((item, index) => {
-          arr[index]=parseFloat(qqal[index]?.qqal) * parseFloat(plo[index]?.plo) * parseFloat(values1[index][7])
+      newArray.map((item, index) => {
+          arr[index]=parseFloat(qqal[index]?.qqal) * parseFloat(plo[index]?.plo) * parseFloat(item[7])
       })
       dispatch(tigizQoldiqSuccess([...arr]))
     } catch (error) {
@@ -38,19 +37,6 @@ function List1() {
     }
   };
 
-
- 
-
-  const saveAllValues = async () => {
-    dispatch(valueSetStart())
-    try {
-      // dispatch(valueSetSuccess([...jadvalQiymatlari]))
-      // handlePloSetArray()
-      // dispatch(valueSetSuccess(values))
-    } catch (error) {
-      console.log(error);
-    }
-  };
   
 
   return (
@@ -64,7 +50,10 @@ function List1() {
             Qiymat Kiritish
             <table className='shadow-lg border bg-white text-center text-xs md:text-sm font-light dark:border-neutral-500 rounded-lg'>
               <TableInputHead/>
-            <List3Input handleInputChange={handleInputChange} values1={values1} setValues1={setValues1} />
+            <List3Input
+              handleInputChange={handleInputChange}
+              values1={values1}
+              setValues1={setValues1} />
             </table>
           </div>
           <div>
@@ -76,7 +65,6 @@ function List1() {
             <TableNatija values1={values1}/>
           </div>
         </div>
-      <button onClick={saveAllValues} className='bg-blue-600 px-2 rounded-md text-white items-start'>Hisoblash</button>
       </div>
   );
 }

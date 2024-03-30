@@ -8,6 +8,7 @@ const initialState = {
   valuesResultJami: 0,
   jamiQiymatlar: [], //pastki jami qiymatlar
   tip: [],
+  shorYuvish: [],
   tipPerList3: [],
   error: null,
 };
@@ -47,6 +48,10 @@ export const value3Slice = createSlice({
       state.isLoading = false;
       state.jamiQiymatlar = action.payload;
     },
+    shorYuvishSuccess: (state, action) => {
+      state.isLoading = false;
+      state.shorYuvish = action.payload;
+    },
   },
 });
 
@@ -59,5 +64,6 @@ export const {
   tipSuccess,
   tipPerList3Success,
   jamiQiymatlarSuccess,
+  shorYuvishSuccess,
 } = value3Slice.actions;
 export default value3Slice.reducer;

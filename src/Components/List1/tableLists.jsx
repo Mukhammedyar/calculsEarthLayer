@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
 import { list1 } from '../../API/tableList'
-import { qqal } from '../../API/tableList2'
+import { qqalList1 } from '../../API/tableList2'
 export default function TableLists() {
     const [listData, setListData] = useState(list1)
     return (
     <table
-        className="shadow-lg  border bg-white text-center text-xs md:text-sm font-light dark:border-neutral-500 rounded-lg">
+        className="shadow-lg border bg-white text-center text-xs font-light dark:border-neutral-500 rounded-lg">
         <thead className="border-b h-[82px] border-gray-300 font-medium dark:border-neutral-500 rounded">
-            <tr className='bg-gray-200 border-b text-xs md:text-sm border-neutral-300 font-normal'>
+            <tr className='bg-gray-200 border-b text-xs border-neutral-300 font-normal'>
                 <th
                     rowSpan={2}
                     scope="col"
-                    className="border-r border-neutral-300 ">
+                    className="border-r border-neutral-300 px-1">
                     Кесмa N0
                 </th>
                 <th
@@ -41,15 +41,15 @@ export default function TableLists() {
                 </th>
         </tr>
         </thead>
-        <tbody className='h-[300px] text-xs md:text-sm'>
+        <tbody className='h-[300px] text-xs md:text-xs'>
         {/* 1-qatar */}
         {listData.map((item , index)=> (
-           <tr key={item.id} className={`${index == 8 ? "bg-blue-300": "bg-white"} border-b`}>
-            <th className='border-r'>{item.id ===9 ? "Oratasha" : item.id}</th>
-            <td className='border-r'>{item.id ===9 ? "" : item.ych}</td>
-            <td className='border-r'>{item.id ===9 ? "" : item.tch}</td>
-            <td className='border-r' colSpan={2}>{qqal[index].qqal}</td>
-        </tr> 
+           <tr key={item.id} className={`${index == 8 ? "bg-blue-300": "bg-white"} border-b font-normal`}>
+                <th className='border-r px-1 w-[30px]'>{item.id ===9 ? "Oratasha" : item.id}</th>
+                <td className='border-r'>{item.id ===9 ? "" : item.ych}</td>
+                <td className='border-r'>{item.id ===9 ? "" : item.tch}</td>
+                <td className='border-r' colSpan={2}>{qqalList1[index].qqal}</td>
+            </tr> 
         ))}
     </tbody>
     </table>

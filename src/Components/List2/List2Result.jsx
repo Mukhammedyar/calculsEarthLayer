@@ -26,7 +26,7 @@ export default function List2Result() {
                     scope="col"
                     rowSpan={2}
                     className="border-r px-2 border-neutral-300">
-                    Степень засоления
+                    Шурланиш даражаси
                 </th>
             </tr>
         </thead>
@@ -34,8 +34,8 @@ export default function List2Result() {
         {/* 1-qatar */}
         {listData.map((item ,index)=> (
             index < 8 ? 
-            <tr key={ item.id} className='border-b font-normal'>
-                <td className='border-r px-2'>{tip[index]}</td>
+            <tr key={ item.id} className={`${index % 2 == 1 ? "bg-gray-100" : ""} border-b font-medium`}>
+                <td className='border-r px-2 min-w-[150px]'>{tip[index]}</td>
                 <td className='border-r'>{tipPer[index]}</td>
                 <td className='border-r'>{"NaN"}</td>
             </tr> 

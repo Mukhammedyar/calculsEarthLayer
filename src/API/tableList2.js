@@ -65,6 +65,40 @@ export const qqal = [
     id: 8,
     qqal: 15,
   },
+];
+export const qqalList1 = [
+  {
+    id: 1,
+    qqal: 15,
+  },
+  {
+    id: 2,
+    qqal: 10,
+  },
+  {
+    id: 3,
+    qqal: 10,
+  },
+  {
+    id: 4,
+    qqal: 10,
+  },
+  {
+    id: 5,
+    qqal: 10,
+  },
+  {
+    id: 6,
+    qqal: 15,
+  },
+  {
+    id: 7,
+    qqal: 15,
+  },
+  {
+    id: 8,
+    qqal: 15,
+  },
   {
     id: 9,
     qqal: 100,

@@ -5,7 +5,7 @@ export default function Jami() {
   const {isLoading, jamiPercent}=useSelector(state => state.valuesList1)
 
   return (
-    <table className='shadow-lg w-[100px] md:min-w-[100px] border bg-white text-center text-xs md:text-sm font-light dark:border-neutral-500 rounded-lg'>
+    <table className='shadow-lg w-[50px] md:w-[70px] border bg-white text-center text-xs md:text-sm font-light dark:border-neutral-500 rounded-lg'>
         <thead className="text-xs md:text-sm border-b h-[82px] border-gray-300 font-medium dark:border-neutral-500 rounded">
             <tr className='bg-gray-200 border-b border-neutral-300 font-normal'>
                 <th

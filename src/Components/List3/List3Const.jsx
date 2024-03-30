@@ -3,6 +3,7 @@ import { list1 } from '../../API/tableList'
 import { plo } from '../../API/tableList2'
 import { useDispatch, useSelector } from 'react-redux'
 import { tigizQoldiqJamiSuccess } from '../../Reducer/List3Values'
+import { db } from '../../config/firebase'
 
 
 export default function List3Const() {
@@ -10,7 +11,7 @@ export default function List3Const() {
     const [listData, setListData] = useState(list1)
     const [ploData, setPloData] = useState(plo)
     const { tigizQoldiq } = useSelector(state => state.valuesList3)
-    
+
     const jamiTigizQoldiq = () => {
         let sum = 0
         tigizQoldiq.map(i => {
@@ -23,7 +24,7 @@ export default function List3Const() {
 
     useEffect(() => {
         dispatch(tigizQoldiqJamiSuccess(jamiTigizQoldiqArray))
-    },[jamiTigizQoldiqArray, dispatch])
+    },[db, dispatch])
 
   return (
     <table
