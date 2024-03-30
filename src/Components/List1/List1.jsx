@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import TableInputHead from './tableInputHead';
 import { useDispatch, useSelector } from 'react-redux';
-import {valueSetStart, valueSetSuccess } from '../../Reducer/ValuesList1';
+import { valueSetSuccess } from '../../Reducer/ValuesList1';
 import TableNatija from './tableNatija';
 import List3Input from './List3Input';
 import TableLists from './tableLists';

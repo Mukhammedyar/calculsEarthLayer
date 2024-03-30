@@ -22,7 +22,7 @@ export default function Jami() {
                 <td
                 scope="col"
                 className="border-b border-neutral-300">
-                {item == NaN ? '0' : item?.toString()?.slice(0,7)}
+                {item == NaN ? '0' : item?.toString()?.slice(0,6)}
                 </td>
             </tr>
         ))}

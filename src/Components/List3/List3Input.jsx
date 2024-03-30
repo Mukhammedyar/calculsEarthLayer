@@ -24,7 +24,6 @@ export default function List3Input({ jadvalQiymatlari, setJadvalQiymatlari, hand
                 const jamiQiymatquery = await getDocs(collection(db, "Jami3"))
                 const jamiQiymat = jamiQiymatquery.docs.map(doc => doc.data().data); // Verileri diziye dönüştür
                 setJamiQiymatlarArray(jamiQiymat[0]);
-                console.log(jamiQiymat);
             } catch (error) {
                 console.error('Error fetching Firestore values:', error);
             }

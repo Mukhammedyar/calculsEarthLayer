@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { qqalList1 } from '../../API/tableList2'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { fizikLoySuccess, fizikQumSuccess, jamiNatiyjatSuccess, jamiPercentSuccess } from '../../Reducer/ValuesList1'
 import { db } from '../../config/firebase'
 import { collection, doc, getDocs, setDoc } from 'firebase/firestore'
@@ -56,10 +56,10 @@ export default function TableNatija({values1}) {
                     sum3 = 0; sum4 = 0;
                     
                     for (let i = 0; i < 8; i++) {
-                        sum4 += parseFloat(newdata[i][7]) * parseFloat(listData[i].qqal) * fizikQumArray[i]      
-                        sum5 += parseFloat(newdata[i][7]) * parseFloat(listData[i].qqal) * fizikLoyArray[i]
+                        sum4 += parseFloat(newdata[index][7]) * parseFloat(listData[index].qqal) * fizikQumArray[i]      
+                        sum5 += parseFloat(newdata[index][7]) * parseFloat(listData[index].qqal) * fizikLoyArray[i]
                         sum6 += jamiQiymatlar[i]
-
+                        
                         fizikLoyArray[i] <= 10 ? mexanikTarkib[i] = "Қум"
                         : fizikLoyArray[i] >= 10 && fizikLoyArray[i] <= 20 ? mexanikTarkib[i] = "Qumloq"
                         : fizikLoyArray[i] >= 20 && fizikLoyArray[i] <= 30 ? mexanikTarkib[i] = "Yengil Qumloq" 
@@ -67,8 +67,6 @@ export default function TableNatija({values1}) {
                         : fizikLoyArray[i] >= 45 && fizikLoyArray[i] <= 60 ? mexanikTarkib[i] = "Ogir qumloq" 
                         : fizikLoyArray[i] >= 60 && fizikLoyArray[i] <= 100 ? mexanikTarkib[i] = "Loy" 
                         : mexanikTarkib[i] = "Nimadir Xato"
-                         
-                        
                     }
                     sum4 /= parseFloat(listData[8].qqal) * parseFloat(newdata[7][7])
                     sum5 /= parseFloat(listData[8].qqal) * parseFloat(newdata[7][7])

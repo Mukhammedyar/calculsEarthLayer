@@ -7,7 +7,8 @@ import Button from '../../UI/button'
 
 function Auth() {
     const [value,setValue]=useState({login: "", password: ""})
-    const dispatch = useDispatch()
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
     const signInHandler =async (e) => {
         e.preventDefault()
@@ -16,6 +17,9 @@ function Auth() {
           value.login === "admin" && value.password === "admin1234"
             ? dispatch(signUserSuccess())
             : setValue({ login: "", password: "" })
+          navigate("/list1")
+          dispatch(signUserSuccess())
+          
         } catch (error) {
             console.log(error);
         }

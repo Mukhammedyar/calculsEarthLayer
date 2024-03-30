@@ -1,26 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import { db } from '../../config/firebase'
 import { collection, doc, getDocs, setDoc } from 'firebase/firestore'
+import { useSelector } from 'react-redux'
 
-export default function ShorYuvishCalculing() {
+export default function ShorYuvishCalculing({jadvalQiymatlari}) {
     let [shorYuvishQiymat, setShorYuvishQiymat] = useState([]) 
-
+    const { shorlanishDarajasi } = useSelector(state => state.valuesList3)
     useEffect(() => {
         const shorYuvishCalculing = async () => {
             let shorYuvishArray = []
+            const mexanikTarkibQuery = await getDocs(collection(db, "Results"))
+            const mexanikTarkib = mexanikTarkibQuery.docs.map(doc => doc.data().data);
             try {
-                const mexanikTarkibQuery = await getDocs(collection(db, "Results"))
-                const mexanikTarkib = mexanikTarkibQuery.docs.map(doc => doc.data().data);
-                const shorlanishDarajasiQuery = await getDocs(collection(db, "List3Results"))
-                const shorlanishDarajasi = shorlanishDarajasiQuery.docs.map(doc => doc.data().data);
-                
                 const shorYuvish = () => {
-                    switch (shorlanishDarajasi[1]) {
+                    switch (shorlanishDarajasi) {
                         case "Шурланмаган": return calculateShorlanmagan(mexanikTarkib[0]);
                         case "Кучсиз шурланган": return calculateKuchsizShurlangan(mexanikTarkib[0]);
                         case "Уртача шурланган": return calculateOrtachaShorlangan(mexanikTarkib[0]);
                         case "Кучли шурланган": return calculateKuchliShorlangan(mexanikTarkib[0]);
-                        case "Шурхоклар": return calculateShurxoqlar(mexanikTarkib[0]);
+                        case "Жуда кучли шўрланган": return calculateShurxoqlar(mexanikTarkib[0]);
                         default: return ["X0", "Y0", "Y0"];
                     }
                 }
@@ -86,19 +84,16 @@ export default function ShorYuvishCalculing() {
                 }
                 shorYuvishArray = shorYuvish()
                 await setDoc(doc(db, "List3Results", "ShorYuvushQiymatlar"), { data: shorYuvishArray });
-                
                 const resultsDoc = await getDocs(collection(db, "List3Results")); // Firestore'dan belgeleri al
                 const getResults = resultsDoc.docs.map(doc => doc.data()); 
-                
                 const resultsArray = getResults.map(result => result.data);
                 setShorYuvishQiymat(resultsArray[0]);
-
             } catch (error) {
               console.log(error); 
             }
         }
         shorYuvishCalculing()
-    },[db])
+    },[db, shorlanishDarajasi])
 
   return (
     <div className='flex justify-center'>

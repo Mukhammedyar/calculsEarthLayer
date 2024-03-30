@@ -20,7 +20,7 @@ function App() {
       <Routes>
         <Route path='/' element={loggedIn?<List1/>:<Auth/>} />
         <Route path='/auth' element={<Auth/>} />
-        <Route path='/list1' element={<List1/>} />
+        <Route path='/list1' element={loggedIn?<List1/>:<Auth/>} />
         <Route path='/list2' element={loggedIn?<List2/>:<Auth/>} />
         <Route path='/list3' element={loggedIn?<List3/>:<Auth/>} />
       </Routes>

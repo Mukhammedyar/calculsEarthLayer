@@ -1,28 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import List3Input from './List3Input';
 import { useDispatch } from 'react-redux';
-import {value2SetStart, value2SetSuccess } from '../../Reducer/ValueList2';
+import { value2SetSuccess } from '../../Reducer/ValueList2';
 import List3Const from './List3Const';
 import List3Result from './List3Result';
 import { useSelector } from 'react-redux'
 import { plo, qqal } from '../../API/tableList2'
-import { jamiQiymatlarSuccess, shorYuvishSuccess, tigizQoldiqSuccess, tipPerList3Success, tipSuccess, valuesResultSuccess } from '../../Reducer/List3Values';
-import { collection, doc, getDocs, setDoc } from 'firebase/firestore';
+import { jamiQiymatlarSuccess, tigizQoldiqSuccess, valuesResultSuccess } from '../../Reducer/List3Values';
+import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import ShorYuvishCalculing from './ShorYuvishCalculing';
 
 function List3() {
   const [jadvalQiymatlari, setJadvalQiymatlari] = useState(Array(8).fill(Array(6).fill(0)));
   const [valueResult, setValueResult] = useState(Array(8).fill(Array(6).fill(0)));
-  const [shorlanishDarajasi, setShorlanishDarajasi] = useState('')
   let PloConstResult = Array(8).fill(0)
   const dispatch = useDispatch()
-  
   const { loggedIn } = useSelector(state => state.auth)
   const { values } = useSelector(state => state.valuesList1)
-  const { shorYuvish } = useSelector(state => state.valuesList3)
-
-
 
   const handleChange = async (rowIndex, colIndex, event) => {
     try {
@@ -53,15 +48,12 @@ function List3() {
         }
         jamiQiymatlarArray.push(sum);
       }
-      
       dispatch(jamiQiymatlarSuccess(jamiQiymatlarArray));
       await setDoc(doc(db, "Jami3", "JOUiIpphpwbfDqms0Uq4"), { data: jamiQiymatlarArray });
     } catch (error) {
         console.log(error);
     }
 };
-
-
 
   useEffect(() => {
     try {
@@ -74,10 +66,6 @@ function List3() {
       console.log(error);
     }
   }, [db, loggedIn])
-
-    
-  
-
   return (
     <div className='min-h-[100vh] px-10 md:px-20'>
       <div className='flex mt-5 justify-center items-start gap-2'>
@@ -90,7 +78,7 @@ function List3() {
           setValueResult={setValueResult}/>
         <List3Result jadvalQiymatlari={jadvalQiymatlari} />
       </div>
-      <ShorYuvishCalculing/>
+      <ShorYuvishCalculing jadvalQiymatlari={jadvalQiymatlari}/>
     </div>
   )
 }

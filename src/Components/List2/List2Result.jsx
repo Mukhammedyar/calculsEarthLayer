@@ -8,7 +8,6 @@ import { tipSuccess } from '../../Reducer/List3Values'
 
 export default function List2Result({jadvalQiymatlari2}) {
     const [listData, setListData] = useState(list1)
-    const { tip, tipPer } = useSelector(state => state.valuesList2)
     const dispatch = useDispatch()
     const [results, setResults] = useState(Array(6).fill(Array(8).fill("")))
     

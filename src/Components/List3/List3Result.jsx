@@ -3,14 +3,13 @@ import { list3 } from '../../API/tableList'
 import React, {  useEffect, useState } from 'react'
 import { collection, doc, getDocs, setDoc } from 'firebase/firestore'
 import { db } from '../../config/firebase'
-import { shorYuvishSuccess, tipPerList3Success, tipSuccess } from '../../Reducer/List3Values'
+import { shorlanishDarajasiSuccess } from '../../Reducer/List3Values'
 
 
 export default function List3Result({jadvalQiymatlari}) {
     const [listData, setListData] = useState(list3)
-    const { tip, tipPerList3, tigizQoldiqJami } = useSelector(state => state.valuesList3)
+    const { tigizQoldiqJami } = useSelector(state => state.valuesList3)
     const dispatch = useDispatch()
-    const { valuesList2 } = useSelector(state => state.valuesList2)
     var typeArray = [], typePer = []
 
     const [results, setResults] = useState(Array(6).fill(Array(8).fill("")))
@@ -47,10 +46,12 @@ export default function List3Result({jadvalQiymatlari}) {
                         : tigizQoldiqJami > 50 && tigizQoldiqJami <= 100 ? "Кучсиз шурланган" 
                         : tigizQoldiqJami > 100 && tigizQoldiqJami <= 200 ? "Уртача шурланган"
                         : tigizQoldiqJami > 200 && tigizQoldiqJami <= 300 ? "Кучли шурланган"
-                        : tigizQoldiqJami > 300 ? "Шурхоклар" : "xato"
+                        : tigizQoldiqJami > 300 ? "Жуда кучли шўрланган" : "xato"
                 }
                 
                 const shorlanishDarajasiQuery = getTigizStatus(tigizQoldiqJami)
+                dispatch(shorlanishDarajasiSuccess(shorlanishDarajasiQuery))
+                
                 await setDoc(doc(db, "List3Results", "type"), { data: typeArray });
                 await setDoc(doc(db, "List3Results", "typePer"), { data: typePer });
                 await setDoc(doc(db, "List3Results", "shorlanishDarajasi"), { data: shorlanishDarajasiQuery });
@@ -66,7 +67,7 @@ export default function List3Result({jadvalQiymatlari}) {
             }
         }
         fetchData()
-    }, [db, jadvalQiymatlari])
+    }, [db, jadvalQiymatlari, tigizQoldiqJami])
     
 
   return (
@@ -99,15 +100,15 @@ export default function List3Result({jadvalQiymatlari}) {
             {listData.map((item ,index)=> (
                 index < 8 ? 
                 <tr key={ item.id} className='border-b font-medium text-sm'>
-                    <td className='border-r px-1 min-w-[150px]'>{results[2][index]}</td>
-                    <td className='border-r px-1 '>{results[3][index]}</td>
+                    <td className='border-r px-1 min-w-[150px]'>{results[3][index]}</td>
+                    <td className='border-r px-1 '>{results[4][index]}</td>
                     <td className='border-r px-1 '>{""}</td>
                 </tr> 
                 : <tr key={ item.id} className='border-b bg-blue-300 font-medium text-sm h-[21px]'>
                     <td className='border-r min-w-[100px]'></td>
                     <td className='border-r '></td>
                     <td className='border-r '>
-                        {results[1]}
+                        {results[2]}
                     </td>
                 </tr> 
             ))}
