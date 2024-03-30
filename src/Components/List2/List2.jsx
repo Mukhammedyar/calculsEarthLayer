@@ -26,27 +26,6 @@ function List2() {
       await setDoc(doc(db, "ResultValuesList2", `row_${rowIndex}`), { data: newArray[rowIndex] });
       setNatiyjaValues(newArray)
       dispatch(natiyjaValuesSuccess(newArray))
-
-      var typeArray = [] 
-      typeArray = natijaValues.map((row, rowIndex) => (
-        row[2] / row[1] > 0 && row[2] / row[1] <= 0.5 ? "Хлоридли" : // CO2 va CI ustunlari bolinmasini orqali hisoblash
-        row[2] / row[1] > 0.5 && row[2] / row[1] <= 1 ? "Сульфат-хлоридли":
-        row[2] / row[1] > 1 && row[2] / row[1] <= 5 ? "Хлорид-сульфатли":
-        row[2] / row[1] > 5 ? "Сульфатли" : "Сульфатли" 
-      ))
-      await setDoc(doc(db, "Resul2", "typeBool"), { data: typeArray });
-      dispatch(tipSuccess(typeArray))
-      
-      // Tipning foizini hisoblash
-      var typePerArray =Array(8).fill(0)
-      typePerArray = natijaValues.map((row, rowIndex) => (
-        row[2] / row[1] > 0 && row[2] / row[1] <= 0.5 ? "1" :
-        row[2] / row[1] > 0.5 && row[2] / row[1] <= 1 ? "2":
-        row[2] / row[1] > 1 && row[2] / row[1] <= 5 ? "3":
-        row[2] / row[1] > 5 ? "4" : 4
-      ))
-      await setDoc(doc(db, "Resul2", "typePer"), { data: typePerArray });
-      dispatch(tipPerSuccess(typePerArray))
     } catch (error) {
       console.log(error);
     }
@@ -85,7 +64,7 @@ function List2() {
         </div>
         <div>
           <p className="text-xl pb-2">Natiyalar</p>
-          <List2Result />
+          <List2Result jadvalQiymatlari2={ jadvalQiymatlari2 } />
         </div>
       </div>
     </div>

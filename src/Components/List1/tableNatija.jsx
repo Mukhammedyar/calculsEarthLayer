@@ -8,7 +8,6 @@ import { collection, doc, getDocs, setDoc } from 'firebase/firestore'
 export default function TableNatija({values1}) {
     const [listData, setListData] = useState(qqalList1)
     const dispatch = useDispatch()
-    const { values,fizikQum,fizikLoy, jamiNatiyja } = useSelector(state => state.valuesList1)
     const [results, setResults] = useState(Array(6).fill(Array(8).fill("")))
     
     useEffect(() => {
@@ -17,7 +16,6 @@ export default function TableNatija({values1}) {
                 const querySnapshot = await getDocs(collection(db, "Values")); // Firestore'dan belgeleri al
                 const data = querySnapshot.docs.map(doc => doc.data()); // Verileri diziye dönüştür
                 let newdata = Array(8).fill(Array(8).fill(0))
-                
 
                 for (let i = 0; i < 8; i++) {
                     for (let j = 0; j < 8; j++) {

@@ -15,7 +15,7 @@ function Auth() {
         try {
           value.login === "admin" && value.password === "admin1234"
             ? dispatch(signUserSuccess())
-            : setValue({login: "", password: ""})
+            : setValue({ login: "", password: "" })
         } catch (error) {
             console.log(error);
         }

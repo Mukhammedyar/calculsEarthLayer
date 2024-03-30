@@ -16,7 +16,7 @@ export default function List3Input({handleInputChange, values1, setValues1}) {
       try {
         const querySnapshot = await getDocs(collection(db, "Values")); // Firestore'dan belgeleri al
         const newData = querySnapshot.docs.map(doc => doc.data().data); // Verileri diziye dönüştür
-        setValues1(newData); // Verileri bileşenin dizisine ayarla
+        setValues1(newData);
         dispatch(valueSetSuccess([...newData]))
       } catch (error) {
         console.error('Error fetching Firestore values:', error);

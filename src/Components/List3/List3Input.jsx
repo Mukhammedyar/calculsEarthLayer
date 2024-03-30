@@ -6,9 +6,9 @@ import { db } from '../../config/firebase'
 import { value2SetSuccess } from '../../Reducer/ValueList2'
 
 export default function List3Input({ jadvalQiymatlari, setJadvalQiymatlari, handleChange , valueResult, setValueResult}) {
-    const { jamiQiymatlar } = useSelector(state => state.valuesList3)
+    const [jamiQiymatArray, setJamiQiymatlarArray] = useState([])
     const dispatch = useDispatch()
-
+    
     useEffect(() => { 
         const getValue2Docs = async () => {
             try {
@@ -20,6 +20,11 @@ export default function List3Input({ jadvalQiymatlari, setJadvalQiymatlari, hand
                 const valueResultquery = await getDocs(collection(db, "Results3"))
                 const newResult = valueResultquery.docs.map(doc => doc.data().data); // Verileri diziye dönüştür
                 setValueResult(newResult);
+
+                const jamiQiymatquery = await getDocs(collection(db, "Jami3"))
+                const jamiQiymat = jamiQiymatquery.docs.map(doc => doc.data().data); // Verileri diziye dönüştür
+                setJamiQiymatlarArray(jamiQiymat[0]);
+                console.log(jamiQiymat);
             } catch (error) {
                 console.error('Error fetching Firestore values:', error);
             }
@@ -62,7 +67,7 @@ export default function List3Input({ jadvalQiymatlari, setJadvalQiymatlari, hand
                 </tr>
             ))}
               <tr className='border-b border-neutral-300 text-xs h-[20px]'>
-                {jamiQiymatlar.map((qiymat, index) => (
+                {jamiQiymatArray.map((qiymat, index) => (
                     <td key={index} className='w-[80px] border-r border-neutral-30 font-medium bg-blue-300 text-start px-1 text-black'>
                         {qiymat.toString().slice(0,6)}
                     </td>
