@@ -14,48 +14,38 @@ export default function List2Result({jadvalQiymatlari2}) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const querySnapshot = await getDocs(collection(db, "ValuesList2")); // Firestore'dan belgeleri al
-                const data = querySnapshot.docs.map(doc => doc.data()); // Verileri diziye dönüştür
-                let newdata = Array(8).fill(Array(8).fill(0))
-
-                for (let i = 0; i < 8; i++) {
-                    for (let j = 0; j < 8; j++) {
-                        newdata[i] = data[i].data
-                    }
-                }
-                
                 var typeArray = [] 
-                typeArray = newdata.map((row, rowIndex) => (
+                typeArray = jadvalQiymatlari2.map((row, rowIndex) => (
                   row[2] / row[1] > 0 && row[2] / row[1] <= 0.5 ? "Хлоридли" : // CO2 va CI ustunlari bolinmasini orqali hisoblash
                   row[2] / row[1] > 0.5 && row[2] / row[1] <= 1 ? "Сульфат-хлоридли":
                   row[2] / row[1] > 1 && row[2] / row[1] <= 5 ? "Хлорид-сульфатли":
                   row[2] / row[1] > 5 ? "Сульфатли" : "Сульфатли" 
                 ))
-                await setDoc(doc(db, "Resul2", "typeBool"), { data: typeArray });
                 dispatch(tipSuccess(typeArray))
                 
                 // Tipning foizini hisoblash
                 var typePerArray =Array(8).fill(0)
-                typePerArray = newdata.map((row, rowIndex) => (
+                typePerArray = jadvalQiymatlari2.map((row, rowIndex) => (
                   row[2] / row[1] > 0 && row[2] / row[1] <= 0.5 ? "1" :
                   row[2] / row[1] > 0.5 && row[2] / row[1] <= 1 ? "2":
                   row[2] / row[1] > 1 && row[2] / row[1] <= 5 ? "3":
                   row[2] / row[1] > 5 ? "4" : 4
                 ))
-                await setDoc(doc(db, "Resul2", "typePer"), { data: typePerArray });
                 dispatch(tipPerSuccess(typePerArray))
 
-                const resultsDoc = await getDocs(collection(db, "Resul2")); // Firestore'dan belgeleri al
-                const getResults = resultsDoc.docs.map(doc => doc.data()); 
                 
-                const resultsArray = getResults.map(result => result.data);
+                let resultsArray = []
+                resultsArray.length = 2
+                resultsArray[0] = typeArray
+                resultsArray[1] = typePerArray
                 setResults(resultsArray);
+                console.log(results);
             } catch (error) {
                 console.log(error);
             }
         }
         fetchData()
-    }, [db, jadvalQiymatlari2])
+    }, [jadvalQiymatlari2])
 
   return (
     <table

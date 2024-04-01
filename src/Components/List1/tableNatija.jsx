@@ -1,27 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { qqalList1 } from '../../API/tableList2'
 import { useDispatch } from 'react-redux'
-import { fizikLoySuccess, fizikQumSuccess, jamiNatiyjatSuccess, jamiPercentSuccess } from '../../Reducer/ValuesList1'
+import { MexanikTarkibJamiSuccess, MexanikTarkibSuccess, fizikLoySuccess, fizikQumSuccess, jamiNatiyjatSuccess, jamiPercentSuccess } from '../../Reducer/ValuesList1'
 import { db } from '../../config/firebase'
 import { collection, doc, getDocs, setDoc } from 'firebase/firestore'
 
 export default function TableNatija({values1}) {
     const [listData, setListData] = useState(qqalList1)
     const dispatch = useDispatch()
-    const [results, setResults] = useState(Array(6).fill(Array(8).fill("")))
+    const [results, setResults] = useState(Array(6).fill(Array(8).fill('')))
     
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const querySnapshot = await getDocs(collection(db, "Values")); // Firestore'dan belgeleri al
-                const data = querySnapshot.docs.map(doc => doc.data()); // Verileri diziye dönüştür
-                let newdata = Array(8).fill(Array(8).fill(0))
-
-                for (let i = 0; i < 8; i++) {
-                    for (let j = 0; j < 8; j++) {
-                        newdata[i] = data[i].data
-                    }
-                }
                 const fizikQumArray = [],
                     fizikLoyArray = [],
                     jamiPerArray = Array(9).fill(0),
@@ -29,25 +20,25 @@ export default function TableNatija({values1}) {
                     mexanikTarkib = Array(8).fill('');
                 let mexanikTarkibJami = '';
                 
-                newdata.forEach((row, index) => {
+                values1.forEach((row, index) => {
                     let sum1 = 0,sum2 = 0,sum3 = 0,sum4 = 0,sum5 = 0,XajmOgirligiJami = 0,sum6 = 0
 
                     for (let colIndex = 0; colIndex < 4; colIndex++) {
-                        sum1 += parseFloat(newdata[index][colIndex]);
+                        sum1 += parseFloat(values1[index][colIndex]);
                         fizikQumArray[index] = sum1
                     }
                     sum1 = 0
                     // 5 - 8 ustunlar yigindisi 
                     for (let colIndex = 4; colIndex < 7; colIndex++) {
-                        sum2 += parseFloat(newdata[index][colIndex]);
+                        sum2 += parseFloat(values1[index][colIndex]);
                         fizikLoyArray[index] = sum2
                     }
                     sum2 = 0
                     jamiPerArray[index] = fizikLoyArray[index] + fizikQumArray[index]
                     
                     for (let i = 0; i < 8; i++) {
-                        XajmOgirligiJami += (parseFloat(listData[i].qqal) * newdata[i][7])
-                        sum3 += parseFloat(newdata[i][7]) * parseFloat(listData[i].qqal) * parseFloat(newdata[i][index])
+                        XajmOgirligiJami += (parseFloat(listData[i].qqal) * values1[i][7])
+                        sum3 += parseFloat(values1[i][7]) * parseFloat(listData[i].qqal) * parseFloat(values1[i][index])
                     }
                     sum3 = sum3 / XajmOgirligiJami
                     jamiQiymatlar[index] = sum3
@@ -56,8 +47,8 @@ export default function TableNatija({values1}) {
                     sum3 = 0; sum4 = 0;
                     
                     for (let i = 0; i < 8; i++) {
-                        sum4 += parseFloat(newdata[index][7]) * parseFloat(listData[index].qqal) * fizikQumArray[i]      
-                        sum5 += parseFloat(newdata[index][7]) * parseFloat(listData[index].qqal) * fizikLoyArray[i]
+                        sum4 += parseFloat(values1[index][7]) * parseFloat(listData[index].qqal) * fizikQumArray[i]      
+                        sum5 += parseFloat(values1[index][7]) * parseFloat(listData[index].qqal) * fizikLoyArray[i]
                         sum6 += jamiQiymatlar[i]
                         
                         fizikLoyArray[i] <= 10 ? mexanikTarkib[i] = "Қум"
@@ -68,8 +59,8 @@ export default function TableNatija({values1}) {
                         : fizikLoyArray[i] >= 60 && fizikLoyArray[i] <= 100 ? mexanikTarkib[i] = "Loy" 
                         : mexanikTarkib[i] = "Nimadir Xato"
                     }
-                    sum4 /= parseFloat(listData[8].qqal) * parseFloat(newdata[7][7])
-                    sum5 /= parseFloat(listData[8].qqal) * parseFloat(newdata[7][7])
+                    sum4 /= parseFloat(listData[8].qqal) * parseFloat(values1[7][7])
+                    sum5 /= parseFloat(listData[8].qqal) * parseFloat(values1[7][7])
                     jamiQiymatlar[8] = sum4
                     jamiQiymatlar[9] = sum5
                     jamiPerArray[8]= sum6
@@ -84,25 +75,22 @@ export default function TableNatija({values1}) {
                     : mexanikTarkibJami = "Nimadir Xato"
                          
                 })
+                let getResults = []
+                getResults.length = 6
+                getResults[0]= jamiPerArray
+                getResults[1]= jamiQiymatlar
+                getResults[2]= fizikQumArray
+                getResults[3]= fizikLoyArray
+                getResults[4]= mexanikTarkib
+                getResults[5]= mexanikTarkibJami
+                setResults(getResults);
 
-                await setDoc(doc(db, "Results", "jamiYigindi"), { data: jamiPerArray });
-                await setDoc(doc(db, "Results", "jamiInputs"), { data: jamiQiymatlar });
-                await setDoc(doc(db, "Results", "fizikQum"), { data: fizikQumArray });
-                await setDoc(doc(db, "Results", "fizikLoy"), { data: fizikLoyArray });
-                await setDoc(doc(db, "Results", "mexanikTarkib"), { data: mexanikTarkib });
-                await setDoc(doc(db, "Results", "MexanikTarkibJami"), { data: mexanikTarkibJami });
-                
-                const resultsDoc = await getDocs(collection(db, "Results")); // Firestore'dan belgeleri al
-                const getResults = resultsDoc.docs.map(doc => doc.data()); 
-                
-                const resultsArray = getResults.map(result => result.data);
-                setResults(resultsArray);
-                
-
-                dispatch(jamiPercentSuccess(resultsArray[4]))
-                dispatch(fizikQumSuccess(resultsArray[1]))
-                dispatch(fizikLoySuccess(resultsArray[0]))
-                dispatch(jamiNatiyjatSuccess(resultsArray[3]))
+                dispatch(jamiPercentSuccess(jamiPerArray))
+                dispatch(fizikQumSuccess(results[2]))
+                dispatch(fizikLoySuccess(results[3]))
+                dispatch(jamiNatiyjatSuccess(jamiQiymatlar))
+                dispatch(MexanikTarkibSuccess(mexanikTarkib))
+                dispatch(MexanikTarkibJamiSuccess(mexanikTarkibJami))
 
             } catch (error) {
                 console.log(error);
@@ -141,16 +129,16 @@ export default function TableNatija({values1}) {
         {listData.map((item ,index)=> (
             index < 8 ? 
             <tr key={ item.id} className='border-b font-medium'>
-                <td className='border-r'>{results[2][index]?.toString().slice(0,5)}</td>
-                <td className='border-r'>{results[1][index]?.toString().slice(0,7)}</td>
-                <td className='border-r min-w-[100px]'>{results[5][index]}</td>
+                <td className='border-r'>{results[2][index]}</td>
+                <td className='border-r'>{results[3][index]}</td>
+                <td className='border-r min-w-[100px]'>{results[4][index]}</td>
             </tr> 
             : ""
         ))}
         <tr className={'bg-blue-300 h-[33px] font-medium'}>
-            <td className='border-r'>{results[3][8]?.toString().slice(0,5)}</td>
-            <td className='border-r py-[2px]'>{results[3][9]?.toString().slice(0,5)}</td>
-            <td className='border-r py-[2px]'>{results[0]}</td>
+            <td className='border-r'>{results[1][8]}</td>
+            <td className='border-r py-[2px]'>{results[1][9]}</td>
+            <td className='border-r py-[2px]'>{results[5]}</td>
         </tr>
     </tbody>
     </table>

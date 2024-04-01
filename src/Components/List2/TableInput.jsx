@@ -5,24 +5,9 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { useSelector } from 'react-redux';
 
-export default function TableInput({ handleChange, jadvalQiymatlari, setJadvalQiymatlari, natijaValues , setNatiyjaValues}) {
-    // const {natiyjaValues} = useSelector(state => state.valuesList2)
-    useEffect(() => { 
-        const getValue2Docs = async () => {
-            try {
-                const query = await getDocs(collection(db, "ValuesList2"))
-                const newData = query.docs.map(doc => doc.data().data); // Verileri diziye dönüştür
-                const resultValuesQuery = await getDocs(collection(db, "ResultValuesList2"))
-                const newResultValues = resultValuesQuery.docs.map(doc => doc.data().data); // Verileri diziye dönüştür
-                setJadvalQiymatlari(newData);
-                setNatiyjaValues(newResultValues)
-
-            } catch (error) {
-                console.error('Error fetching Firestore values:', error);
-            }
-        }
-        getValue2Docs()
-    }, [db])
+export default function TableInput({ handleChange, jadvalQiymatlari, natijaValuesArray }) {
+    const {natiyjaValues, valuesList2} = useSelector(state => state.valuesList2)
+    console.log(natiyjaValues);
     
   return (
     <table
@@ -36,7 +21,7 @@ export default function TableInput({ handleChange, jadvalQiymatlari, setJadvalQi
                         <input
                             type={"number"}
                             step={0.1}
-                            value={qiymat.toString().slice(0,5)}
+                            value={valuesList2 == "" ? qiymat.slice(0,5) : valuesList2[rowIndex][colIndex]}
                             placeholder={"0"} 
                             onChange={(event) => handleChange(rowIndex, colIndex, event)}
                             className={`
@@ -49,7 +34,7 @@ export default function TableInput({ handleChange, jadvalQiymatlari, setJadvalQi
                             <tbody>
                                 <tr>
                                     <td className='bg-slate-200 text-blue-800 w-[100px] md:w-[80px] text-start px-2 font-medium'>
-                                       {natijaValues[rowIndex][colIndex]?.toString().slice(0,6)}
+                                       {natijaValuesArray[rowIndex][colIndex]?.toString().slice(0,6)}
                                     </td>
                                 </tr>
                             </tbody>

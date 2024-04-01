@@ -6,19 +6,19 @@ import { useSelector } from 'react-redux'
 export default function ShorYuvishCalculing({jadvalQiymatlari}) {
     let [shorYuvishQiymat, setShorYuvishQiymat] = useState([]) 
     const { shorlanishDarajasi } = useSelector(state => state.valuesList3)
+    const { MexanikTarkibJami } = useSelector(state => state.valuesList1)
     useEffect(() => {
         const shorYuvishCalculing = async () => {
             let shorYuvishArray = []
-            const mexanikTarkibQuery = await getDocs(collection(db, "Results"))
-            const mexanikTarkib = mexanikTarkibQuery.docs.map(doc => doc.data().data);
+            
             try {
                 const shorYuvish = () => {
                     switch (shorlanishDarajasi) {
-                        case "Шурланмаган": return calculateShorlanmagan(mexanikTarkib[0]);
-                        case "Кучсиз шурланган": return calculateKuchsizShurlangan(mexanikTarkib[0]);
-                        case "Уртача шурланган": return calculateOrtachaShorlangan(mexanikTarkib[0]);
-                        case "Кучли шурланган": return calculateKuchliShorlangan(mexanikTarkib[0]);
-                        case "Жуда кучли шўрланган": return calculateShurxoqlar(mexanikTarkib[0]);
+                        case "Шурланмаган": return calculateShorlanmagan(MexanikTarkibJami);
+                        case "Кучсиз шурланган": return calculateKuchsizShurlangan(MexanikTarkibJami);
+                        case "Уртача шурланган": return calculateOrtachaShorlangan(MexanikTarkibJami);
+                        case "Кучли шурланган": return calculateKuchliShorlangan(MexanikTarkibJami);
+                        case "Жуда кучли шўрланган": return calculateShurxoqlar(MexanikTarkibJami);
                         default: return ["X0", "Y0", "Y0"];
                     }
                 }
@@ -83,11 +83,7 @@ export default function ShorYuvishCalculing({jadvalQiymatlari}) {
                     }
                 }
                 shorYuvishArray = shorYuvish()
-                await setDoc(doc(db, "List3Results", "ShorYuvushQiymatlar"), { data: shorYuvishArray });
-                const resultsDoc = await getDocs(collection(db, "List3Results")); // Firestore'dan belgeleri al
-                const getResults = resultsDoc.docs.map(doc => doc.data()); 
-                const resultsArray = getResults.map(result => result.data);
-                setShorYuvishQiymat(resultsArray[0]);
+                setShorYuvishQiymat(shorYuvishArray)
             } catch (error) {
               console.log(error); 
             }
