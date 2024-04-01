@@ -9,21 +9,21 @@ import { doc, setDoc } from 'firebase/firestore'
 
 
 function List2() {
-  const [jadvalQiymatlari2, setJadvalQiymatlari2] = useState(Array(8).fill(Array(6).fill(0)));
+  const [jadvalQiymatlari2, setJadvalQiymatlari2] = useState(Array(8).fill(Array(6).fill('')));
   const [natijaValues, setNatiyjaValues] = useState(Array(8).fill(Array(6).fill(0)))
   const dispatch = useDispatch()
+  const {valuesList2} = useSelector(state => state.valuesList2)
   const factors = [0.061, 0.0355, 0.048, 0.02004, 0.0121, 0.023]; // bo'linuvchi sonlar 
 
   const handleChange2 = async (rowIndex, colIndex, event) => {
-    const newQiymat = [...jadvalQiymatlari2]
+    const newQiymat = jadvalQiymatlari2.map(row => [...row])
     newQiymat[rowIndex][colIndex] = event.target.value;
     setJadvalQiymatlari2(newQiymat);
     try {
-      await setDoc(doc(db, "ValuesList2", `row_${rowIndex}`), { data: newQiymat[rowIndex] });
+      dispatch(value2SetSuccess(newQiymat))
       const newArray = jadvalQiymatlari2.map(row => (
         row.map((num, index) => num / factors[index]) // newArrayga bolinmalarni kiritish
       ));
-      await setDoc(doc(db, "ResultValuesList2", `row_${rowIndex}`), { data: newArray[rowIndex] });
       setNatiyjaValues(newArray)
       dispatch(natiyjaValuesSuccess(newArray))
     } catch (error) {
@@ -57,9 +57,7 @@ function List2() {
           <TableInput 
             handleChange={handleChange2}
             jadvalQiymatlari={jadvalQiymatlari2}
-            setJadvalQiymatlari={setJadvalQiymatlari2}
-            natijaValues={natijaValues}
-            setNatiyjaValues={setNatiyjaValues}
+            natijaValuesArray={natijaValues}
           />
         </div>
         <div>

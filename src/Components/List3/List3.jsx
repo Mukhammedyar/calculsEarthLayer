@@ -12,8 +12,9 @@ import { db } from '../../config/firebase';
 import ShorYuvishCalculing from './ShorYuvishCalculing';
 
 function List3() {
-  const [jadvalQiymatlari, setJadvalQiymatlari] = useState(Array(8).fill(Array(6).fill(0)));
+  const [jadvalQiymatlari, setJadvalQiymatlari] = useState(Array(8).fill(Array(6).fill('')));
   const [valueResult, setValueResult] = useState(Array(8).fill(Array(6).fill(0)));
+  const [jamiQiymatlar, setJamiQiymatlar] = useState(Array(6).fill(0))
   let PloConstResult = Array(8).fill(0)
   const dispatch = useDispatch()
   const { loggedIn } = useSelector(state => state.auth)
@@ -24,9 +25,7 @@ function List3() {
       const newQiymat = jadvalQiymatlari.map(row => [...row])
       newQiymat[rowIndex][colIndex] = event.target.value;
       setJadvalQiymatlari(newQiymat);
-
       dispatch(value2SetSuccess(newQiymat))
-      await setDoc(doc(db, "ValuesList2", `row_${rowIndex}`), { data: newQiymat[rowIndex] });
 
       let multipliedArray = [];
       for (let i = 0; i < jadvalQiymatlari.length; i++) {
@@ -36,10 +35,8 @@ function List3() {
         }
         multipliedArray.push(multipliedRow);
       }
-      await setDoc(doc(db, "Results3", `row_${rowIndex}`), { data: multipliedArray[rowIndex] });
       setValueResult(multipliedArray)
       dispatch(valuesResultSuccess(multipliedArray))
-      
       let jamiQiymatlarArray = [];
       for (let j = 0; j < multipliedArray[0].length; j++) {
         let sum = 0;
@@ -48,8 +45,8 @@ function List3() {
         }
         jamiQiymatlarArray.push(sum);
       }
-      dispatch(jamiQiymatlarSuccess(jamiQiymatlarArray));
-      await setDoc(doc(db, "Jami3", "JOUiIpphpwbfDqms0Uq4"), { data: jamiQiymatlarArray });
+      setJamiQiymatlar(jamiQiymatlarArray)
+      dispatch(jamiQiymatlarSuccess(jamiQiymatlarArray))
     } catch (error) {
         console.log(error);
     }
@@ -65,17 +62,16 @@ function List3() {
     } catch (error) {
       console.log(error);
     }
-  }, [db, loggedIn])
+  }, [loggedIn])
   return (
     <div className='min-h-[100vh] px-10 md:px-20'>
       <div className='flex mt-5 justify-center items-start gap-2'>
         <List3Const/>
         <List3Input 
           jadvalQiymatlari={jadvalQiymatlari}
-          setJadvalQiymatlari={setJadvalQiymatlari}
+          jamiQiymatlar={jamiQiymatlar}
           handleChange={handleChange}
-          valueResult={valueResult}
-          setValueResult={setValueResult}/>
+          valueResultArray={valueResult}/>
         <List3Result jadvalQiymatlari={jadvalQiymatlari} />
       </div>
       <ShorYuvishCalculing jadvalQiymatlari={jadvalQiymatlari}/>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import {saveAs} from 'file-saver'
 import TableInputHead from './tableInputHead';
 import { useDispatch, useSelector } from 'react-redux';
 import { valueSetSuccess } from '../../Reducer/ValuesList1';
@@ -16,9 +17,8 @@ import {doc, setDoc} from 'firebase/firestore';
 
 function List1() {
   const dispatch = useDispatch()
-  const { values } = useSelector(state => state.valuesList1)
-  const [values1 , setValues1] = useState(Array(8).fill(Array(8).fill(0)))
-
+  const [values1 , setValues1] = useState(Array(8).fill(Array(8).fill('')))
+  const {values} = useSelector(state => state.valuesList1)
 
   const handleInputChange = async (rowIndex, colIndex, event) => {
     const newArray = values1.map(row => [...row]);
@@ -26,12 +26,12 @@ function List1() {
     setValues1(newArray);
     dispatch(valueSetSuccess(newArray))
     try {
-      await setDoc(doc(db, "Values", `row_${rowIndex}`), { data: newArray[rowIndex] });
       const arr = []
       newArray.map((item, index) => {
           arr[index]=parseFloat(qqal[index]?.qqal) * parseFloat(plo[index]?.plo) * parseFloat(item[7])
       })
       dispatch(tigizQoldiqSuccess([...arr]))
+      setValues1(newArray )
     } catch (error) {
       console.error('Error updating Firestore:', error);
     }

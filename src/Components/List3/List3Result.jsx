@@ -3,12 +3,13 @@ import { list3 } from '../../API/tableList'
 import React, {  useEffect, useState } from 'react'
 import { collection, doc, getDocs, setDoc } from 'firebase/firestore'
 import { db } from '../../config/firebase'
-import { shorlanishDarajasiSuccess } from '../../Reducer/List3Values'
+import { shorlanishDarajasiSuccess, tipPerList3Success, tipSuccess } from '../../Reducer/List3Values'
 
 
 export default function List3Result({jadvalQiymatlari}) {
     const [listData, setListData] = useState(list3)
-    const { tigizQoldiqJami } = useSelector(state => state.valuesList3)
+    const { valuesList2 } = useSelector(state => state.valuesList2)
+    const { tigizQoldiqJami, tip, tipPerList3} = useSelector(state => state.valuesList3)
     const dispatch = useDispatch()
     var typeArray = [], typePer = []
 
@@ -17,17 +18,7 @@ export default function List3Result({jadvalQiymatlari}) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const querySnapshot = await getDocs(collection(db, "ValuesList2")); // Firestore'dan belgeleri al
-                const data = querySnapshot.docs.map(doc => doc.data()); // Verileri diziye dönüştür
-                let newdata = Array(8).fill(Array(8).fill(0))
-
-                for (let i = 0; i < 8; i++) {
-                    for (let j = 0; j < 8; j++) {
-                        newdata[i] = data[i].data
-                    }
-                }
-                
-                newdata.forEach((item, index) => {
+                valuesList2 == [] ? jadvalQiymatlari : valuesList2.forEach((item, index) => {
                     const ratio = item[2] / item[1];
                     typeArray[index] = 
                         ratio > 0 && ratio <= 0.5 ? "Хлоридли" :
@@ -51,15 +42,15 @@ export default function List3Result({jadvalQiymatlari}) {
                 
                 const shorlanishDarajasiQuery = getTigizStatus(tigizQoldiqJami)
                 dispatch(shorlanishDarajasiSuccess(shorlanishDarajasiQuery))
-                
-                await setDoc(doc(db, "List3Results", "type"), { data: typeArray });
-                await setDoc(doc(db, "List3Results", "typePer"), { data: typePer });
-                await setDoc(doc(db, "List3Results", "shorlanishDarajasi"), { data: shorlanishDarajasiQuery });
-                
-                const resultsDoc = await getDocs(collection(db, "List3Results")); // Firestore'dan belgeleri al
-                const getResults = resultsDoc.docs.map(doc => doc.data()); 
-                
-                const resultsArray = getResults.map(result => result.data);
+               
+                const resultsArray = Array(3).fill('')
+                resultsArray[0] = typeArray
+                resultsArray[1] = typePer
+                resultsArray[2] = shorlanishDarajasiQuery
+
+                dispatch(tipSuccess(typeArray))
+                dispatch(tipPerList3Success(typePer))
+                dispatch(shorlanishDarajasiSuccess(shorlanishDarajasiQuery))
                 setResults(resultsArray);
                 
             } catch (error) {
@@ -100,8 +91,8 @@ export default function List3Result({jadvalQiymatlari}) {
             {listData.map((item ,index)=> (
                 index < 8 ? 
                 <tr key={ item.id} className='border-b font-medium text-sm'>
-                    <td className='border-r px-1 min-w-[150px]'>{results[3][index]}</td>
-                    <td className='border-r px-1 '>{results[4][index]}</td>
+                    <td className='border-r px-1 min-w-[150px]'>{tip[index]}</td>
+                    <td className='border-r px-1 '>{tipPerList3[index]}</td>
                     <td className='border-r px-1 '>{""}</td>
                 </tr> 
                 : <tr key={ item.id} className='border-b bg-blue-300 font-medium text-sm h-[21px]'>
