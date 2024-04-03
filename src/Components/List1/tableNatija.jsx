@@ -133,8 +133,8 @@ export default function TableNatija({values1}) {
             : ""
         ))}
         <tr className={'bg-blue-300 h-[33px] font-medium'}>
-            <td className='border-r'>{results[1][8].toString().slice(0,6)}</td>
-            <td className='border-r py-[2px]'>{results[1][9].toString().slice(0,6)}</td>
+            <td className='border-r'>{results[1][8]?.toString().slice(0,6)}</td>
+            <td className='border-r py-[2px]'>{results[1][9]?.toString().slice(0,6)}</td>
             <td className='border-r py-[2px]'>{results[5]}</td>
         </tr>
     </tbody>
