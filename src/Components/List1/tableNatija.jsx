@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { qqalList1 } from '../../API/tableList2'
 import { useDispatch } from 'react-redux'
 import { MexanikTarkibJamiSuccess, MexanikTarkibSuccess, fizikLoySuccess, fizikQumSuccess, jamiNatiyjatSuccess, jamiPercentSuccess } from '../../Reducer/ValuesList1'
-import { db } from '../../config/firebase'
-import { collection, doc, getDocs, setDoc } from 'firebase/firestore'
 
 export default function TableNatija({values1}) {
     const [listData, setListData] = useState(qqalList1)
@@ -97,8 +95,7 @@ export default function TableNatija({values1}) {
             }
         }
         fetchData()
-    }, [db, values1])
-    
+    }, [values1])
   return (
     <table
         className="shadow-lg border bg-white text-center font-light dark:border-neutral-500 rounded-lg">
@@ -128,7 +125,7 @@ export default function TableNatija({values1}) {
         {/* 1-qatar */}
         {listData.map((item ,index)=> (
             index < 8 ? 
-            <tr key={ item.id} className='border-b font-medium'>
+            <tr key={item.id} className='border-b font-medium'>
                 <td className='border-r'>{results[2][index]}</td>
                 <td className='border-r'>{results[3][index]}</td>
                 <td className='border-r min-w-[100px]'>{results[4][index]}</td>
@@ -136,8 +133,8 @@ export default function TableNatija({values1}) {
             : ""
         ))}
         <tr className={'bg-blue-300 h-[33px] font-medium'}>
-            <td className='border-r'>{results[1][8]}</td>
-            <td className='border-r py-[2px]'>{results[1][9]}</td>
+            <td className='border-r'>{results[1][8].toString().slice(0,6)}</td>
+            <td className='border-r py-[2px]'>{results[1][9].toString().slice(0,6)}</td>
             <td className='border-r py-[2px]'>{results[5]}</td>
         </tr>
     </tbody>

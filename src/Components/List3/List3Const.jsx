@@ -3,8 +3,6 @@ import { list1 } from '../../API/tableList'
 import { plo } from '../../API/tableList2'
 import { useDispatch, useSelector } from 'react-redux'
 import { tigizQoldiqJamiSuccess } from '../../Reducer/List3Values'
-import { db } from '../../config/firebase'
-import { doc, setDoc } from 'firebase/firestore'
 
 
 export default function List3Const() {
@@ -28,7 +26,7 @@ export default function List3Const() {
             dispatch(tigizQoldiqJamiSuccess(jamiTigizQoldiqArray))
         }
         dataFetching()
-    },[db, tigizQoldiq])
+    },[tigizQoldiq])
 
   return (
     <table

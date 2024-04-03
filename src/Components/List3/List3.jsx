@@ -7,8 +7,6 @@ import List3Result from './List3Result';
 import { useSelector } from 'react-redux'
 import { plo, qqal } from '../../API/tableList2'
 import { jamiQiymatlarSuccess, tigizQoldiqSuccess, valuesResultSuccess } from '../../Reducer/List3Values';
-import { doc, setDoc } from 'firebase/firestore';
-import { db } from '../../config/firebase';
 import ShorYuvishCalculing from './ShorYuvishCalculing';
 
 function List3() {
@@ -74,7 +72,7 @@ function List3() {
           valueResultArray={valueResult}/>
         <List3Result jadvalQiymatlari={jadvalQiymatlari} />
       </div>
-      <ShorYuvishCalculing jadvalQiymatlari={jadvalQiymatlari}/>
+      <ShorYuvishCalculing/>
     </div>
   )
 }

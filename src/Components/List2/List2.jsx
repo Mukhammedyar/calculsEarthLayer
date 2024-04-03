@@ -2,17 +2,14 @@ import React, { useEffect, useState } from 'react'
 import TableConst from './tableConstList2'
 import TableInput from './TableInput'
 import List2Result from './List2Result'
-import { useDispatch, useSelector } from 'react-redux'
-import { natiyjaValuesSuccess, tipPerSuccess, tipSuccess, value2SetStart, value2SetSuccess } from '../../Reducer/ValueList2'
-import { db } from '../../config/firebase'
-import { doc, setDoc } from 'firebase/firestore'
+import { useDispatch } from 'react-redux'
+import { natiyjaValuesSuccess, value2SetSuccess } from '../../Reducer/ValueList2'
 
 
 function List2() {
   const [jadvalQiymatlari2, setJadvalQiymatlari2] = useState(Array(8).fill(Array(6).fill('')));
   const [natijaValues, setNatiyjaValues] = useState(Array(8).fill(Array(6).fill(0)))
   const dispatch = useDispatch()
-  const {valuesList2} = useSelector(state => state.valuesList2)
   const factors = [0.061, 0.0355, 0.048, 0.02004, 0.0121, 0.023]; // bo'linuvchi sonlar 
 
   const handleChange2 = async (rowIndex, colIndex, event) => {
@@ -38,10 +35,9 @@ function List2() {
       ));
       setNatiyjaValues(newArray)
       dispatch(natiyjaValuesSuccess(newArray))
-      // Tipning solishtirib turini sozlar bilan hisoblash
     }
     calculateTypes()
-  }, [db])
+  }, [jadvalQiymatlari2])
 
 
 

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { list1 } from '../../API/tableList'
-import { useDispatch, useSelector } from 'react-redux'
-import { collection, doc, getDocs, setDoc } from 'firebase/firestore'
-import { db } from '../../config/firebase'
+import { useDispatch } from 'react-redux'
 import { tipPerSuccess } from '../../Reducer/ValueList2'
 import { tipSuccess } from '../../Reducer/List3Values'
 
@@ -39,7 +37,6 @@ export default function List2Result({jadvalQiymatlari2}) {
                 resultsArray[0] = typeArray
                 resultsArray[1] = typePerArray
                 setResults(resultsArray);
-                console.log(results);
             } catch (error) {
                 console.log(error);
             }

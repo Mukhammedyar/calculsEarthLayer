@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import './tableInput.css'
 import List2Head from './List2Head';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../../config/firebase';
 import { useSelector } from 'react-redux';
 
 export default function TableInput({ handleChange, jadvalQiymatlari, natijaValuesArray }) {
     const {natiyjaValues, valuesList2} = useSelector(state => state.valuesList2)
-    console.log(natiyjaValues);
     
   return (
     <table

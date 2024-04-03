@@ -1,8 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { list3 } from '../../API/tableList'
 import React, {  useEffect, useState } from 'react'
-import { collection, doc, getDocs, setDoc } from 'firebase/firestore'
-import { db } from '../../config/firebase'
 import { shorlanishDarajasiSuccess, tipPerList3Success, tipSuccess } from '../../Reducer/List3Values'
 
 
@@ -58,7 +56,7 @@ export default function List3Result({jadvalQiymatlari}) {
             }
         }
         fetchData()
-    }, [db, jadvalQiymatlari, tigizQoldiqJami])
+    }, [jadvalQiymatlari, tigizQoldiqJami])
     
 
   return (

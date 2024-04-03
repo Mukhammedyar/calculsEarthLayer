@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import {saveAs} from 'file-saver'
 import TableInputHead from './tableInputHead';
 import { useDispatch, useSelector } from 'react-redux';
 import { valueSetSuccess } from '../../Reducer/ValuesList1';
@@ -10,15 +9,12 @@ import Jami from './Jami';
 import { qqal } from '../../API/tableList2'
 import { plo } from '../../API/tableList2'
 import { tigizQoldiqSuccess } from '../../Reducer/List3Values';
-import {db} from '../../config/firebase'
-import {doc, setDoc} from 'firebase/firestore';
 
 
 
 function List1() {
   const dispatch = useDispatch()
   const [values1 , setValues1] = useState(Array(8).fill(Array(8).fill('')))
-  const {values} = useSelector(state => state.valuesList1)
 
   const handleInputChange = async (rowIndex, colIndex, event) => {
     const newArray = values1.map(row => [...row]);

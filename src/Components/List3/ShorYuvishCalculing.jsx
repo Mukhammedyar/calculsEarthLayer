@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { db } from '../../config/firebase'
-import { collection, doc, getDocs, setDoc } from 'firebase/firestore'
 import { useSelector } from 'react-redux'
 
-export default function ShorYuvishCalculing({jadvalQiymatlari}) {
+export default function ShorYuvishCalculing() {
     let [shorYuvishQiymat, setShorYuvishQiymat] = useState([]) 
     const { shorlanishDarajasi } = useSelector(state => state.valuesList3)
     const { MexanikTarkibJami } = useSelector(state => state.valuesList1)
@@ -89,7 +87,7 @@ export default function ShorYuvishCalculing({jadvalQiymatlari}) {
             }
         }
         shorYuvishCalculing()
-    },[db, shorlanishDarajasi])
+    },[shorlanishDarajasi])
 
   return (
     <div className='flex justify-center'>
