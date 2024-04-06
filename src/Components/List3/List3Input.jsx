@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import List3Head from './list3Head'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from '../../config/firebase'
 import { value2SetSuccess } from '../../Reducer/ValueList2'

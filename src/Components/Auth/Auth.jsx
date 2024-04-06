@@ -14,12 +14,12 @@ function Auth() {
         e.preventDefault()
         dispatch(signUserStart())
         try {
-          value.login === "admin" && value.password === "admin1234"
-            ? dispatch(signUserSuccess())
-            : setValue({ login: "", password: "" })
-          navigate("/list1")
-          dispatch(signUserSuccess())
-          
+          if (value.login === "admin" && value.password === "admin1234") {
+            dispatch(signUserSuccess()) 
+            navigate('/list1')
+          } else {
+            setValue({ login: "", password: "" })
+          }
         } catch (error) {
             console.log(error);
         }
