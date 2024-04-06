@@ -45,9 +45,8 @@ export default function TableNatija({values1}) {
                     sum3 = 0; sum4 = 0;
                     
                     for (let i = 0; i < 8; i++) {
-                        sum4 += parseFloat(values1[index][7]) * parseFloat(listData[index].qqal) * fizikQumArray[i]      
-                        sum5 += parseFloat(values1[index][7]) * parseFloat(listData[index].qqal) * fizikLoyArray[i]
-                        sum6 += jamiQiymatlar[i]
+                        sum4 += parseFloat(values1[index][7]) * parseFloat(listData[i].qqal) * fizikQumArray[i]      
+                        sum5 += parseFloat(values1[index][7]) * parseFloat(listData[i].qqal) * fizikLoyArray[i]
                         
                         fizikLoyArray[i] <= 10 ? mexanikTarkib[i] = "Қум"
                         : fizikLoyArray[i] >= 10 && fizikLoyArray[i] <= 20 ? mexanikTarkib[i] = "Qumloq"
@@ -61,7 +60,8 @@ export default function TableNatija({values1}) {
                     sum5 /= parseFloat(listData[8].qqal) * parseFloat(values1[7][7])
                     jamiQiymatlar[8] = sum4
                     jamiQiymatlar[9] = sum5
-                    jamiPerArray[8]= sum6
+                    sum6 = sum4 + sum5
+                    jamiPerArray[8]= sum6.toFixed()
                     sum4 = 0; sum5 = 0; sum6 = 0
                     
                     jamiQiymatlar[9] <= 10 ? mexanikTarkibJami = "Qum"
