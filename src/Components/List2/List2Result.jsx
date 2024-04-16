@@ -74,22 +74,15 @@ export default function List2Result({jadvalQiymatlari2}) {
                     className="border-r px-2 border-neutral-300">
                     Тип (N%)
                 </th>
-                <th
-                    scope="col"
-                    rowSpan={2}
-                    className="border-r px-2 border-neutral-300">
-                    Шурланиш даражаси
-                </th>
             </tr>
         </thead>
-        <tbody className='h-[325px]'>
+        <tbody className=''>
         {/* 1-qatar */}
         {listData.map((item ,index)=> (
             index < 8 ? 
-            <tr key={ item.id} className={`${index % 2 == 1 ? "bg-gray-100" : ""} border-b font-medium`}>
+            <tr key={ item.id} className={`${index % 2 == 1 ? "bg-gray-100" : ""} border-b font-medium h-[36.6px]`}>
                 <td className='border-r px-2 min-w-[150px]'>{results[0][index]}</td>
                 <td className='border-r'>{results[1][index]}</td>
-                <td className='border-r'>{"NaN"}</td>
             </tr> 
             : ""
         ))}

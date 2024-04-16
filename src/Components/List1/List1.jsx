@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import './list1.css'
 import TableInputHead from './tableInputHead';
 import { useDispatch, useSelector } from 'react-redux';
 import { valueSetSuccess } from '../../Reducer/ValuesList1';

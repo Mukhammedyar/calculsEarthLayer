@@ -14,8 +14,8 @@ export default function List3Input({handleInputChange, values1, setValues1}) {
   useEffect(() => {
     const getValueDocs = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, "Values")); // Firestore'dan belgeleri al
-        const newData = querySnapshot.docs.map(doc => doc.data().data); // Verileri diziye dönüştür
+        const querySnapshot = await getDocs(collection(db, "Values")); 
+        const newData = querySnapshot.docs.map(doc => doc.data().data);
         setValues1(newData);
         dispatch(valueSetSuccess([...newData]))
       } catch (error) {
@@ -27,7 +27,7 @@ export default function List3Input({handleInputChange, values1, setValues1}) {
   }, [db]);
 
   return (
-    <tbody className='text-xs md:text-sm h-[300px]'>
+    <tbody className='text-xs md:text-sm'>
           {values1.map((row, rowIndex) => (
             <tr key={rowIndex} className='border-b'>
               {row.map((qiymat, colIndex) => (

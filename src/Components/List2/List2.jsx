@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import './tableInput.css'
 import TableConst from './tableConstList2'
 import TableInput from './TableInput'
 import List2Result from './List2Result'
-import { useDispatch, useSelector } from 'react-redux'
-import { natiyjaValuesSuccess, tipPerSuccess, tipSuccess, value2SetStart, value2SetSuccess } from '../../Reducer/ValueList2'
+import { useDispatch } from 'react-redux'
+import { natiyjaValuesSuccess} from '../../Reducer/ValueList2'
 import { db } from '../../config/firebase'
 import { doc, setDoc } from 'firebase/firestore'
 

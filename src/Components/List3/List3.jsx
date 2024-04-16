@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import '../List2/tableInput.css'
 import List3Input from './List3Input';
 import { useDispatch } from 'react-redux';
 import { value2SetSuccess } from '../../Reducer/ValueList2';
@@ -7,7 +8,7 @@ import List3Result from './List3Result';
 import { useSelector } from 'react-redux'
 import { plo, qqal } from '../../API/tableList2'
 import { jamiQiymatlarSuccess, tigizQoldiqSuccess, valuesResultSuccess } from '../../Reducer/List3Values';
-import { doc, setDoc } from 'firebase/firestore';
+import { collection, doc, getDocs, setDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import ShorYuvishCalculing from './ShorYuvishCalculing';
 
@@ -27,7 +28,7 @@ function List3() {
 
       dispatch(value2SetSuccess(newQiymat))
       await setDoc(doc(db, "ValuesList2", `row_${rowIndex}`), { data: newQiymat[rowIndex] });
-
+      
       let multipliedArray = [];
       for (let i = 0; i < jadvalQiymatlari.length; i++) {
         let multipliedRow = [];
@@ -56,16 +57,23 @@ function List3() {
 };
 
   useEffect(() => {
-    try {
-      const ConstResultPlo = PloConstResult.map((row, rowIndex) => {
-        return parseFloat(plo[rowIndex].plo) * parseFloat(qqal[rowIndex].qqal) * parseFloat(values[rowIndex][7]); 
-      });;
-
-      dispatch(tigizQoldiqSuccess(ConstResultPlo));
-    } catch (error) {
-      console.log(error);
+    const dataFetching = async () => {
+      try {
+        const tigizQoldiqQuery = await getDocs(collection(db, "List2TableLists")); 
+        const tigizQoldiqArray = tigizQoldiqQuery.docs.map(doc => doc.data().data);
+        const qatlamQalinligiQuery = await getDocs(collection(db, "list1QatlamQalinligi")); 
+        const qatlamQalinligi = qatlamQalinligiQuery.docs.map(doc => doc.data().arr);
+        let qqalArray = qatlamQalinligi[1]
+        const ConstResultPlo = PloConstResult.map((row, rowIndex) => {
+          return parseFloat(tigizQoldiqArray[rowIndex][2]) * parseFloat(qqalArray[rowIndex]) * parseFloat(values[rowIndex][7]); 
+        });;
+        dispatch(tigizQoldiqSuccess(ConstResultPlo));
+      } catch (error) {
+        console.log(error);
+      }
     }
-  }, [db, loggedIn])
+    dataFetching()
+  }, [db, loggedIn,])
   return (
     <div className='min-h-[100vh] px-10 md:px-20'>
       <div className='flex mt-5 justify-center items-start gap-2'>

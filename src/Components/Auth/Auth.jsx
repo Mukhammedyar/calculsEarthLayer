@@ -14,12 +14,14 @@ function Auth() {
         e.preventDefault()
         dispatch(signUserStart())
         try {
-          if (value.login === "admin" && value.password === "admin1234") {
-            dispatch(signUserSuccess()) 
+          // if (value.login === "admin" && value.password === "admin1234") {
+          //   dispatch(signUserSuccess()) 
+          //   navigate('/list1')
+          // } else {
+          //   setValue({ login: "", password: "" })
+          // }
+          dispatch(signUserSuccess()) 
             navigate('/list1')
-          } else {
-            setValue({ login: "", password: "" })
-          }
         } catch (error) {
             console.log(error);
         }
@@ -46,7 +48,7 @@ function Auth() {
         <Button
           className={"bg-blue-500 text-white disabled:bg-blue-300 font-medium rounded-md mt-4"}
           onClick={signInHandler}
-          disabled= {value.password == "" || value.password=="" ? true : false}
+          // disabled= {value.password == "" || value.password=="" ? true : false}
         >
           SignIn
         </Button>

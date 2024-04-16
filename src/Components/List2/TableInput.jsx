@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import './tableInput.css'
 import List2Head from './List2Head';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../config/firebase';
-import { useSelector } from 'react-redux';
 
 export default function TableInput({ handleChange, jadvalQiymatlari, setJadvalQiymatlari, natijaValues , setNatiyjaValues}) {
     // const {natiyjaValues} = useSelector(state => state.valuesList2)
@@ -30,9 +29,9 @@ export default function TableInput({ handleChange, jadvalQiymatlari, setJadvalQi
         <List2Head/>
         <tbody className=''>
             {jadvalQiymatlari.map((row, rowIndex) => (
-                <tr key={rowIndex} className='border-b border-neutral-300 text-xs'>
+                <tr key={rowIndex} className='border-b border-neutral-300 text-xs tablerow'>
                 {row?.map((qiymat, colIndex) => (
-                    <td key={colIndex} className='w-[80px] border-r border-neutral-300 px-0 bg-white text-black'>
+                    <td key={colIndex} className='w-[80px] border-r border-neutral-300 px-0 bg-white text-black tablerow'>
                         <input
                             type={"number"}
                             step={0.1}
@@ -43,9 +42,9 @@ export default function TableInput({ handleChange, jadvalQiymatlari, setJadvalQi
                             ${ +qiymat > 100
                                 ? 'border-1 border-red-500 text-red-500'
                                 : "border-none focus:ring-0 text-gray-800 "
-                            } py-[2px] max-w-[100px] md:w-[80px] lg:w-[80px] font-medium px-1 mx-0 focus:outline-0`}
+                            } max-w-[100px] md:w-[80px] lg:w-[80px] font-medium px-1 mx-0 focus:outline-0`}
                         />
-                        <table className='w-full h-full'>
+                        <table className='w-full'>
                             <tbody>
                                 <tr>
                                     <td className='bg-slate-200 text-blue-800 w-[100px] md:w-[80px] text-start px-2 font-medium'>

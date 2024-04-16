@@ -4,14 +4,17 @@ import { plo } from '../../API/tableList2'
 import { useDispatch, useSelector } from 'react-redux'
 import { tigizQoldiqJamiSuccess } from '../../Reducer/List3Values'
 import { db } from '../../config/firebase'
-import { doc, setDoc } from 'firebase/firestore'
+import { collection, getDocs } from 'firebase/firestore'
 
 
 export default function List3Const() {
     const dispatch = useDispatch()
+    const { length } = useSelector(state => state.tableLength)
     const [listData, setListData] = useState(list1)
     const [ploData, setPloData] = useState(plo)
     const { tigizQoldiq } = useSelector(state => state.valuesList3)
+    const [values, setValues] = useState(Array(length).fill(Array(2).fill('')))
+    const [tigizQoldiqArray, setTigizQoldiqArray] = useState(Array(length).fill(Array(2).fill('')))
 
     const jamiTigizQoldiq = () => {
         let sum = 0
@@ -21,14 +24,24 @@ export default function List3Const() {
         return sum
     }
     let jamiTigizQoldiqArray = jamiTigizQoldiq()
-    
 
     useEffect(() => {
         const dataFetching = async () => {
             dispatch(tigizQoldiqJamiSuccess(jamiTigizQoldiqArray))
+            const querySnapshot = await getDocs(collection(db, "List2TableLists")); 
+            const newData = querySnapshot.docs.map(doc => doc.data().data);
+            newData.length = parseFloat(length)
+            
+            const newArrValues = newData.map(row => row.slice(0, 2));
+            const newArrTigizQoldiq = newData.map(row => row.slice(2, 3));
+            setValues(newArrValues)
+            setTigizQoldiqArray(newArrTigizQoldiq)
         }
         dataFetching()
-    },[db, tigizQoldiq])
+    }, [db, tigizQoldiq])
+    
+
+    
 
   return (
     <table
@@ -68,30 +81,32 @@ export default function List3Const() {
                 </th>
         </tr>
         </thead>
-        <tbody className='h-[375px] '>
+        <tbody className=''>
         {/* 1-qatar */}
-        {listData.map((item, index) => (
-            <tr key={item.id} className={`border-b ${index == 8 ? "bg-blue-300": ""}`}>
-                <td className='border-r font-medium w-auto'>{index == 8 ? "" : item.id}</td>
-                <td className='border-r font-medium'>{index == 8 ? "" : item.ych}</td>
-                <td className='border-r font-medium'>{index == 8 ? "" : item.tch}</td>
-                <td className='border-r w-[80px] font-medium' colSpan={2}>
-                    {ploData[index]?.plo}
-                        {index == 8
-                            ? jamiTigizQoldiq()
-                        : <table className='w-full h-full'>
-                            <tbody>
-                                <tr>
-                                    <td className='bg-slate-200 text-blue-700 text-start px-2 font-medium'>
-                                        { tigizQoldiq == "" ? "null" : tigizQoldiq[index]?.toFixed(3)}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    }
+        {values.map((row , rowIndex)=> (
+           <tr key={rowIndex} className={`bg-white border-b font-normal `}>
+                <th className='border-r px-1 w-[30px]'>{listData[rowIndex].id}</th>
+                {row.map((qiymat, colIndex) => (
+                    <td key={colIndex} className='border-r p-0'>{qiymat}</td>
+                ))}
+                <td className='border-r p-0'>{tigizQoldiqArray[rowIndex]}
+                    <table className='w-full'>
+                        <tbody>
+                            <tr>
+                                <td className='bg-slate-200 h-[20px] text-blue-700 px-2 font-medium text-center'>
+                                    {tigizQoldiq[rowIndex].toString().slice(0,5)}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </td>
             </tr> 
         ))}
+        <tr className='bg-blue-300 font-normal h-[31px]'>
+            <td className='border-r'>Jami</td>
+            <td className='border-r' colSpan={2}></td>
+            <td className='border-'>{jamiTigizQoldiqArray}</td>
+        </tr>
     </tbody>
     </table>
   )

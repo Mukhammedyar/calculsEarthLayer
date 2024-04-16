@@ -37,9 +37,9 @@ export default function List3Input({ jadvalQiymatlari, setJadvalQiymatlari, hand
         <List3Head/>
         <tbody>
             {jadvalQiymatlari.map((row, rowIndex) => (
-                <tr key={rowIndex} className='border-b border-neutral-300 text-xs'>
+                <tr key={rowIndex} className='border-b border-neutral-300 text-xs tablerow'>
                 {row.map((qiymat, colIndex) => (
-                    <td key={colIndex} className='w-[80px] border-r border-neutral-300 px-0 bg-white text-black'>
+                    <td key={colIndex} className='w-[80px] border-r border-neutral-300 px-0 bg-white text-black table-row-item'>
                         <input
                             type={"number"}
                             step={0.1}
@@ -50,12 +50,12 @@ export default function List3Input({ jadvalQiymatlari, setJadvalQiymatlari, hand
                             ${ +qiymat > 100
                                 ? 'border-1 border-red-500 text-red-500'
                                 : "border-none focus:ring-0 text-gray-800 "
-                            } py-[3px] max-w-[100px] md:w-[80px] lg:w-[80px] font-medium px-1 mx-0 focus:outline-0`}
+                            } h-auto max-w-[100px] md:w-[80px] lg:w-[80px] font-medium px-1 mx-0 focus:outline-0`}
                         />
-                        <table className='w-full h-full'>
+                        <table className='w-full'>
                             <tbody>
                                 <tr>
-                                    <td className='bg-slate-200 py-[2px] text-blue-800 w-[100px] md:w-[80px] text-start px-1 font-medium'>
+                                    <td className='bg-slate-200 text-blue-800 w-[100px] md:w-[80px] text-start px-1 font-medium'>
                                         {valueResult[rowIndex][colIndex]?.toString().slice(0,5)}
                                     </td>
                                 </tr>
@@ -65,9 +65,9 @@ export default function List3Input({ jadvalQiymatlari, setJadvalQiymatlari, hand
                 ))}
                 </tr>
             ))}
-              <tr className='border-b border-neutral-300 text-xs h-[20px]'>
+              <tr className='border-neutral-300 text-xs p-0 m-0 table-row-last'>
                 {jamiQiymatArray.map((qiymat, index) => (
-                    <td key={index} className='w-[80px] border-r border-neutral-30 font-medium bg-blue-300 text-start px-1 text-black'>
+                    <td key={index} className='w-[80px] border-r border-neutral-30 font-medium bg-blue-300 text-start px-1 py-0 text-black '>
                         {qiymat.toString().slice(0,6)}
                     </td>
                 ))}
