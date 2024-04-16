@@ -12,8 +12,11 @@ function App() {
       {loggedIn? <Navbar />:""}
      <div className='grid place-items-center'>
       {loggedIn? <Footer />:""} 
-     </div>
-     <AppRouter/>
+      </div>
+      <div className="flex justify-center items-center">
+        <AppRouter/>
+      </div>
+     
     </div>
   )
 }

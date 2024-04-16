@@ -95,19 +95,19 @@ export default function List3Result({jadvalQiymatlari}) {
                 </th>
             </tr>
         </thead>
-        <tbody className='h-[377px]'>
+        <tbody className=''>
             {/* 1-qatar */}
             {listData.map((item ,index)=> (
                 index < 8 ? 
-                <tr key={ item.id} className='border-b font-medium text-sm'>
+                <tr key={ item.id} className='border-b font-medium text-sm h-[36.6px]'>
                     <td className='border-r px-1 min-w-[150px]'>{results[3][index]}</td>
                     <td className='border-r px-1 '>{results[4][index]}</td>
                     <td className='border-r px-1 '>{""}</td>
                 </tr> 
-                : <tr key={ item.id} className='border-b bg-blue-300 font-medium text-sm h-[21px]'>
+                : <tr key={ item.id} className='border-b bg-blue-300 font-medium text-sm p-0 table-row-last'>
                     <td className='border-r min-w-[100px]'></td>
                     <td className='border-r '></td>
-                    <td className='border-r '>
+                    <td className='border-r min-w-[160px] p-0'>
                         {results[2]}
                     </td>
                 </tr> 

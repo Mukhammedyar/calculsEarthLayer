@@ -110,7 +110,7 @@ export default function TableLists() {
                             ? 'border-1 border-red-500  text-red-500'
                             : ""
                           }
-                        w-[100px] h-[30px] md:w-[95px] focus:outline-0 text-xs md:text-sm font-medium px-1`}
+                        w-[100px] h-[30px] md:w-[75px] focus:outline-0 text-xs md:text-sm font-normal pl-2`}
                       />
                     </td>
                 ))}
