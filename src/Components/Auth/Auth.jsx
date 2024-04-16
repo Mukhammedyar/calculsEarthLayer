@@ -14,12 +14,12 @@ function Auth() {
         e.preventDefault()
         dispatch(signUserStart())
         try {
-          // if (value.login === "admin" && value.password === "admin1234") {
-          //   dispatch(signUserSuccess()) 
-          //   navigate('/list1')
-          // } else {
-          //   setValue({ login: "", password: "" })
-          // }
+          if (value.login === "admin" && value.password === "admin1234") {
+            dispatch(signUserSuccess()) 
+            navigate('/list1')
+          } else {
+            setValue({ login: "", password: "" })
+          }
           dispatch(signUserSuccess()) 
             navigate('/list1')
         } catch (error) {
@@ -28,7 +28,7 @@ function Auth() {
     }
 
   return (
-      <div className='flex h-[100vh] justify-center items-center'>    
+      <div className='flex w-full h-[100vh] justify-center items-center'>    
           <form action="" className='shadow-2xl p-4 py-3 rounded-lg lg:w-1/4 w-[60%] md:w-1/3 flex flex-col gap-2'>
             <p className="text-3xl font-bold text-yellow-600 relative text-center py-3">SignIn</p> 
             <Input 
@@ -48,7 +48,7 @@ function Auth() {
         <Button
           className={"bg-blue-500 text-white disabled:bg-blue-300 font-medium rounded-md mt-4"}
           onClick={signInHandler}
-          // disabled= {value.password == "" || value.password=="" ? true : false}
+          disabled= {value.password == "" || value.password=="" ? true : false}
         >
           SignIn
         </Button>
