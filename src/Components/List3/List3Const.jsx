@@ -94,7 +94,7 @@ export default function List3Const() {
                         <tbody>
                             <tr>
                                 <td className='bg-slate-200 h-[20px] text-blue-700 px-2 font-medium text-center'>
-                                    {tigizQoldiq[rowIndex].toString().slice(0,5)}
+                                    {tigizQoldiq[rowIndex]?.toString().slice(0,5)}
                                 </td>
                             </tr>
                         </tbody>
