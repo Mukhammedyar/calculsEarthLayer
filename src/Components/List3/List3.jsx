@@ -60,12 +60,13 @@ function List3() {
     const dataFetching = async () => {
       try {
         const tigizQoldiqQuery = await getDocs(collection(db, "List2TableLists")); 
-        const tigizQoldiqArray = tigizQoldiqQuery.docs.map(doc => doc.data().data);
+        const tigizQoldiqArray = tigizQoldiqQuery.docs.map(doc => doc.data().newArray);
         const qatlamQalinligiQuery = await getDocs(collection(db, "list1QatlamQalinligi")); 
         const qatlamQalinligi = qatlamQalinligiQuery.docs.map(doc => doc.data().arr);
         let qqalArray = qatlamQalinligi[1]
+        let tigizQoldiq = tigizQoldiqArray[0]
         const ConstResultPlo = PloConstResult.map((row, rowIndex) => {
-          return parseFloat(tigizQoldiqArray[rowIndex][2]) * parseFloat(qqalArray[rowIndex]) * parseFloat(values[rowIndex][7]); 
+          return parseFloat(tigizQoldiq[rowIndex]) * parseFloat(qqalArray[rowIndex]) * parseFloat(values[rowIndex][7]); 
         });;
         dispatch(tigizQoldiqSuccess(ConstResultPlo));
       } catch (error) {
@@ -73,7 +74,7 @@ function List3() {
       }
     }
     dataFetching()
-  }, [db, loggedIn,])
+  }, [db, loggedIn])
   return (
     <div className='min-h-[100vh] px-10 md:px-20'>
       <div className='flex mt-5 justify-center items-start gap-2'>

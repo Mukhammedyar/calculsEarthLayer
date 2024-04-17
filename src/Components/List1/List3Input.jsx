@@ -1,5 +1,5 @@
-import { collection, doc, getDocs, setDoc } from 'firebase/firestore';
-import React, { useEffect, useState } from 'react'
+import { collection, getDocs } from 'firebase/firestore';
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { db } from '../../config/firebase';
 import { valueSetSuccess } from '../../Reducer/ValuesList1';
@@ -7,7 +7,7 @@ import { valueSetSuccess } from '../../Reducer/ValuesList1';
 
 
 export default function List3Input({handleInputChange, values1, setValues1}) {
-  const { jamiNatiyja,values } = useSelector(state => state.valuesList1)
+  const { jamiNatiyja } = useSelector(state => state.valuesList1)
   const dispatch = useDispatch()
   
 

@@ -28,14 +28,14 @@ export default function List3Const() {
     useEffect(() => {
         const dataFetching = async () => {
             dispatch(tigizQoldiqJamiSuccess(jamiTigizQoldiqArray))
-            const querySnapshot = await getDocs(collection(db, "List2TableLists")); 
+            const querySnapshot = await getDocs(collection(db, "List1TableLists")); 
             const newData = querySnapshot.docs.map(doc => doc.data().data);
             newData.length = parseFloat(length)
             
-            const newArrValues = newData.map(row => row.slice(0, 2));
-            const newArrTigizQoldiq = newData.map(row => row.slice(2, 3));
-            setValues(newArrValues)
-            setTigizQoldiqArray(newArrTigizQoldiq)
+            const newArrValues = await getDocs(collection(db, "List2TableLists")); 
+            const newArrTigizQoldiq = newArrValues.docs.map(doc => doc.data().newArray);
+            setValues(newData)
+            setTigizQoldiqArray(newArrTigizQoldiq[0])
         }
         dataFetching()
     }, [db, tigizQoldiq])

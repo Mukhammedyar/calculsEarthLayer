@@ -17,7 +17,6 @@ import {doc, setDoc} from 'firebase/firestore';
 
 function List1() {
   const dispatch = useDispatch()
-  const { values } = useSelector(state => state.valuesList1)
   const [values1 , setValues1] = useState(Array(8).fill(Array(8).fill(0)))
 
 

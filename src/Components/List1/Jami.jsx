@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
+import { db } from '../../config/firebase'
 
 export default function Jami() {
-  const {isLoading, jamiPercent}=useSelector(state => state.valuesList1)
+    const { isLoading, jamiPercent } = useSelector(state => state.valuesList1)
 
   return (
     <table className='shadow-lg w-[50px] md:w-[70px] border bg-white text-center text-xs md:text-sm font-light dark:border-neutral-500 rounded-lg'>

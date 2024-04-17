@@ -9,7 +9,6 @@ import { db } from '../../config/firebase'
 export default function TableLists() {
     const [listData, setListData] = useState(list1)
     const { length } = useSelector(state => state.tableLength)
-    const dispatch = useDispatch()
     const [values , setValues] = useState(Array(length).fill(Array(2).fill('')))
     const [results , setResults] = useState([])
     const [resultsSum , setResultsSum] = useState([])
@@ -22,7 +21,7 @@ export default function TableLists() {
             await setDoc(doc(db, "List1TableLists", `row_${rowIndex}`), { data: newArray[rowIndex] });
             let arr = []
             for (let i = 0; i < length; i++) {
-                arr.push(parseFloat(newArray[i][0]) + parseFloat(newArray[i][1]))
+                arr.push(parseFloat(newArray[i][1]) - parseFloat(newArray[i][0]))
             }
             await setDoc(doc(db, "list1QatlamQalinligi", "nAdN4kZ5OoALisjjcRAR"), { arr });
             setResults(arr)
