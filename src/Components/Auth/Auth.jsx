@@ -20,8 +20,7 @@ function Auth() {
           } else {
             setValue({ login: "", password: "" })
           }
-          dispatch(signUserSuccess()) 
-            navigate('/list1')
+          navigate('/list1')
         } catch (error) {
             console.log(error);
         }
