@@ -5,7 +5,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 
 export default function TableInput({ handleChange, jadvalQiymatlari, setJadvalQiymatlari, natijaValues , setNatiyjaValues}) {
-    // const {natiyjaValues} = useSelector(state => state.valuesList2)
+
     useEffect(() => { 
         const getValue2Docs = async () => {
             try {

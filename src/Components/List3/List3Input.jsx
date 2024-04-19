@@ -68,7 +68,7 @@ export default function List3Input({ jadvalQiymatlari, setJadvalQiymatlari, hand
               <tr className='border-neutral-300 text-xs p-0 m-0 table-row-last'>
                 {jamiQiymatArray.map((qiymat, index) => (
                     <td key={index} className='w-[80px] border-r border-neutral-30 font-medium bg-blue-300 text-start px-1 py-0 text-black '>
-                        {qiymat.toString().slice(0,6)}
+                        {qiymat?.toString().slice(0,6)}
                     </td>
                 ))}
                 </tr>
