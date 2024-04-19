@@ -150,7 +150,7 @@ export const fetchData = async (
     await setDoc(doc(db, "Results", "jamiYigindi"), { data: jamiPerArray });
     await setDoc(doc(db, "Results", "jamiInputs"), {
       data: jamiQiymatlarSliced,
-   8 });
+    });
     await setDoc(doc(db, "Results", "fizikQum"), { data: fizikQumArray });
     await setDoc(doc(db, "Results", "fizikLoy"), { data: fizikLoyArray });
     await setDoc(doc(db, "Results", "mexanikTarkib"), { data: mexanikTarkib });
