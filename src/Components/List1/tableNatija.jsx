@@ -23,19 +23,19 @@ export default function TableNatija({values1}) {
                     scope="col"
                     rowSpan={2}
                     className="border-r px-2 border-neutral-300">
-                    Физик қум
+                    Fizik qum
                 </th>
                 <th
                     scope="col"
                     rowSpan={2}
                     className="border-r px-2 border-neutral-300">
-                    Физик лой
+                    Fizik loy
                 </th>
                 <th
                     scope="col"
                     rowSpan={2}
                     className="border-r px-2 border-neutral-300">
-                    Механик таркиб
+                    Mexanik tarkib
                 </th>
             </tr>
         </thead>

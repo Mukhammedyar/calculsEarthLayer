@@ -78,14 +78,23 @@ function List3() {
   return (
     <div className='min-h-[100vh] px-10 md:px-20'>
       <div className='flex mt-5 justify-center items-start gap-2'>
-        <List3Const/>
-        <List3Input 
-          jadvalQiymatlari={jadvalQiymatlari}
-          setJadvalQiymatlari={setJadvalQiymatlari}
-          handleChange={handleChange}
-          valueResult={valueResult}
-          setValueResult={setValueResult}/>
-        <List3Result jadvalQiymatlari={jadvalQiymatlari} />
+        <div>
+          Qatlam qiymatlari
+          <List3Const />
+        </div>
+        <div>
+          Qiymat kiritish
+          <List3Input 
+            jadvalQiymatlari={jadvalQiymatlari}
+            setJadvalQiymatlari={setJadvalQiymatlari}
+            handleChange={handleChange}
+            valueResult={valueResult}
+            setValueResult={setValueResult}/>
+        </div>
+        <div>
+          Natiyjaalr
+          <List3Result jadvalQiymatlari={jadvalQiymatlari} />
+        </div>
       </div>
       <ShorYuvishCalculing jadvalQiymatlari={jadvalQiymatlari}/>
     </div>

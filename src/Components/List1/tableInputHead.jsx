@@ -8,25 +8,25 @@ export default function TableInputHead() {
                     colSpan={3}
                     scope="col"
                     className="border-r min-w-[100px] md:min-w-[160px] border-neutral-300">
-                    Қум
+                    Qum
                 </th>
                 <th
                     colSpan={3}
                     scope="col"
                     className="border-r px-2 min-w-[100px] md:min-w-[150px] border-neutral-300">
-                    Чаң
+                    Chang
                 </th>
                 <th
                     colSpan={1}
                     scope="col"
                     className="border-r px-2 border-neutral-300">
-                    Ил
+                    Il'
                 </th>
                 <th
                     rowSpan={2}
                     scope="col"
                     className="border-r px-2 border-neutral-300">
-                    Хажми огирлигиб г/см куб
+                    Xajm og'irligi g/sm kub
                 </th>
             </tr>
             

@@ -30,10 +30,10 @@ export default function List3Result({jadvalQiymatlari}) {
                 newdata.forEach((item, index) => {
                     const ratio = item[2] / item[1];
                     typeArray[index] = 
-                        ratio > 0 && ratio <= 0.5 ? "Хлоридли" :
-                        ratio > 0.5 && ratio <= 1 ? "Сульфат-хлоридли" :
-                        ratio > 1 && ratio <= 5 ? "Хлорид-сульфатли" :
-                        ratio > 5 ? "Сульфатли" : "---"
+                        ratio > 0 && ratio <= 0.5 ? "Xloridli" :
+                        ratio > 0.5 && ratio <= 1 ? "Sulfat-xloridli" :
+                        ratio > 1 && ratio <= 5 ? "Xlorid-sulfatli" :
+                        ratio > 5 ? "SUlfsatli" : "---"
                     typePer[index] = 
                         ratio > 0 && ratio <= 0.5 ? "1" :
                         ratio > 0.5 && ratio <= 1 ? "2" :
@@ -42,11 +42,11 @@ export default function List3Result({jadvalQiymatlari}) {
                 });
                 
                 function getTigizStatus(tigizQoldiqJami) {
-                    return tigizQoldiqJami > 0 && tigizQoldiqJami <= 50 ? "Шурланмаган" 
-                        : tigizQoldiqJami > 50 && tigizQoldiqJami <= 100 ? "Кучсиз шурланган" 
-                        : tigizQoldiqJami > 100 && tigizQoldiqJami <= 200 ? "Уртача шурланган"
-                        : tigizQoldiqJami > 200 && tigizQoldiqJami <= 300 ? "Кучли шурланган"
-                        : tigizQoldiqJami > 300 ? "Жуда кучли шўрланган" : "xato"
+                    return tigizQoldiqJami > 0 && tigizQoldiqJami <= 50 ? "Shorlanmagan" 
+                        : tigizQoldiqJami > 50 && tigizQoldiqJami <= 100 ? "Kuchsiz shorlangan" 
+                        : tigizQoldiqJami > 100 && tigizQoldiqJami <= 200 ? "O'rtacha shorlangan"
+                        : tigizQoldiqJami > 200 && tigizQoldiqJami <= 300 ? "Kuchli shorlangan"
+                        : tigizQoldiqJami > 300 ? "Juda kuchli shorlangan" : "--/--"
                 }
                 
                 const shorlanishDarajasiQuery = getTigizStatus(tigizQoldiqJami)
@@ -79,19 +79,19 @@ export default function List3Result({jadvalQiymatlari}) {
                     scope="col"
                     rowSpan={2}
                     className="border-r px-2 border-neutral-300">
-                    Тип
+                    Tip
                 </th>
                 <th
                     scope="col"
                     rowSpan={2}
                     className="border-r px-2 border-neutral-300">
-                    Тип (N%)
+                    Tip (N%)
                 </th>
                 <th
                     scope="col"
                     rowSpan={2}
                     className="border-r px-2 border-neutral-300">
-                    Шурланиш даржаси
+                    Sho'rlanish darajasi
                 </th>
             </tr>
         </thead>

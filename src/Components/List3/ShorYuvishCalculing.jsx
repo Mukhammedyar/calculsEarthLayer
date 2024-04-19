@@ -11,14 +11,15 @@ export default function ShorYuvishCalculing({jadvalQiymatlari}) {
             let shorYuvishArray = []
             const mexanikTarkibQuery = await getDocs(collection(db, "Results"))
             const mexanikTarkib = mexanikTarkibQuery.docs.map(doc => doc.data().data);
+            console.log(mexanikTarkib[0]);
             try {
                 const shorYuvish = () => {
                     switch (shorlanishDarajasi) {
-                        case "Шурланмаган": return calculateShorlanmagan(mexanikTarkib[0]);
-                        case "Кучсиз шурланган": return calculateKuchsizShurlangan(mexanikTarkib[0]);
-                        case "Уртача шурланган": return calculateOrtachaShorlangan(mexanikTarkib[0]);
-                        case "Кучли шурланган": return calculateKuchliShorlangan(mexanikTarkib[0]);
-                        case "Жуда кучли шўрланган": return calculateShurxoqlar(mexanikTarkib[0]);
+                        case "Shorlanmagan": return calculateShorlanmagan(mexanikTarkib[0]);
+                        case "Kuchsiz shorlangan": return calculateKuchsizShurlangan(mexanikTarkib[0]);
+                        case "O'rtacha shorlangan": return calculateOrtachaShorlangan(mexanikTarkib[0]);
+                        case "Kuchli shorlangan": return calculateKuchliShorlangan(mexanikTarkib[0]);
+                        case "Juda kuchli shorlangan": return calculateShurxoqlar(mexanikTarkib[0]);
                         default: return ["X0", "Y0", "Y0"];
                     }
                 }
@@ -100,11 +101,11 @@ export default function ShorYuvishCalculing({jadvalQiymatlari}) {
         <table className='border border-slate-500 bg-white rounded-lg p-2'>
             <tbody className=''>
                 <tr className='h-[50px] text-center font-medium'>
-                    <td className="border-r p-1 bg-blue-300 text-start border-gray-300 w-[170px]">Шўр ювиш меъёрлари (минг м3)</td>
+                    <td className="border-r p-1 bg-blue-300 text-start border-gray-300 w-[170px]">Shor yuvish meyorlari (ming metr kub)</td>
                     <td className="border-r p-1 text-orange-600 border-slate-300 w-[70px]">{shorYuvishQiymat[0]}</td>
-                    <td className="border-r p-1 bg-blue-300 text-start border-gray-300 w-[170px]">Шўр ювиш сони</td>
+                    <td className="border-r p-1 bg-blue-300 text-start border-gray-300 w-[170px]">Shor yuvish  soni</td>
                     <td className="border-r p-1 text-orange-600 border-slate-300 w-[70px]">{shorYuvishQiymat[1]}</td>
-                    <td className="border-r p-1 bg-blue-300 text-start border-gray-300 w-[170px]">Шўр ювиш муддатлари (ойлар)</td>
+                    <td className="border-r p-1 bg-blue-300 text-start border-gray-300 w-[170px]">Shor yuvish  muddatlari (oylar)</td>
                     <td className="p-1 w-[70px] text-orange-600">{shorYuvishQiymat[2]}</td>
                 </tr>
             </tbody>

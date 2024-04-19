@@ -64,32 +64,32 @@ export default function TableLists() {
                     rowSpan={2}
                     scope="col"
                     className="border-r border-neutral-300 px-1">
-                    Кесмa N0
+                    Kesma N0
                 </th>
                 <th
                     colSpan={2}
                     scope="col"
                     className="border-r  border-neutral-300">
-                    Генетик қатлам.см
+                    Genetik qatlam(sm)
                 </th>
                 <th
                     colSpan={2}
                     rowSpan={2}
                     scope="col"
                     className="border-r max-w-[100px] px-1 border-neutral-300">
-                    Қатлам қалыңлығы
+                    Qatlam qalinligi
                 </th>
             </tr>
             <tr className='bg-gray-200'>
                 <th
                     scope="col"
                     className="border-r pl-1 font-medium border-neutral-300">
-                    Жоқарғы шегара 
+                    Yuqorgi chegara
                 </th>
                 <th
                     scope="col"
                     className="border-r pr-1 font-medium border-neutral-300">
-                    Төменги шегара 
+                    Pastki chegara 
                 </th>
         </tr>
         </thead>

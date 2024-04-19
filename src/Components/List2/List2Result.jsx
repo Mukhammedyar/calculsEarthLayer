@@ -26,10 +26,10 @@ export default function List2Result({jadvalQiymatlari2}) {
                 
                 var typeArray = [] 
                 typeArray = newdata.map((row, rowIndex) => (
-                  row[2] / row[1] > 0 && row[2] / row[1] <= 0.5 ? "Хлоридли" : // CO2 va CI ustunlari bolinmasini orqali hisoblash
-                  row[2] / row[1] > 0.5 && row[2] / row[1] <= 1 ? "Сульфат-хлоридли":
-                  row[2] / row[1] > 1 && row[2] / row[1] <= 5 ? "Хлорид-сульфатли":
-                  row[2] / row[1] > 5 ? "Сульфатли" : "Сульфатли" 
+                  row[2] / row[1] > 0 && row[2] / row[1] <= 0.5 ? "Xloridli" : // CO2 va CI ustunlari bolinmasini orqali hisoblash
+                  row[2] / row[1] > 0.5 && row[2] / row[1] <= 1 ? "Sulfat-xloridli":
+                  row[2] / row[1] > 1 && row[2] / row[1] <= 5 ? "Xlorid-sulfatli":
+                  row[2] / row[1] > 5 ? "Sulfatli" : "Sulfatli" 
                 ))
                 await setDoc(doc(db, "Resul2", "typeBool"), { data: typeArray });
                 dispatch(tipSuccess(typeArray))
@@ -66,13 +66,13 @@ export default function List2Result({jadvalQiymatlari2}) {
                     scope="col"
                     rowSpan={2}
                     className="border-r px-2 border-neutral-300">
-                    Тип
+                    Tip
                 </th>
                 <th
                     scope="col"
                     rowSpan={2}
                     className="border-r px-2 border-neutral-300">
-                    Тип (N%)
+                    Tip (N%)
                 </th>
             </tr>
         </thead>

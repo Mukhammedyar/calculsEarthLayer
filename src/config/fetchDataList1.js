@@ -74,14 +74,14 @@ export const fetchData = async (db, listData, setResults, dispatch) => {
           : fizikLoyArray[i] >= 10 && fizikLoyArray[i] <= 20
           ? (mexanikTarkib[i] = "Qumloq")
           : fizikLoyArray[i] >= 20 && fizikLoyArray[i] <= 30
-          ? (mexanikTarkib[i] = "Yengil Qumloq")
+          ? (mexanikTarkib[i] = "Yengil qumoq")
           : fizikLoyArray[i] >= 30 && fizikLoyArray[i] <= 45
-          ? (mexanikTarkib[i] = "Orta Qumloq")
+          ? (mexanikTarkib[i] = "Orta qumoq")
           : fizikLoyArray[i] >= 45 && fizikLoyArray[i] <= 60
-          ? (mexanikTarkib[i] = "Ogir qumloq")
+          ? (mexanikTarkib[i] = "Ogir qumoq")
           : fizikLoyArray[i] >= 60 && fizikLoyArray[i] <= 100
           ? (mexanikTarkib[i] = "Loy")
-          : (mexanikTarkib[i] = "Nimadir Xato");
+          : (mexanikTarkib[i] = "--/--");
       }
 
       sum4 /= parseFloat(listData[8].qqal) * parseFloat(jamiQiymatlar[7]);
@@ -107,7 +107,6 @@ export const fetchData = async (db, listData, setResults, dispatch) => {
         ? (mexanikTarkibJami = "Loy")
         : (mexanikTarkibJami = "Nimadir Xato");
     });
-
     await setDoc(doc(db, "Results", "jamiYigindi"), { data: jamiPerArray });
     await setDoc(doc(db, "Results", "jamiInputs"), { data: jamiQiymatlar });
     await setDoc(doc(db, "Results", "fizikQum"), { data: fizikQumArray });

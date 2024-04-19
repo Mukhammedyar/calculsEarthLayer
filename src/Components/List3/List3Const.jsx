@@ -52,32 +52,32 @@ export default function List3Const() {
                     rowSpan={2}
                     scope="col"
                     className="border-r w-[50px] border-neutral-300 ">
-                    Кесмa N0
+                    Kesma N0
                 </th>
                 <th
                     colSpan={2}
                     scope="col"
                     className="border-r px-2 border-neutral-300">
-                    Чуқурлик.см
+                    Chuqurlik.sm
                 </th>
                 <th
                     colSpan={2}
                     rowSpan={2}
                     scope="col"
                     className="border-r px-2 border-neutral-300">
-                    Тығыз қалдық 
+                    Zich qoldiq 
                 </th>
             </tr>
             <tr className='bg-gray-200'>
                 <th
                     scope="col"
                     className="border-r px-2 font-medium border-neutral-300">
-                    Жоқарғы шегара 
+                    Yuqorgi chegara 
                 </th>
                 <th
                     scope="col"
                     className="border-r px-2 font-medium border-neutral-300">
-                    Төменги шегара 
+                    Pastgi chegara
                 </th>
         </tr>
         </thead>
@@ -102,7 +102,7 @@ export default function List3Const() {
                 </td>
             </tr> 
         ))}
-        <tr className='bg-blue-300 font-normal h-[31px]'>
+        <tr className='bg-blue-300 font-medium h-[31px]'>
             <td className='border-r'>Jami</td>
             <td className='border-r' colSpan={2}></td>
             <td className='border-'>{jamiTigizQoldiqArray}</td>

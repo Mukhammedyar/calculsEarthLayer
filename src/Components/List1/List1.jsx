@@ -43,7 +43,7 @@ function List1() {
     <div className='mt-10 flex items-start flex-col px-10 gap-5 min-h-[100vh]'>
         <div className="flex gap-2 flex-wrap md:flex-nowrap items-start">
           <div>
-            Ozgarmas Qiymatlar 
+            Qatlam qiymatlari
             <TableLists/>
           </div>
           <div>
@@ -57,7 +57,7 @@ function List1() {
             </table>
           </div>
           <div>
-            <p>Jami</p>
+            <p>Ja'mi</p>
             <Jami/>
           </div>
           <div>

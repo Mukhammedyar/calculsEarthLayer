@@ -51,32 +51,32 @@ export default function TableConst() {
                     rowSpan={2}
                     scope="col"
                     className="border-r w-[50px] border-neutral-300 ">
-                    Кесмa N0
+                    Kesma N0
                 </th>
                 <th
                     colSpan={2}
                     scope="col"
                     className="border-r  px-2 border-neutral-300">
-                    Чуқурлик.см
+                    Chuqurlik.sm
                 </th>
                 <th
                     colSpan={2}
                     rowSpan={2}
                     scope="col"
                     className="border-r  px-2 border-neutral-300">
-                    Тығыз қалдық 
+                    Zich qoldiq
                 </th>
             </tr>
             <tr className='bg-gray-200'>
                 <th
                     scope="col"
                     className="border-r px-2 font-medium border-neutral-300">
-                    Жоқарғы шегара 
+                    Yuqorgi chegara 
                 </th>
                 <th
                     scope="col"
                     className="border-r px-2 font-medium border-neutral-300">
-                    Төменги шегара 
+                    Pastgi chegara 
                 </th>
         </tr>
         </thead>

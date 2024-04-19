@@ -50,11 +50,11 @@ function List2() {
     <div className='px-10 my-5 flex flex-col items-start min-h-[100vh]'>
       <div className='flex flex-wrap md:flex-nowrap justify-center items-start gap-1'>
         <div>
-          <p className="text-xl pb-2">Ozgarmas Qiymatlar</p>
+          <p className="text-xl pb-2">Qatlam qiymatlari</p>
           <TableConst />
         </div>
         <div className=''>
-          <p className="text-xl pb-2">Qiymat Kiritish</p>
+          <p className="text-xl pb-2">Qiymat kiritish</p>
           <TableInput 
             handleChange={handleChange2}
             jadvalQiymatlari={jadvalQiymatlari2}

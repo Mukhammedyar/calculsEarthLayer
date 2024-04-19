@@ -13,7 +13,7 @@ export default function Jami() {
                     rowSpan={2}
                     scope="col"
                     className="border-r border-neutral-300">
-                    Жами %
+                    Ja'mi %
                 </th>
             </tr>
         </thead>
