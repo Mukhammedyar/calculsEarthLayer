@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { qqalList1 } from '../../API/tableList2'
 import { useDispatch } from 'react-redux'
 import { db } from '../../config/firebase'
-import { fetchData } from '../../config/fetchDataList1'
+import { fetchData } from '../../Functions/fetchDataList1'
 
 
 export default function TableNatija({values1}) {
     const [listData, setListData] = useState(qqalList1)
     const dispatch = useDispatch()
     const [results, setResults] = useState(Array(6).fill(Array(8).fill("")))
+    const theadValues = ["Fizik qum", "Fizik loy", "Mexanik tarkib"]
     
     useEffect(() => {
         fetchData(db, listData, setResults, dispatch)
@@ -19,24 +20,15 @@ export default function TableNatija({values1}) {
         className="shadow-lg border bg-white text-center font-light dark:border-neutral-500 rounded-lg">
         <thead className="border-b h-[82px] text-xs md:text-sm border-gray-300 font-medium dark:border-neutral-500 rounded">
             <tr className='bg-gray-200 border-b border-neutral-300 font-normal'>
-                <th
-                    scope="col"
-                    rowSpan={2}
-                    className="border-r px-2 border-neutral-300">
-                    Fizik qum
-                </th>
-                <th
-                    scope="col"
-                    rowSpan={2}
-                    className="border-r px-2 border-neutral-300">
-                    Fizik loy
-                </th>
-                <th
-                    scope="col"
-                    rowSpan={2}
-                    className="border-r px-2 border-neutral-300">
-                    Mexanik tarkib
-                </th>
+                {theadValues.map(item => (
+                   <th
+                        scope="col"
+                        rowSpan={2}
+                        className="border-r px-2 border-neutral-300">
+                        {item}
+                    </th> 
+                ))}
+                
             </tr>
         </thead>
         <tbody className='h-[300px] text-xs md:text-sm'>

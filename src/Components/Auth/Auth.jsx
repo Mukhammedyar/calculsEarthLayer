@@ -28,7 +28,7 @@ function Auth() {
 
   return (
       <div className='flex w-full h-[100vh] justify-center items-center'>    
-          <form action="" className='shadow-2xl p-4 py-3 rounded-lg lg:w-1/4 w-[60%] md:w-1/3 flex flex-col gap-2'>
+          <form action="" className=' bg-white shadow-2xl p-4 py-3 rounded-lg lg:w-1/4 w-[60%] md:w-1/3 flex flex-col gap-2'>
             <p className="text-3xl font-bold text-yellow-600 relative text-center py-3">SignIn</p> 
             <Input 
                 placeholder={"login..."}

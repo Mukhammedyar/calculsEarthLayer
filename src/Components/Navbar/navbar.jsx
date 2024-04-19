@@ -26,7 +26,7 @@ function Navbar() {
   }
 
   return (
-    <div className='flex z-10 px-10 md:px-16 items-center justify-between sticky top-0 h-[40px] md:h-[50px] bg-[rgba(255,255,255,.5)] shadow-md backdrop-blur-sm'>
+    <div className='flex z-10 px-10 md:px-16 items-center justify-between sticky top-0 h-[40px] md:h-[50px] bg-[rgba(255,255,255,.7)] shadow-md backdrop-blur-sm'>
       <h1 className='font-bold text-cyan-700 text-lg'>ЭМБ Дастур</h1>
       <form action="">
         <input 

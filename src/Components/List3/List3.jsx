@@ -6,7 +6,7 @@ import { value2SetSuccess } from '../../Reducer/ValueList2';
 import List3Const from './List3Const';
 import List3Result from './List3Result';
 import { useSelector } from 'react-redux'
-import { plo, qqal } from '../../API/tableList2'
+import { qqal } from '../../API/tableList2'
 import { jamiQiymatlarSuccess, tigizQoldiqSuccess, valuesResultSuccess } from '../../Reducer/List3Values';
 import { collection, doc, getDocs, setDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
