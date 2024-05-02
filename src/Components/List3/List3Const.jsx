@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { list1 } from '../../API/tableList'
-import { plo } from '../../API/tableList2'
 import { useDispatch, useSelector } from 'react-redux'
 import { tigizQoldiqJamiSuccess } from '../../Reducer/List3Values'
 import { db } from '../../config/firebase'
@@ -11,14 +10,14 @@ export default function List3Const() {
     const dispatch = useDispatch()
     const { length } = useSelector(state => state.tableLength)
     const [listData, setListData] = useState(list1)
-    const [ploData, setPloData] = useState(plo)
     const { tigizQoldiq } = useSelector(state => state.valuesList3)
     const [values, setValues] = useState(Array(length).fill(Array(2).fill('')))
     const [tigizQoldiqArray, setTigizQoldiqArray] = useState(Array(length).fill(Array(2).fill('')))
 
     const jamiTigizQoldiq = () => {
         let sum = 0
-        tigizQoldiq.map(i => {
+        let tigizQoldiqArray = tigizQoldiq.slice(0, length)
+        tigizQoldiqArray.map(i => {
             sum += i
         })
         return sum
@@ -30,7 +29,7 @@ export default function List3Const() {
             dispatch(tigizQoldiqJamiSuccess(jamiTigizQoldiqArray))
             const querySnapshot = await getDocs(collection(db, "List1TableLists")); 
             const newData = querySnapshot.docs.map(doc => doc.data().data);
-            newData.length = parseFloat(length)
+            newData.length = length
             
             const newArrValues = await getDocs(collection(db, "List2TableLists")); 
             const newArrTigizQoldiq = newArrValues.docs.map(doc => doc.data().newArray);
@@ -38,11 +37,8 @@ export default function List3Const() {
             setTigizQoldiqArray(newArrTigizQoldiq[0])
         }
         dataFetching()
-    }, [db, tigizQoldiq])
+    }, [db, tigizQoldiq, length])
     
-
-    
-
   return (
     <table
         className="shadow-lg border bg-white text-center text-xs font-light dark:border-neutral-500 rounded-lg">
@@ -105,7 +101,7 @@ export default function List3Const() {
         <tr className='bg-blue-300 font-medium h-[31px]'>
             <td className='border-r'>Jami</td>
             <td className='border-r' colSpan={2}></td>
-            <td className='border-'>{jamiTigizQoldiqArray}</td>
+            <td className='border-'>{jamiTigizQoldiqArray?.toString().slice(0,6)}</td>
         </tr>
     </tbody>
     </table>

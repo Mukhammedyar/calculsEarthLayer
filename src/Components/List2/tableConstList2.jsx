@@ -9,8 +9,8 @@ export default function TableConst() {
     const [listData, setListData]=useState(list1)
     const { length } = useSelector(state => state.tableLength)
     const [values, setValues] = useState(Array(length).fill(Array(3).fill('')))
-    const [valuesList2, setValuesList2] = useState(Array(8).fill(''))
-    const [results, setResults] = useState([])
+    const [valuesList2, setValuesList2] = useState(Array(length).fill(''))
+    const header = [["Kesma N0", "Chuqurlik.sm", "Zich qoldiq"], ["Yuqorgi chegara", "Pastgi chegara"]]
 
     const handleInputChange = async (index, event) => { 
         try {
@@ -33,6 +33,8 @@ export default function TableConst() {
                 newData.length = parseFloat(length)
                 let data = newData.map(row => row.slice(0,2))
                 setValues(data)
+
+                tigizQoldiqArray[0].length =  length
                 setValuesList2(tigizQoldiqArray[0])
             } catch (error) {
                 console.log(error);
@@ -41,44 +43,30 @@ export default function TableConst() {
         dataFetching()
     }, [db, length])
 
-    
   return (
     <table
         className="shadow-lg border font-medium bg-white text-center dark:border-neutral-500 rounded-lg">
-        <thead className="border-b text-xs h-[70px] border-gray-300 font-medium dark:border-neutral-500 rounded">
-            <tr className='bg-gray-200 border-b border-neutral-300 font-normal'>
-                <th
-                    rowSpan={2}
-                    scope="col"
-                    className="border-r w-[50px] border-neutral-300 ">
-                    Kesma N0
-                </th>
-                <th
-                    colSpan={2}
-                    scope="col"
-                    className="border-r  px-2 border-neutral-300">
-                    Chuqurlik.sm
-                </th>
-                <th
-                    colSpan={2}
-                    rowSpan={2}
-                    scope="col"
-                    className="border-r  px-2 border-neutral-300">
-                    Zich qoldiq
-                </th>
+        <thead className="border border-gray-300 text-xs h-[70px] border-b-gray-300 font-medium dark:border-neutral-500 rounded">
+            <tr className='bg-gray-200 border-b border-neutral-400 font-normal'>
+                {header[0].map((item, index) => (
+                    <th
+                        rowSpan={index == 0 || index == 2 ? 2 : 1}
+                        colSpan={index !== 0 ? 2 : 1}
+                        scope="col"
+                        className={`${index == 2 ? "border-0" : "border-r"} w-[50px] border-neutral-400`}>
+                        {item}
+                    </th>
+                ))}
             </tr>
             <tr className='bg-gray-200'>
+              {header[1].map((item, index) => (
                 <th
                     scope="col"
-                    className="border-r px-2 font-medium border-neutral-300">
-                    Yuqorgi chegara 
+                    className="border-r px-2 font-medium border-neutral-400">
+                    {item}
                 </th>
-                <th
-                    scope="col"
-                    className="border-r px-2 font-medium border-neutral-300">
-                    Pastgi chegara 
-                </th>
-        </tr>
+              ))}  
+            </tr>
         </thead>
         <tbody className='text-xs'>
             {valuesList2.map((item, index) => (
@@ -99,49 +87,3 @@ export default function TableConst() {
     </table>
   )
 }
-{/* <tr key={rowIndex} className={`bg-white border-b font-normal tablerow h-[36.6px]`}>
-            <th className='border-r px-1 w-[30px]'>{listData[rowIndex].id}</th>
-            <td key={colIndex} className='border-r p-0'>{qiymat}</td>
-            <input
-                type="number"
-                step={1}
-                onChange={(event) => handleInputChange(rowIndex, event)}
-                className={`text-xs font-medium px-1 w-[100px] h-[30px] md:w-[95px] focus:outline-0 md:text-sm`}
-                // ${ + > 100 || +qiymat < 0
-                //     ? 'border-1 border-red-500  text-red-500'
-                //     : ""
-                // }
-                
-            />
-        </tr>  */}
-
-
-{/* <tbody className='text-xs md:text-xs'>
-        {values.map((row , rowIndex)=> (
-           <tr key={rowIndex} className={`bg-white border-b font-normal `}>
-                    <th className='border-r px-1 w-[30px]'>{listData[rowIndex].id}</th>
-                {row.map((qiymat, colIndex) => (
-                    <td key={colIndex} className='border-r p-0'>
-                        <input
-                        type="number"
-                        step={1}
-                        value={qiymat}
-                        onChange={(event) => handleInputChange(rowIndex, colIndex, event)}
-                        className={`text-xs font-medium px-1
-                          ${ +qiymat > 100 || +qiymat < 0
-                            ? 'border-1 border-red-500  text-red-500'
-                            : ""
-                          }
-                        w-[100px] h-[30px] md:w-[95px] focus:outline-0 text-xs md:text-sm font-medium px-1`}
-                      />
-                    </td>
-                ))}
-                <td className='border-r' colSpan={2}>{results[rowIndex]}</td>
-            </tr> 
-        ))}
-        <tr className='bg-blue-300 font-normal h-[31px]'>
-            <td className='border-r'>Jami</td>
-            <td className='border-r' colSpan={2}></td>
-            <td className='border-'>{resultsSum}</td>
-        </tr>
-    </tbody> */}

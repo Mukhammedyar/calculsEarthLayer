@@ -1,42 +1,41 @@
 import React, { useEffect, useState } from 'react'
 import List3Head from './list3Head'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from '../../config/firebase'
 import { value2SetSuccess } from '../../Reducer/ValueList2'
 
-export default function List3Input({ jadvalQiymatlari, setJadvalQiymatlari, handleChange , valueResult, setValueResult}) {
-    const [jamiQiymatArray, setJamiQiymatlarArray] = useState([])
+export default function List3Input({ values3,setValues3, handleChange , valueResult, setValueResult}) {
+    const { length } = useSelector(state => state.tableLength)
+    const {jamiQiymatlar} = useSelector(state => state.valuesList3)
     const dispatch = useDispatch()
     
     useEffect(() => { 
         const getValue2Docs = async () => {
             try {
                 const query = await getDocs(collection(db , "ValuesList2"))
-                const newData = query.docs.map(doc => doc.data().data); // Verileri diziye dönüştür
-                setJadvalQiymatlari(newData);
-                dispatch(value2SetSuccess(newData))
+                const newData = query.docs.map(doc => doc.data().data);
+                let list3Values = newData.slice(0, length)
+                setValues3(list3Values);
+                dispatch(value2SetSuccess(list3Values))
                 
                 const valueResultquery = await getDocs(collection(db, "Results3"))
-                const newResult = valueResultquery.docs.map(doc => doc.data().data); // Verileri diziye dönüştür
-                setValueResult(newResult);
-
-                const jamiQiymatquery = await getDocs(collection(db, "Jami3"))
-                const jamiQiymat = jamiQiymatquery.docs.map(doc => doc.data().data); // Verileri diziye dönüştür
-                setJamiQiymatlarArray(jamiQiymat[0]);
+                const newResult = valueResultquery.docs.map(doc => doc.data().data);
+                let resultSliced = newResult.slice(0, length)
+                setValueResult(resultSliced);
             } catch (error) {
                 console.error('Error fetching Firestore values:', error);
             }
         }
         getValue2Docs()
-    }, [db])
+    }, [db, length])
 
   return (
     <table
         className="mb-4 shadow-lg border bg-white text-center text-xs md:text-sm font-light dark:border-neutral-500 rounded-lg">
         <List3Head/>
         <tbody>
-            {jadvalQiymatlari.map((row, rowIndex) => (
+            {values3.map((row, rowIndex) => (
                 <tr key={rowIndex} className='border-b border-neutral-300 text-xs tablerow'>
                 {row.map((qiymat, colIndex) => (
                     <td key={colIndex} className='w-[80px] border-r border-neutral-300 px-0 bg-white text-black table-row-item'>
@@ -56,7 +55,7 @@ export default function List3Input({ jadvalQiymatlari, setJadvalQiymatlari, hand
                             <tbody>
                                 <tr>
                                     <td className='bg-slate-200 text-blue-800 w-[100px] md:w-[80px] text-start px-1 font-medium'>
-                                        {valueResult[rowIndex][colIndex]?.toString().slice(0,5)}
+                                        {valueResult[rowIndex][colIndex]?.toString()?.slice(0,5)}
                                     </td>
                                 </tr>
                             </tbody>
@@ -65,8 +64,8 @@ export default function List3Input({ jadvalQiymatlari, setJadvalQiymatlari, hand
                 ))}
                 </tr>
             ))}
-              <tr className='border-neutral-300 text-xs p-0 m-0 table-row-last'>
-                {jamiQiymatArray.map((qiymat, index) => (
+                <tr className='border-neutral-300 text-xs h-[33.6px] table-row-last'>
+                {jamiQiymatlar.map((qiymat, index) => (
                     <td key={index} className='w-[80px] border-r border-neutral-30 font-medium bg-blue-300 text-start px-1 py-0 text-black '>
                         {qiymat?.toString().slice(0,6)}
                     </td>

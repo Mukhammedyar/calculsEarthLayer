@@ -25,13 +25,13 @@ export default function TableLists() {
             }
             await setDoc(doc(db, "list1QatlamQalinligi", "nAdN4kZ5OoALisjjcRAR"), { arr });
             setResults(arr)
+            
             let sum = 0
             for (let i = 0; i < length; i++) {
                 sum += arr[i]
             }
-            await setDoc(doc(db, "list1QatlamQalinligi", "QatlamQalinligiJami"), {arr: sum });
             setResultsSum(sum)
-            console.log(sum);
+            await setDoc(doc(db, "list1QatlamQalinligi", "QatlamQalinligiJami"), { arr: sum });
         } catch (error) {
             console.error('Error updating Firestore:', error);
         }
@@ -40,15 +40,15 @@ export default function TableLists() {
     
     useEffect(() => {
         const dataFetching =async () => {
-           try {
-            const querySnapshot = await getDocs(collection(db, "List1TableLists")); 
-            const newData = querySnapshot.docs.map(doc => doc.data().data);
-            newData.length = parseFloat(length)
-            setValues(newData)
-            const result = await getDocs(collection(db, "list1QatlamQalinligi")); 
-            const res = result.docs.map(doc => doc.data().arr);
-               setResults(res[1])
-               setResultsSum(res[0])
+            try {       
+                const querySnapshot = await getDocs(collection(db, "List1TableLists")); 
+                const newData = querySnapshot.docs.map(doc => doc.data().data);
+                const dataLength = newData.slice(0, length)
+                setValues(dataLength)
+                const result = await getDocs(collection(db, "list1QatlamQalinligi")); 
+                const res = result.docs.map(doc => doc.data().arr);
+                setResults(res[1])
+                setResultsSum(res[0])
            } catch (error) {
                 console.log(error);
            }

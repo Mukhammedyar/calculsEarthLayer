@@ -1,4 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { collection, getDocs } from "firebase/firestore";
+import { useSelector } from "react-redux";
+import { db } from "../config/firebase";
 
 const initialState = {
   isLoading: true,
@@ -15,38 +18,32 @@ export const value1Slice = createSlice({
   name: "values1",
   initialState,
   reducers: {
-    valueSetStart: (state) => {
-      state.isLoading = true;
+    valueSetStart(state) {
+      return { ...state, isLoading: true };
     },
-    valueSetSuccess: (state, action) => {
-      state.isLoading = false;
-      state.values = action.payload;
+    valueSetSuccess(state, action) {
+      return { ...state, isLoading: false, values: action.payload };
     },
-    valueSetFailure: (state) => {
-      state.isLoading = true;
+    valueSetFailure(state) {
+      return { ...state, isLoading: true };
     },
-    calculsStart: (state) => {
-      state.isLoading = true;
+    calculsStart(state) {
+      return { ...state, isLoading: true };
     },
-    fizikQumSuccess: (state, action) => {
-      state.isLoading = false;
-      state.fizikQum = action.payload;
+    fizikQumSuccess(state, action) {
+      return { ...state, isLoading: false, fizikQum: action.payload };
     },
-    fizikLoySuccess: (state, action) => {
-      state.isLoading = false;
-      state.fizikLoy = action.payload;
+    fizikLoySuccess(state, action) {
+      return { ...state, isLoading: false, fizikLoy: action.payload };
     },
-    MexanikTarkibSuccess: (state, action) => {
-      state.isLoading = false;
-      state.MexanikTarkib = action.payload;
+    MexanikTarkibSuccess(state, action) {
+      return { ...state, isLoading: false, MexanikTarkib: action.payload };
     },
-    jamiPercentSuccess: (state, action) => {
-      state.isLoading = false;
-      state.jamiPercent = action.payload;
+    jamiPercentSuccess(state, action) {
+      return { ...state, isLoading: false, jamiPercent: action.payload };
     },
-    jamiNatiyjatSuccess: (state, action) => {
-      state.isLoading = false;
-      state.jamiNatiyja = action.payload;
+    jamiNatiyjatSuccess(state, action) {
+      return { ...state, isLoading: false, jamiNatiyja: action.payload };
     },
   },
 });

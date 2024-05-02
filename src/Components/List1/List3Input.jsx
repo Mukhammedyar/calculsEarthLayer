@@ -8,14 +8,16 @@ import { valueSetSuccess } from '../../Reducer/ValuesList1';
 
 export default function List3Input({handleInputChange, values1, setValues1}) {
   const { jamiNatiyja } = useSelector(state => state.valuesList1)
+  const { length } = useSelector(state => state.tableLength)
+  const EightArray = Array(8).fill('')
   const dispatch = useDispatch()
   
-
   useEffect(() => {
     const getValueDocs = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, "Values")); 
         const newData = querySnapshot.docs.map(doc => doc.data().data);
+        newData.length = parseFloat(length)
         setValues1(newData);
         dispatch(valueSetSuccess([...newData]))
       } catch (error) {
@@ -24,7 +26,7 @@ export default function List3Input({handleInputChange, values1, setValues1}) {
     };
 
     getValueDocs();
-  }, [db]);
+  }, [db, length]);
 
   return (
     <tbody className='text-xs md:text-sm'>
@@ -49,7 +51,7 @@ export default function List3Input({handleInputChange, values1, setValues1}) {
             </tr>
           ))}
           <tr className='bg-blue-300 text-start h-[33px]'>
-            {values1.map((item, index) => (
+            {EightArray.map((item, index) => (
               <td key={index} className='w-[50px] border-2 md:w-[50px] px-2 border-r-[1px] text-gray-800 font-medium'>
                 {jamiNatiyja[index]?.toFixed(3)}
               </td>

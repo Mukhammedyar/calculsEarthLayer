@@ -6,34 +6,49 @@ import { value2SetSuccess } from '../../Reducer/ValueList2';
 import List3Const from './List3Const';
 import List3Result from './List3Result';
 import { useSelector } from 'react-redux'
-import { qqal } from '../../API/tableList2'
 import { jamiQiymatlarSuccess, tigizQoldiqSuccess, valuesResultSuccess } from '../../Reducer/List3Values';
 import { collection, doc, getDocs, setDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import ShorYuvishCalculing from './ShorYuvishCalculing';
 
 function List3() {
-  const [jadvalQiymatlari, setJadvalQiymatlari] = useState(Array(8).fill(Array(6).fill(0)));
-  const [valueResult, setValueResult] = useState(Array(8).fill(Array(6).fill(0)));
+  const {length} = useSelector(state => state.tableLength)
+  const [values3, setValues3] = useState(Array(length).fill(Array(6).fill(0)));
+  const [valueResult, setValueResult] = useState(Array(length).fill(Array(6).fill(0)));
   let PloConstResult = Array(8).fill(0)
   const dispatch = useDispatch()
   const { loggedIn } = useSelector(state => state.auth)
   const { values } = useSelector(state => state.valuesList1)
 
-  const handleChange = async (rowIndex, colIndex, event) => {
-    try {
-      const newQiymat = jadvalQiymatlari.map(row => [...row])
-      newQiymat[rowIndex][colIndex] = event.target.value;
-      setJadvalQiymatlari(newQiymat);
+  useEffect(() => {
+    // Update values1 whenever length changes
+    setValues3(prevValues => {
+      const newArray = Array(length).fill().map((_, i) => prevValues[i] || Array(6).fill(0));
+      return newArray;
+    });
+    setValueResult(prevValues => {
+      const newArray = Array(length).fill().map((_, i) => prevValues[i] || Array(6).fill(0));
+      return newArray;
+    });
+  }, [length, db]);
 
-      dispatch(value2SetSuccess(newQiymat))
+  const handleChange = async (rowIndex, colIndex, event) => {
+    const newQiymat = values3.map(row => [...row])
+    newQiymat[rowIndex][colIndex] = event.target.value;
+    setValues3(newQiymat);
+    dispatch(value2SetSuccess(newQiymat))
+
+    const qatlamQalinligiQuery = await getDocs(collection(db, "list1QatlamQalinligi"))
+    const qatlamQalinligiArray = qatlamQalinligiQuery.docs.map(doc => doc.data().arr);
+    const qatlamQalinligi = qatlamQalinligiArray[1];
+    try {
       await setDoc(doc(db, "ValuesList2", `row_${rowIndex}`), { data: newQiymat[rowIndex] });
       
       let multipliedArray = [];
-      for (let i = 0; i < jadvalQiymatlari.length; i++) {
+      for (let i = 0; i < values3.length; i++) {
         let multipliedRow = [];
-        for (let j = 0; j < jadvalQiymatlari[i].length; j++) {
-          multipliedRow.push(newQiymat[i][j] * parseFloat(qqal[i].qqal) * parseFloat(values[i][7]));
+        for (let j = 0; j < values3[i].length; j++) {
+          multipliedRow.push(newQiymat[i][j] * parseFloat(qatlamQalinligi[i]) * parseFloat(values[i][7]));
         }
         multipliedArray.push(multipliedRow);
       }
@@ -74,7 +89,7 @@ function List3() {
       }
     }
     dataFetching()
-  }, [db, loggedIn])
+  }, [db, loggedIn, length])
   return (
     <div className='min-h-[100vh] px-10 md:px-20'>
       <div className='flex mt-5 justify-center items-start gap-2'>
@@ -85,18 +100,18 @@ function List3() {
         <div>
           Qiymat kiritish
           <List3Input 
-            jadvalQiymatlari={jadvalQiymatlari}
-            setJadvalQiymatlari={setJadvalQiymatlari}
+            values3={values3}
+            setValues3={setValues3}
             handleChange={handleChange}
             valueResult={valueResult}
             setValueResult={setValueResult}/>
         </div>
         <div>
-          Natiyjaalr
-          <List3Result jadvalQiymatlari={jadvalQiymatlari} />
+          Natiyjalar
+          <List3Result values3={values3} />
         </div>
       </div>
-      <ShorYuvishCalculing jadvalQiymatlari={jadvalQiymatlari}/>
+      <ShorYuvishCalculing/>
     </div>
   )
 }

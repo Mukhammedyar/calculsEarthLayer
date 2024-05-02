@@ -3,7 +3,7 @@ import { db } from '../../config/firebase'
 import { collection, doc, getDocs, setDoc } from 'firebase/firestore'
 import { useSelector } from 'react-redux'
 
-export default function ShorYuvishCalculing({jadvalQiymatlari}) {
+export default function ShorYuvishCalculing() {
     let [shorYuvishQiymat, setShorYuvishQiymat] = useState([]) 
     const { shorlanishDarajasi } = useSelector(state => state.valuesList3)
     useEffect(() => {
@@ -11,15 +11,15 @@ export default function ShorYuvishCalculing({jadvalQiymatlari}) {
             let shorYuvishArray = []
             const mexanikTarkibQuery = await getDocs(collection(db, "Results"))
             const mexanikTarkib = mexanikTarkibQuery.docs.map(doc => doc.data().data);
-            console.log(mexanikTarkib[0]);
+            
             try {
                 const shorYuvish = () => {
                     switch (shorlanishDarajasi) {
-                        case "Shorlanmagan": return calculateShorlanmagan(mexanikTarkib[0]);
-                        case "Kuchsiz shorlangan": return calculateKuchsizShurlangan(mexanikTarkib[0]);
-                        case "O'rtacha shorlangan": return calculateOrtachaShorlangan(mexanikTarkib[0]);
-                        case "Kuchli shorlangan": return calculateKuchliShorlangan(mexanikTarkib[0]);
-                        case "Juda kuchli shorlangan": return calculateShurxoqlar(mexanikTarkib[0]);
+                        case "Shorlanmagan": return calculateShorlanmagan(mexanikTarkib[1]);
+                        case "Kuchsiz shorlangan": return calculateKuchsizShurlangan(mexanikTarkib[1]);
+                        case "O'rtacha shorlangan": return calculateOrtachaShorlangan(mexanikTarkib[1]);
+                        case "Kuchli shorlangan": return calculateKuchliShorlangan(mexanikTarkib[1]);
+                        case "Juda kuchli shorlangan": return calculateShurxoqlar(mexanikTarkib[1]);
                         default: return ["X0", "Y0", "Y0"];
                     }
                 }

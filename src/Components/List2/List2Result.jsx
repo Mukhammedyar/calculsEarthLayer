@@ -6,8 +6,9 @@ import { db } from '../../config/firebase'
 import { tipPerSuccess } from '../../Reducer/ValueList2'
 import { tipSuccess } from '../../Reducer/List3Values'
 
-export default function List2Result({jadvalQiymatlari2}) {
-    const [listData, setListData] = useState(list1)
+export default function List2Result({values2}) {
+    const {length} = useSelector(state => state.tableLength) 
+    const listData = Array(length).fill(0)
     const dispatch = useDispatch()
     const [results, setResults] = useState(Array(6).fill(Array(8).fill("")))
     
@@ -16,16 +17,17 @@ export default function List2Result({jadvalQiymatlari2}) {
             try {
                 const querySnapshot = await getDocs(collection(db, "ValuesList2")); // Firestore'dan belgeleri al
                 const data = querySnapshot.docs.map(doc => doc.data()); // Verileri diziye dönüştür
-                let newdata = Array(8).fill(Array(8).fill(0))
+                data.length = length
+                let valuesInput = Array(length).fill(Array(6).fill(0))
 
-                for (let i = 0; i < 8; i++) {
-                    for (let j = 0; j < 8; j++) {
-                        newdata[i] = data[i].data
+                for (let i = 0; i < length; i++) {
+                    for (let j = 0; j < 6; j++) {
+                        valuesInput[i] = data[i].data
                     }
                 }
                 
                 var typeArray = [] 
-                typeArray = newdata.map((row, rowIndex) => (
+                typeArray = valuesInput.map((row, rowIndex) => (
                   row[2] / row[1] > 0 && row[2] / row[1] <= 0.5 ? "Xloridli" : // CO2 va CI ustunlari bolinmasini orqali hisoblash
                   row[2] / row[1] > 0.5 && row[2] / row[1] <= 1 ? "Sulfat-xloridli":
                   row[2] / row[1] > 1 && row[2] / row[1] <= 5 ? "Xlorid-sulfatli":
@@ -36,7 +38,7 @@ export default function List2Result({jadvalQiymatlari2}) {
                 
                 // Tipning foizini hisoblash
                 var typePerArray =Array(8).fill(0)
-                typePerArray = newdata.map((row, rowIndex) => (
+                typePerArray = valuesInput.map((row, rowIndex) => (
                   row[2] / row[1] > 0 && row[2] / row[1] <= 0.5 ? "1" :
                   row[2] / row[1] > 0.5 && row[2] / row[1] <= 1 ? "2":
                   row[2] / row[1] > 1 && row[2] / row[1] <= 5 ? "3":
@@ -55,7 +57,7 @@ export default function List2Result({jadvalQiymatlari2}) {
             }
         }
         fetchData()
-    }, [db, jadvalQiymatlari2])
+    }, [db, values2])
 
   return (
     <table
@@ -78,13 +80,11 @@ export default function List2Result({jadvalQiymatlari2}) {
         </thead>
         <tbody className=''>
         {/* 1-qatar */}
-        {listData.map((item ,index)=> (
-            index < 8 ? 
-            <tr key={ item.id} className={`${index % 2 == 1 ? "bg-gray-100" : ""} border-b font-medium h-[36.6px]`}>
+        {listData.map((item,index)=> (
+            <tr key={item.id} className={`${index % 2 == 1 ? "bg-gray-100" : ""} border-b font-medium h-[36.6px]`}>
                 <td className='border-r px-2 min-w-[150px]'>{results[0][index]}</td>
                 <td className='border-r'>{results[1][index]}</td>
             </tr> 
-            : ""
         ))}
     </tbody>
     </table>

@@ -3,9 +3,10 @@ import './tableInput.css'
 import List2Head from './List2Head';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../config/firebase';
+import { useSelector } from 'react-redux';
 
 export default function TableInput({ handleChange, jadvalQiymatlari, setJadvalQiymatlari, natijaValues , setNatiyjaValues}) {
-
+    const { length } = useSelector(state => state.tableLength)
     useEffect(() => { 
         const getValue2Docs = async () => {
             try {
@@ -13,9 +14,11 @@ export default function TableInput({ handleChange, jadvalQiymatlari, setJadvalQi
                 const newData = query.docs.map(doc => doc.data().data); // Verileri diziye dönüştür
                 const resultValuesQuery = await getDocs(collection(db, "ResultValuesList2"))
                 const newResultValues = resultValuesQuery.docs.map(doc => doc.data().data); // Verileri diziye dönüştür
+                
+                newData.length = length
+                newResultValues.length = length
                 setJadvalQiymatlari(newData);
                 setNatiyjaValues(newResultValues)
-
             } catch (error) {
                 console.error('Error fetching Firestore values:', error);
             }

@@ -1,56 +1,60 @@
 import { collection, doc, getDocs, setDoc } from "firebase/firestore";
 import {
-  fizikLoySuccess,
-  fizikQumSuccess,
   jamiNatiyjatSuccess,
   jamiPercentSuccess,
 } from "../Reducer/ValuesList1";
+import { db } from "../config/firebase";
 
-export const fetchData = async (
-  db,
-  qatlamQalinligiArray,
-  setResults,
-  dispatch
-) => {
-  try {
-    const querySnapshot = await getDocs(collection(db, "Values")); // get valuesInput as List1 from firestore
-    const data = querySnapshot.docs.map((doc) => doc.data());
-    const qatlamQalingiQuery = await getDocs(
-      collection(db, "list1QatlamQalinligi")
-    ); // get Qatlam qalinligi as List1 from firestore
-    const qatlamQalingi = qatlamQalingiQuery.docs.map((doc) => doc.data());
+export const fetchData = async (setResults, dispatch) => {
+  const querySnapshot = await getDocs(collection(db, "Values")); // get valuesInput as List1 from firestore
+  const data = querySnapshot.docs.map((doc) => doc.data());
 
-    let valuesInputArray = Array(8).fill(Array(8).fill(0));
+  const lenthQuery = await getDocs(collection(db, "TableLength")); // table length
+  const lengthData = lenthQuery.docs.map((doc) => doc.data().data);
+  const length = lengthData[0];
 
-    for (let i = 0; i < 8; i++) {
-      for (let j = 0; j < 8; j++) {
-        valuesInputArray[i] = data[i].data;
-      }
+  const qatlamQalingiQuery = await getDocs(
+    // get Qatlam qalinligi as List1 from firestore
+    collection(db, "list1QatlamQalinligi")
+  );
+  const qatlamQalingiData = qatlamQalingiQuery.docs.map(
+    (doc) => doc.data().arr
+  );
+  const qatlamQalingi = qatlamQalingiData[1];
+
+  let dataInput = data.slice(0, length);
+  let valuesInputArray = Array(length).fill(Array(8).fill(0));
+  for (let i = 0; i < length; i++) {
+    for (let j = 0; j < 8; j++) {
+      valuesInputArray[i] = dataInput[i].data;
     }
-    const fizikQumArray = [],
-      fizikLoyArray = [], // fizikloy di arrayga saqlaw ushin
-      jamiPerArray = Array(8).fill(0), //Jami komponent ushin value saqlaw ushin
-      jamiQiymatlar = Array(10).fill(0), // list1 astindagi jami fizikloy jami hami fizik qum jaminin valueslerdi saqlaw ushin
-      qatlamQalinligiArray = qatlamQalingi[1].arr,
-      qatlamQalinligiJamiArray = qatlamQalingi[0].arr,
-      mexanikTarkib = Array(8).fill(""); //mexanik tarkib values saqlaw ushin
-    let mexanikTarkibJami = ""; //mexanik tarkib jami value saqlaw ushin
+  }
 
-    valuesInputArray.forEach((row, index) => {
-      let fizikQumVar = 0,
-        fizikLoyVar = 0,
-        inputValuesVar = 0,
-        fizikQumJamiVar = 0,
-        fizikLoyJamiVar = 0,
-        XajmOgirligiJami = 0,
-        JamiPercentVar = 0;
+  const fizikQumArray = [],
+    fizikLoyArray = [], // fizikloy di arrayga saqlaw ushin
+    jamiPerArray = Array(8).fill(0), //Jami komponent ushin value saqlaw ushin
+    jamiQiymatlar = Array(10).fill(0), // list1 astindagi jami fizikloy jami hami fizik qum jaminin valueslerdi saqlaw ushin
+    qatlamQalinligiArray = qatlamQalingi.slice(0, length),
+    qatlamQalinligiJamiArray = qatlamQalingiData[0],
+    mexanikTarkib = Array(8).fill(""); //mexanik tarkib values saqlaw ushin
+  let mexanikTarkibJami = ""; //mexanik tarkib jami value saqlaw ushin
+  let fizikQumVar = 0,
+    fizikLoyVar = 0,
+    inputValuesVar = 0,
+    fizikQumJamiVar = 0,
+    fizikLoyJamiVar = 0,
+    XajmOgirligiJami = 0,
+    JamiPercentVar = 0,
+    valuesInputWithOutXO = Array(length).fill(0), //values Input without Xajm ogirligi alohida arrayga otkazish
+    xajmOgirligiVar = Array(length).fill(0); //xajm ogirligini alohida arrayga otkazish
 
-      let xajmOgirligiVar = Array(8).fill(0); //xajm ogirligini alohida arrayga otkazish
+  try {
+    for (let index = 0; index < length; index++) {
       valuesInputArray.map((rows, i) => {
         let arr = rows.slice(7, 8);
         xajmOgirligiVar[i] = arr[0];
       });
-      let valuesInputWithOutXO = Array(8).fill(0); //values Input without Xajm ogirligi alohida arrayga otkazish
+
       valuesInputArray.map((rows, i) => {
         let arr = rows.slice(0, 7);
         valuesInputWithOutXO[i] = arr;
@@ -72,33 +76,6 @@ export const fetchData = async (
       jamiPerArray[index] = fizikLoyArray[index] + fizikQumArray[index];
 
       for (let i = 0; i < 8; i++) {
-        // input astindagi jami qiymatlardi esaplaydi
-        XajmOgirligiJami +=
-          parseFloat(qatlamQalinligiArray[i]) * xajmOgirligiVar[i];
-        inputValuesVar +=
-          parseFloat(xajmOgirligiVar[i]) *
-          parseFloat(qatlamQalinligiArray[i]) *
-          parseFloat(valuesInputWithOutXO[i][index]);
-      }
-      inputValuesVar = inputValuesVar / XajmOgirligiJami; // cikl aqirindagi boliw ameli
-
-      jamiQiymatlar[index] = inputValuesVar;
-      jamiQiymatlar[7] =
-        XajmOgirligiJami / parseFloat(qatlamQalinligiJamiArray);
-      XajmOgirligiJami = 0;
-      inputValuesVar = 0;
-
-      for (let i = 0; i < 8; i++) {
-        //fizik qum ham fizik loy jami sin esaplaydi
-        fizikQumJamiVar +=
-          parseFloat(xajmOgirligiVar[i]) *
-          parseFloat(qatlamQalinligiArray[i]) *
-          fizikQumArray[i];
-        fizikLoyJamiVar +=
-          parseFloat(xajmOgirligiVar[i]) *
-          parseFloat(qatlamQalinligiArray[i]) *
-          fizikLoyArray[i];
-
         fizikLoyArray[i] <= 10 //mexanik tarkib
           ? (mexanikTarkib[i] = "Қум")
           : fizikLoyArray[i] >= 10 && fizikLoyArray[i] <= 20
@@ -113,16 +90,43 @@ export const fetchData = async (
           ? (mexanikTarkib[i] = "Loy")
           : (mexanikTarkib[i] = "--/--");
       }
+    }
+
+    for (let index = 0; index < 7; index++) {
+      for (let i = 0; i < length; i++) {
+        //fizik qum ham fizik loy jami sin esaplaydi
+        fizikQumJamiVar +=
+          parseFloat(xajmOgirligiVar[i]) *
+          parseFloat(qatlamQalinligiArray[i]) *
+          fizikQumArray[i];
+        fizikLoyJamiVar +=
+          parseFloat(xajmOgirligiVar[i]) *
+          parseFloat(qatlamQalinligiArray[i]) *
+          fizikLoyArray[i];
+        // input astindagi jami qiymatlardi esaplaydi
+        XajmOgirligiJami +=
+          parseFloat(qatlamQalinligiArray[i]) * xajmOgirligiVar[i];
+        inputValuesVar +=
+          parseFloat(xajmOgirligiVar[i]) *
+          parseFloat(qatlamQalinligiArray[i]) *
+          parseFloat(valuesInputWithOutXO[i][index]);
+      }
+      inputValuesVar = inputValuesVar / XajmOgirligiJami; // cikl aqirindagi boliw ameli
+      jamiQiymatlar[index] = inputValuesVar;
+      jamiQiymatlar[7] =
+        XajmOgirligiJami / parseFloat(qatlamQalinligiJamiArray);
+      XajmOgirligiJami = 0;
+      inputValuesVar = 0;
 
       fizikQumJamiVar /=
         parseFloat(qatlamQalinligiJamiArray) * parseFloat(jamiQiymatlar[7]);
       fizikLoyJamiVar /=
         parseFloat(qatlamQalinligiJamiArray) * parseFloat(jamiQiymatlar[7]);
 
-      jamiQiymatlar[8] = fizikQumJamiVar;
-      jamiQiymatlar[9] = fizikLoyJamiVar;
+      jamiQiymatlar[9] = fizikQumJamiVar;
+      jamiQiymatlar[10] = fizikLoyJamiVar;
       JamiPercentVar = fizikQumJamiVar + fizikLoyJamiVar;
-      jamiPerArray[8] = JamiPercentVar.toFixed();
+      jamiQiymatlar[8] = JamiPercentVar.toFixed();
       fizikQumJamiVar = 0;
       fizikLoyJamiVar = 0;
       jamiQiymatlar[9] <= 10
@@ -138,18 +142,12 @@ export const fetchData = async (
         : jamiQiymatlar[9] >= 60 && jamiQiymatlar[9] <= 100
         ? (mexanikTarkibJami = "Loy")
         : (mexanikTarkibJami = "Nimadir Xato");
-    });
-
-    // JamiQiymatlar arrayidagi values InputJami ni ajratib olish va osha arrayning 6 va 7 qiymatlari ornini almashtirib qoyish
-    let jamiQiymatlarSliced = jamiQiymatlar;
-    let temp = jamiQiymatlarSliced[6];
-    jamiQiymatlarSliced[6] = jamiQiymatlarSliced[5];
-    jamiQiymatlarSliced[5] = temp;
+    }
 
     // shiqqan naiyjelerdi firebase database Results collectionga saqlaw
     await setDoc(doc(db, "Results", "jamiYigindi"), { data: jamiPerArray });
     await setDoc(doc(db, "Results", "jamiInputs"), {
-      data: jamiQiymatlarSliced,
+      data: jamiQiymatlar,
     });
     await setDoc(doc(db, "Results", "fizikQum"), { data: fizikQumArray });
     await setDoc(doc(db, "Results", "fizikLoy"), { data: fizikLoyArray });
@@ -164,13 +162,10 @@ export const fetchData = async (
 
     const resultsArray = getResults.map((result) => result.data);
     setResults(resultsArray);
-    console.log(resultsArray[3]);
 
     // dispatch arqali reducerge  saqlaw <ValuesList1.js qa!>
+    dispatch(jamiNatiyjatSuccess(resultsArray[4]));
     dispatch(jamiPercentSuccess(jamiPerArray));
-    dispatch(fizikQumSuccess(fizikQumArray));
-    dispatch(fizikLoySuccess(fizikLoyArray));
-    dispatch(jamiNatiyjatSuccess(resultsArray[3]));
   } catch (error) {
     console.log(error);
   }

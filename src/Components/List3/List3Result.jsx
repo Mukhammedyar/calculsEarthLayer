@@ -6,8 +6,9 @@ import { db } from '../../config/firebase'
 import { shorlanishDarajasiSuccess } from '../../Reducer/List3Values'
 
 
-export default function List3Result({jadvalQiymatlari}) {
-    const [listData, setListData] = useState(list3)
+export default function List3Result({ jadvalQiymatlari }) {
+    const {length} = useSelector(state => state.tableLength)
+    const listData = Array(length).fill(0)
     const { tigizQoldiqJami } = useSelector(state => state.valuesList3)
     const dispatch = useDispatch()
     var typeArray = [], typePer = []
@@ -19,14 +20,14 @@ export default function List3Result({jadvalQiymatlari}) {
             try {
                 const querySnapshot = await getDocs(collection(db, "ValuesList2")); // Firestore'dan belgeleri al
                 const data = querySnapshot.docs.map(doc => doc.data()); // Verileri diziye dönüştür
-                let newdata = Array(8).fill(Array(8).fill(0))
-
-                for (let i = 0; i < 8; i++) {
-                    for (let j = 0; j < 8; j++) {
-                        newdata[i] = data[i].data
+                let valueInput = data.slice(0, length)
+                let newdata = Array(length).fill(Array(6).fill(0))
+                
+                for (let i = 0; i < length; i++) {
+                    for (let j = 0; j < 6; j++) {
+                        newdata[i] = valueInput[i].data
                     }
                 }
-                
                 newdata.forEach((item, index) => {
                     const ratio = item[2] / item[1];
                     typeArray[index] = 
@@ -98,20 +99,19 @@ export default function List3Result({jadvalQiymatlari}) {
         <tbody className=''>
             {/* 1-qatar */}
             {listData.map((item ,index)=> (
-                index < 8 ? 
                 <tr key={ item.id} className='border-b font-medium text-sm h-[36.6px]'>
                     <td className='border-r px-1 min-w-[150px]'>{results[3][index]}</td>
                     <td className='border-r px-1 '>{results[4][index]}</td>
                     <td className='border-r px-1 '>{""}</td>
                 </tr> 
-                : <tr key={ item.id} className='border-b bg-blue-300 font-medium text-sm p-0 table-row-last'>
-                    <td className='border-r min-w-[100px]'></td>
-                    <td className='border-r '></td>
-                    <td className='border-r min-w-[160px] p-0'>
-                        {results[2]}
-                    </td>
-                </tr> 
             ))}
+            <tr className='border-b bg-blue-300 font-medium text-sm p-0 table-row-last'>
+                <td className='border-r min-w-[100px]'></td>
+                <td className='border-r '></td>
+                <td className='border-r min-w-[160px] p-0'>
+                    {results[2]}
+                </td>
+            </tr> 
         </tbody>
     </table>
   )

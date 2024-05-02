@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './list1.css'
 import TableInputHead from './tableInputHead';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,18 +7,24 @@ import TableNatija from './tableNatija';
 import List3Input from './List3Input';
 import TableLists from './tableLists';
 import Jami from './Jami';
-import { qqal } from '../../API/tableList2'
-import { plo } from '../../API/tableList2'
 import { tigizQoldiqSuccess } from '../../Reducer/List3Values';
 import {db} from '../../config/firebase'
-import {doc, setDoc} from 'firebase/firestore';
+import {collection, doc, getDocs, setDoc} from 'firebase/firestore';
 
 
 
 function List1() {
   const dispatch = useDispatch()
-  const [values1 , setValues1] = useState(Array(8).fill(Array(8).fill(0)))
+  const { length } = useSelector(state => state.tableLength)
+  const [values1, setValues1] = useState(Array(8).fill(Array(8).fill(0)))
 
+  useEffect(() => {
+    // Update values1 whenever length changes
+    setValues1(prevValues => {
+      const newArray = Array(length).fill().map((_, i) => prevValues[i] || Array(8).fill(0));
+      return newArray;
+    });
+  }, [length, db]);
 
   const handleInputChange = async (rowIndex, colIndex, event) => {
     const newArray = values1.map(row => [...row]);
@@ -27,11 +33,21 @@ function List1() {
     dispatch(valueSetSuccess(newArray))
     try {
       await setDoc(doc(db, "Values", `row_${rowIndex}`), { data: newArray[rowIndex] });
+      
+      const querySnapshot = await getDocs(collection(db, "list1QatlamQalinligi")); 
+      const newData = querySnapshot.docs.map(doc => doc.data().arr);
+      const qatlamQalinligi = newData[1]
+
+      const tigizQoldiqQuery = await getDocs(collection(db, "List2TableLists")); 
+      const tigizQoldiqArray= tigizQoldiqQuery.docs.map(doc => doc.data().newArray);
+      const tigizQoldiq = tigizQoldiqArray[0]
+      
       const arr = []
       newArray.map((item, index) => {
-          arr[index]=parseFloat(qqal[index]?.qqal) * parseFloat(plo[index]?.plo) * parseFloat(item[7])
+          arr[index]=parseFloat(qatlamQalinligi[index]) * parseFloat(tigizQoldiq[index]) * parseFloat(item[7])
       })
       dispatch(tigizQoldiqSuccess([...arr]))
+      dispatch(valueSetSuccess(newArray))
     } catch (error) {
       console.error('Error updating Firestore:', error);
     }
