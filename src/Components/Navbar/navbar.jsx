@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Button from '../../UI/button'
 import 'boxicons'
@@ -11,7 +11,8 @@ import { db } from '../../config/firebase'
 
 function Navbar() {
   const [hidden, setHidden] = useState(true)
-  const dispatch = useDispatch()
+  const { loggedIn } = useSelector(state => state.auth)
+  const dispatch =  useDispatch()
   const [value, setValue]=useState(0)
   const navigate = useNavigate()
   const logOutHandler = () => {
@@ -27,6 +28,13 @@ function Navbar() {
     dispatch(lengthEdit(parseInt(value)))
     await setDoc(doc(db, "TableLength", "length"), { data: parseInt(value) });
   }
+
+  useEffect(() => {
+    const pushLength = async () => {
+      loggedIn ? dispatch(lengthEdit(value)) : dispatch(lengthEdit(8))
+    }
+    pushLength()
+  })
 
   return (
     <div className='flex z-10 px-10 md:px-16 items-center justify-between sticky top-0 h-[40px] md:h-[50px] bg-[rgba(255,255,255,.7)] shadow-md backdrop-blur-sm'>
