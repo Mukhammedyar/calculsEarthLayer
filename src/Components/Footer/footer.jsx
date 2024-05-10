@@ -7,7 +7,9 @@ export default function Footer() {
   const [active2, setActive2] = useState(false)
   const [active3, setActive3] = useState(false)
   return (
-    <div className={`${footerStyles.flexCenter} ${footerStyles.responsiveStyle  } ${footerStyles.backgroundStyle} bottom-1 px-2 fixed `}>
+    <div className={`flex text-gray-300 w-full justify-center md:justify-between lg:justify-between items-end ${footerStyles.responsiveStyle} bottom-1 px-2 fixed`}>
+      <h1 className='text-xs  hidden md:flex lg:flex xl:flex item-center'>Last update: 10.05.2024</h1>
+      <div className={`flex justify-between ${footerStyles.backgroundStyle} ${footerStyles.defaultStyles} ${footerStyles.responsiveWidth}`}>
         <Link 
           onClick={() => {setActive1(true); setActive2(false); setActive3(false)}} 
           className={`${active1 ? footerStyles.borderBottomStyle : ""} ${footerStyles.defaultStyles}`} 
@@ -26,6 +28,8 @@ export default function Footer() {
           to={"/list3"}>
             <p>3-Jadval</p>
           </Link>
+      </div>
+      <p className='text-xs hidden md:flex lg:flex xl:flex item-center'>Version 2.4 last update: 10.05.2024</p>
     </div>
   )
 }

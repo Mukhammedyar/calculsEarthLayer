@@ -45,10 +45,24 @@ export default function TableLists() {
                 const newData = querySnapshot.docs.map(doc => doc.data().data);
                 const dataLength = newData.slice(0, length)
                 setValues(dataLength)
-                const result = await getDocs(collection(db, "list1QatlamQalinligi")); 
-                const res = result.docs.map(doc => doc.data().arr);
-                setResults(res[1])
-                setResultsSum(res[0])
+                
+                let arr = []
+                for (let i = 0; i < length; i++) {
+                    arr.push(parseFloat(dataLength[i][1]) - parseFloat(dataLength[i][0]))
+                }
+                await setDoc(doc(db, "list1QatlamQalinligi", "nAdN4kZ5OoALisjjcRAR"), { arr });
+                setResults(arr)
+                
+                let sum = 0
+                for (let i = 0; i < length; i++) {
+                    sum += arr[i]
+                }
+                setResultsSum(sum)
+                await setDoc(doc(db, "list1QatlamQalinligi", "QatlamQalinligiJami"), { arr: sum });
+
+                setResults(arr)
+                setResultsSum(sum)
+                
            } catch (error) {
                 console.log(error);
            }
