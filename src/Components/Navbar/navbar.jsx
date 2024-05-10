@@ -13,7 +13,7 @@ function Navbar() {
   const [hidden, setHidden] = useState(true)
   const { loggedIn } = useSelector(state => state.auth)
   const dispatch =  useDispatch()
-  const [value, setValue]=useState(0)
+  const [value, setValue]=useState(8)
   const navigate = useNavigate()
   const logOutHandler = () => {
     dispatch(logOutUser())
