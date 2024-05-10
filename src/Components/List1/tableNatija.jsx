@@ -24,8 +24,9 @@ export default function TableNatija({values1}) {
         className="shadow-lg border bg-white text-center font-light dark:border-neutral-500 rounded-lg">
         <thead className="border-b h-[82px] text-xs md:text-sm border-gray-300 font-medium dark:border-neutral-500 rounded">
             <tr className='bg-gray-200 border-b border-neutral-300 font-normal'>
-                {theadValues.map(item => (
-                   <th
+                {theadValues.map((item, index) => (
+                    <th
+                        key={index}
                         scope="col"
                         rowSpan={2}
                         className="border-r px-2 border-neutral-300">
@@ -38,13 +39,11 @@ export default function TableNatija({values1}) {
         <tbody className='text-xs md:text-sm'>
         {/* 1-qatar */}
         {listData.map((item ,index)=> (
-            index < 8 ? 
-            <tr key={item.id} className='border-b font-medium h-[33px]'>
+            <tr key={index} className='border-b font-medium h-[33px]'>
                 <td className='border-r'>{results[3][index]?.toString().slice(0,5)}</td>
                 <td className='border-r'>{results[2][index]?.toString().slice(0,7)}</td>
                 <td className='border-r min-w-[100px]'>{results[6] == undefined ? "" : results[6][index]}</td>
             </tr> 
-            : ""
         ))}
         <tr className={'bg-blue-300 h-[33px] font-medium'}>
             <td className='border-r'>{results[4][9]?.toString().slice(0,5)}</td>

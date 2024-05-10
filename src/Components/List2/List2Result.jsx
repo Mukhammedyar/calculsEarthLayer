@@ -81,7 +81,7 @@ export default function List2Result({values2}) {
         <tbody className=''>
         {/* 1-qatar */}
         {listData.map((item,index)=> (
-            <tr key={item.id} className={`${index % 2 == 1 ? "bg-gray-100" : ""} border-b font-medium h-[36.6px]`}>
+            <tr key={index} className={`${index % 2 == 1 ? "bg-gray-100" : ""} border-b font-medium h-[36.6px]`}>
                 <td className='border-r px-2 min-w-[150px]'>{results[0][index]}</td>
                 <td className='border-r'>{results[1][index]}</td>
             </tr> 

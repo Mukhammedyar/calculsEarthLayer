@@ -19,7 +19,7 @@ function List2() {
   useEffect(() => {
     // Update values1 whenever length changes
     setValues2(prevValues => {
-      const newArray = Array(length).fill().map((_, i) => prevValues[i] || Array(8).fill(0));
+      const newArray = Array(length).fill().map((_, i) => prevValues[i] || Array().fill(0));
       return newArray;
     });
   }, [length, db]);
@@ -39,8 +39,6 @@ function List2() {
   useEffect(() => {
     calculateTypes(values2,setNatiyjaValues,dispatch,factors) //values input astndagi natiyjelerdi aladi ham esaplaydi
   }, [db])
-
-
 
 
   return (

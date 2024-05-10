@@ -7,6 +7,8 @@ import { useSelector } from 'react-redux';
 
 export default function TableInput({ handleChange, jadvalQiymatlari, setJadvalQiymatlari, natijaValues , setNatiyjaValues}) {
     const { length } = useSelector(state => state.tableLength)
+    const arr  = Array(length).fill(Array(6).fill(0))
+
     useEffect(() => { 
         const getValue2Docs = async () => {
             try {
@@ -15,17 +17,17 @@ export default function TableInput({ handleChange, jadvalQiymatlari, setJadvalQi
                 const resultValuesQuery = await getDocs(collection(db, "ResultValuesList2"))
                 const newResultValues = resultValuesQuery.docs.map(doc => doc.data().data); // Verileri diziye dönüştür
                 
-                newData.length = length
-                newResultValues.length = length
-                setJadvalQiymatlari(newData);
-                setNatiyjaValues(newResultValues)
+                let data = newData.slice(0, length)
+                let newResult = newResultValues.slice(0,length) 
+                setJadvalQiymatlari(data);
+                setNatiyjaValues(newResult)
             } catch (error) {
                 console.error('Error fetching Firestore values:', error);
             }
         }
         getValue2Docs()
-    }, [db])
-    
+    }, [db, length])
+
   return (
     <table
         className="mb-4 shadow-lg border bg-white text-center text-xs md:text-sm font-light dark:border-neutral-500 rounded-lg">
@@ -33,12 +35,12 @@ export default function TableInput({ handleChange, jadvalQiymatlari, setJadvalQi
         <tbody className=''>
             {jadvalQiymatlari.map((row, rowIndex) => (
                 <tr key={rowIndex} className='border-b border-neutral-300 text-xs tablerow'>
-                {row?.map((qiymat, colIndex) => (
+                {row.map((qiymat, colIndex) => (
                     <td key={colIndex} className='w-[80px] border-r border-neutral-300 px-0 bg-white text-black tablerow'>
                         <input
                             type={"number"}
                             step={0.1}
-                            value={qiymat.toString().slice(0,5)}
+                            value={jadvalQiymatlari[rowIndex][colIndex]}
                             placeholder={"0"} 
                             onChange={(event) => handleChange(rowIndex, colIndex, event)}
                             className={`
@@ -51,7 +53,7 @@ export default function TableInput({ handleChange, jadvalQiymatlari, setJadvalQi
                             <tbody>
                                 <tr>
                                     <td className='bg-slate-200 text-blue-800 w-[100px] md:w-[80px] text-start px-2 font-medium'>
-                                       {natijaValues[rowIndex][colIndex]?.toString().slice(0,6)}
+                                       {natijaValues[rowIndex][colIndex]?.toFixed(2)}
                                     </td>
                                 </tr>
                             </tbody>

@@ -15,7 +15,6 @@ function List3() {
   const {length} = useSelector(state => state.tableLength)
   const [values3, setValues3] = useState(Array(length).fill(Array(6).fill(0)));
   const [valueResult, setValueResult] = useState(Array(length).fill(Array(6).fill(0)));
-  let PloConstResult = Array(8).fill(0)
   const dispatch = useDispatch()
   const { loggedIn } = useSelector(state => state.auth)
   const { values } = useSelector(state => state.valuesList1)
@@ -56,16 +55,6 @@ function List3() {
       setValueResult(multipliedArray)
       dispatch(valuesResultSuccess(multipliedArray))
       
-      let jamiQiymatlarArray = [];
-      for (let j = 0; j < multipliedArray[0].length; j++) {
-        let sum = 0;
-        for (let i = 0; i < multipliedArray.length; i++) {
-          sum += multipliedArray[i][j];
-        }
-        jamiQiymatlarArray.push(sum);
-      }
-      dispatch(jamiQiymatlarSuccess(jamiQiymatlarArray));
-      await setDoc(doc(db, "Jami3", "JOUiIpphpwbfDqms0Uq4"), { data: jamiQiymatlarArray });
     } catch (error) {
         console.log(error);
     }
@@ -78,18 +67,36 @@ function List3() {
         const tigizQoldiqArray = tigizQoldiqQuery.docs.map(doc => doc.data().newArray);
         const qatlamQalinligiQuery = await getDocs(collection(db, "list1QatlamQalinligi")); 
         const qatlamQalinligi = qatlamQalinligiQuery.docs.map(doc => doc.data().arr);
-        let qqalArray = qatlamQalinligi[1]
-        let tigizQoldiq = tigizQoldiqArray[0]
-        const ConstResultPlo = PloConstResult.map((row, rowIndex) => {
-          return parseFloat(tigizQoldiq[rowIndex]) * parseFloat(qqalArray[rowIndex]) * parseFloat(values[rowIndex][7]); 
-        });;
+        const Results3Query = await getDocs(collection(db, "Results3")); 
+        const Results3Array = Results3Query.docs.map(doc => doc.data().data);
+        let results = Results3Array.slice(0, length)
+        let jamiQiymatlarArray = [];
+        for (let j = 0; j < results[0].length; j++) {
+          let sum = 0;
+          for (let i = 0; i < results.length; i++) {
+            sum += results[i][j];
+          }
+          jamiQiymatlarArray.push(sum);
+        }
+        dispatch(jamiQiymatlarSuccess(jamiQiymatlarArray));
+        await setDoc(doc(db, "Jami3", "JOUiIpphpwbfDqms0Uq4"), { data: jamiQiymatlarArray });;
+
+        let qqalArray = qatlamQalinligi[1].slice(0, length)
+        let tigizQoldiq = tigizQoldiqArray[0].slice(0, length)
+        let cuttedValue = values.slice(0, length)
+
+        const ConstResultPlo = []
+
+        for (let i = 0; i < length; i++){
+          ConstResultPlo[i] = parseFloat(tigizQoldiq[i]) * parseFloat(qqalArray[i]) * parseFloat(cuttedValue[i][7]); 
+        }
         dispatch(tigizQoldiqSuccess(ConstResultPlo));
       } catch (error) {
         console.log(error);
       }
     }
     dataFetching()
-  }, [db, loggedIn, length])
+  }, [db, length])
   return (
     <div className='min-h-[100vh] px-10 md:px-20'>
       <div className='flex mt-5 justify-center items-start gap-2'>

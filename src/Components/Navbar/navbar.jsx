@@ -21,6 +21,7 @@ function Navbar() {
   const changeHandler = (e) => {
     e.target.value < 0 ? e.target.value = 0 : e.target.value > 8 ? e.target.value = 8 : setValue(e.target.value)
   }
+  
   const saveHandler = async (e) => {
     e.preventDefault()
     dispatch(lengthEdit(parseInt(value)))

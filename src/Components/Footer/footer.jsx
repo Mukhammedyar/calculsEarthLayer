@@ -8,7 +8,7 @@ export default function Footer() {
   const [active3, setActive3] = useState(false)
   return (
     <div className={`flex text-gray-300 w-full justify-center md:justify-between lg:justify-between items-end ${footerStyles.responsiveStyle} bottom-1 px-2 fixed`}>
-      <h1 className='text-xs  hidden md:flex lg:flex xl:flex item-center'>Last update: 10.05.2024</h1>
+      <p className='text-xs  hidden md:flex lg:flex xl:flex item-center'>Last update: 10.05.2024</p>
       <div className={`flex justify-between ${footerStyles.backgroundStyle} ${footerStyles.defaultStyles} ${footerStyles.responsiveWidth}`}>
         <Link 
           onClick={() => {setActive1(true); setActive2(false); setActive3(false)}} 
