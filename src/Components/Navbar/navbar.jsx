@@ -31,7 +31,7 @@ function Navbar() {
 
   useEffect(() => {
     const pushLength = async () => {
-      loggedIn ? dispatch(lengthEdit(value)) : dispatch(lengthEdit(8))
+      loggedIn ? "" : dispatch(lengthEdit(8))
     }
     pushLength()
   })
