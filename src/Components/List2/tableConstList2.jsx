@@ -22,6 +22,7 @@ export default function TableConst() {
             console.error('Error updating Firestore:', error);
         }
     };
+
     
     useEffect(() => {
         const dataFetching =async () => {
@@ -30,18 +31,19 @@ export default function TableConst() {
                 const newData = querySnapshot.docs.map(doc => doc.data().data);
                 const tigizQoldiqQuery = await getDocs(collection(db, "List2TableLists")); 
                 const tigizQoldiqArray = tigizQoldiqQuery.docs.map(doc => doc.data().newArray);
-                newData.length = parseFloat(length)
-                let data = newData.map(row => row.slice(0,2))
+                let newDataCutted = newData.slice(0, length)
+                let data = newDataCutted.map(row => row.slice(0,2))
                 setValues(data)
-
-                tigizQoldiqArray[0].length =  length
-                setValuesList2(tigizQoldiqArray[0])
+                let tigizQoldiq = tigizQoldiqArray[0]
+                let tigizQoldiqCutted = tigizQoldiq.slice(0, length)
+                setValuesList2(tigizQoldiqCutted)
             } catch (error) {
                 console.log(error);
             }
         }
         dataFetching()
     }, [db, length])
+
 
   return (
     <table
@@ -69,8 +71,8 @@ export default function TableConst() {
             </tr>
         </thead>
         <tbody className='text-xs'>
-            {valuesList2.map((item, index) => (
-                <tr key={index} className={`bg-white border-b font-normal tablerow h-[36.6px]`}>
+            {values.map((item, index) => (
+                <tr key={index} className={`border-b font-normal tablerow h-[36.6px] ${index % 2 == 1 ? "bg-gray-100" : "bg-white"}`}>
                 <th className='border-r px-1 w-[30px]'>{listData[index].id}</th>
                 <td className='border-r p-0'>{values[index][0]}</td>
                 <td className='border-r p-0'>{values[index][1]}</td>
@@ -79,7 +81,7 @@ export default function TableConst() {
                     step={1}
                     value={valuesList2[index]}
                     onChange={(event) => handleInputChange(index, event)}
-                    className={`text-xs font-medium px-1 w-[100px] h-[30px] md:w-[95px] focus:outline-0 md:text-sm`}
+                    className={`text-xs font-medium px-1 w-[100px] h-[30px] md:w-[95px] focus:outline-0 md:text-sm ${index % 2 == 1 ? "bg-gray-100" : "bg-white"} `}
                 />
                 </tr> 
             ))}

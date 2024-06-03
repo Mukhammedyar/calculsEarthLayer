@@ -99,7 +99,7 @@ export default function List3Result({ jadvalQiymatlari }) {
         <tbody className=''>
             {/* 1-qatar */}
             {listData.map((item ,index)=> (
-                <tr key={ item.id} className='border-b font-medium text-sm h-[36.6px]'>
+                <tr key={index} className={`border-b font-medium text-sm h-[36.6px] ${index % 2 == 1 ? "bg-gray-100" : "bg-white"}`}>
                     <td className='border-r px-1 min-w-[150px]'>{results[3][index]}</td>
                     <td className='border-r px-1 '>{results[4][index]}</td>
                     <td className='border-r px-1 '>{""}</td>

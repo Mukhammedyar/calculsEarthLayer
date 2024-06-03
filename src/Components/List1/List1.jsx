@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import './list1.css'
-import TableInputHead from './tableInputHead';
+import InputHead from './InputHead';
 import { useDispatch, useSelector } from 'react-redux';
 import { valueSetSuccess } from '../../Reducer/ValuesList1';
-import TableNatija from './tableNatija';
-import List3Input from './List3Input';
-import TableLists from './tableLists';
+import Results from './Result';
+import Inputs from './inputs';
+import ConstLists from './constantLists';
 import Jami from './Jami';
 import { tigizQoldiqSuccess } from '../../Reducer/List3Values';
 import {db} from '../../config/firebase'
@@ -56,30 +56,21 @@ function List1() {
   
 
   return (
-    <div className='mt-10 flex items-start flex-col px-10 gap-5 min-h-[100vh]'>
-        <div className="flex gap-2 flex-wrap md:flex-nowrap items-start">
-          <div>
-            Qatlam qiymatlari
-            <TableLists/>
-          </div>
+    <div className='list1-box'>
+        <div className="list1-flex-box">
+          <ConstLists/>
           <div>
             Qiymat Kiritish
-            <table className='shadow-lg border bg-white text-center text-xs md:text-sm font-light dark:border-neutral-500 rounded-lg'>
-              <TableInputHead/>
-            <List3Input
-              handleInputChange={handleInputChange}
-              values1={values1}
-              setValues1={setValues1} />
+            <table className='list1-table'>
+              <InputHead/>
+              <Inputs
+                handleInputChange={handleInputChange}
+                values1={values1}
+                setValues1={setValues1} />
             </table>
           </div>
-          <div>
-            <p>Ja'mi</p>
             <Jami/>
-          </div>
-          <div>
-            Natiyja
-            <TableNatija values1={values1}/>
-          </div>
+            <Results values1={values1}/>
         </div>
       </div>
   );

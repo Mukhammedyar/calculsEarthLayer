@@ -6,7 +6,7 @@ import { valueSetSuccess } from '../../Reducer/ValuesList1';
 
 
 
-export default function List3Input({handleInputChange, values1, setValues1}) {
+export default function Inputs({handleInputChange, values1, setValues1}) {
   const { jamiNatiyja } = useSelector(state => state.valuesList1)
   const { length } = useSelector(state => state.tableLength)
   const EightArray = Array(8).fill('')
@@ -33,18 +33,13 @@ export default function List3Input({handleInputChange, values1, setValues1}) {
           {values1.map((row, rowIndex) => (
             <tr key={rowIndex} className='border-b'>
               {row.map((qiymat, colIndex) => (
-                <td key={colIndex} className='p-0 w-[50px] md:w-[50px] border-r-[1px]'>
+                <td key={colIndex} className={`inputs-td ${rowIndex % 2 == 1 ? "bg-gray-100" : "bg-white"}`}>
                   <input
                     type="number"
                     value={qiymat}
                     step={1}
                     onChange={(event) => handleInputChange(rowIndex, colIndex, event)}
-                    className={`text-xs font-medium px-1
-                      ${ +qiymat > 100 || +qiymat < 0
-                        ? 'border-1 border-red-500  text-red-500'
-                        : ""
-                      }
-                        w-[50px] md:w-[75px] focus:outline-0 text-xs md:text-sm font-medium px-1`}
+                    className={`${rowIndex % 2 == 1 ? "bg-gray-100" : "bg-white"} inputs-input`}
                   />
                 </td>
               ))}
@@ -52,7 +47,7 @@ export default function List3Input({handleInputChange, values1, setValues1}) {
           ))}
           <tr className='bg-blue-300 text-start h-[33px]'>
             {EightArray.map((item, index) => (
-              <td key={index} className='w-[50px] border-2 md:w-[50px] px-2 border-r-[1px] text-gray-800 font-medium'>
+              <td key={index} className='inputs-last-list'>
                 {jamiNatiyja[index]?.toFixed(3)}
               </td>
             ))}

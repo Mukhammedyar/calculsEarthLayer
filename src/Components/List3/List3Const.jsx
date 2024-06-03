@@ -80,12 +80,12 @@ export default function List3Const() {
         <tbody className=''>
         {/* 1-qatar */}
         {values.map((row , rowIndex)=> (
-           <tr key={rowIndex} className={`bg-white border-b font-normal `}>
+           <tr key={rowIndex} className={`border-b font-normal ${rowIndex % 2 == 1 ? "bg-gray-100" : "bg-white"}`}>
                 <th className='border-r px-1 w-[30px]'>{listData[rowIndex].id}</th>
                 {row.map((qiymat, colIndex) => (
                     <td key={colIndex} className='border-r p-0'>{qiymat}</td>
                 ))}
-                <td className='border-r p-0'>{tigizQoldiqArray[rowIndex]}
+                <td className='border-r p-0 bg-white'>{tigizQoldiqArray[rowIndex]}
                     <table className='w-full'>
                         <tbody>
                             <tr>
