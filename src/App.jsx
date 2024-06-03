@@ -11,7 +11,7 @@ function App() {
   return (
     <div>
       <AnimationBackground/>
-      <div className=' z-10'>
+      <div className='z-10'>
         {loggedIn? <Navbar />:""}
         <div className='grid place-items-center'>
           {loggedIn? <Footer />:""} 

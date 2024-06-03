@@ -72,7 +72,7 @@ export default function TableConst() {
         </thead>
         <tbody className='text-xs'>
             {values.map((item, index) => (
-                <tr key={index} className={`bg-white border-b font-normal tablerow h-[36.6px]`}>
+                <tr key={index} className={`border-b font-normal tablerow h-[36.6px] ${index % 2 == 1 ? "bg-gray-100" : "bg-white"}`}>
                 <th className='border-r px-1 w-[30px]'>{listData[index].id}</th>
                 <td className='border-r p-0'>{values[index][0]}</td>
                 <td className='border-r p-0'>{values[index][1]}</td>
@@ -81,7 +81,7 @@ export default function TableConst() {
                     step={1}
                     value={valuesList2[index]}
                     onChange={(event) => handleInputChange(index, event)}
-                    className={`text-xs font-medium px-1 w-[100px] h-[30px] md:w-[95px] focus:outline-0 md:text-sm`}
+                    className={`text-xs font-medium px-1 w-[100px] h-[30px] md:w-[95px] focus:outline-0 md:text-sm ${index % 2 == 1 ? "bg-gray-100" : "bg-white"} `}
                 />
                 </tr> 
             ))}
